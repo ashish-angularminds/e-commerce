@@ -11,7 +11,8 @@ const routes: Routes = [
   {
     path: 'register',
     component: RegistrationComponent
-  }
+  },
+  // { path: '', component: LoginComponent },
 ];
 
 @NgModule({

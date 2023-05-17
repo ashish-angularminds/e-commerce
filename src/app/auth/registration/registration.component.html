@@ -1,1 +1,54 @@
-<p>registration works!</p>
+<div class="container h-75">
+    <div class="row d-flex justify-content-center align-items-center h-100">
+        <div class="col-4">
+            <form #loginForm="ngForm" (ngSubmit)="register()" class="card
+                border-0
+                shadow-lg p-5">
+                <div class="input-box">
+                    <input type="email" name="email"
+                        [(ngModel)]="User.email">
+                    <span class="cust-label"
+                        [ngClass]="{'fix-label':User.email !== ''}">Enter
+                        Email</span>
+                    <span class="cust-line"
+                        [ngStyle]="{'bottom':User.email === '' ?
+                        '' : '75%' }"></span>
+                </div>
+                <br>
+                <div class="input-box">
+                    <input type="password" name="password"
+                        [(ngModel)]="User.password">
+                    <span class="cust-label"
+                        [ngClass]="{'fix-label':User.password !== ''}">Enter
+                        Password</span>
+                    <span class="cust-line"
+                        [ngStyle]="{'bottom':User.password === '' ?
+                        '' : '75%' }"></span>
+                </div>
+                <br>
+                <div class="input-box">
+                    <input type="text" name="fullname"
+                        [(ngModel)]="User.fullname">
+                    <span class="cust-label"
+                        [ngClass]="{'fix-label':User.fullname !== ''}">Enter
+                        Full Name</span>
+                    <span class="cust-line"
+                        [ngStyle]="{'bottom':User.fullname === '' ?
+                        '' : '75%' }"></span>
+                </div>
+                <br>
+                <div class="input-box">
+                    <input type="text" name="companyname"
+                        [(ngModel)]="User.companyname">
+                    <span class="cust-label"
+                        [ngClass]="{'fix-label':User.companyname !== ''}">Enter
+                        Company Name</span>
+                    <span class="cust-line"
+                        [ngStyle]="{'bottom':User.companyname === '' ?
+                        '' : '75%' }"></span>
+                </div>
+                <button class="btn btn-outline-dark mx-5 my-3">Regiter</button>
+            </form>
+        </div>
+    </div>
+</div>

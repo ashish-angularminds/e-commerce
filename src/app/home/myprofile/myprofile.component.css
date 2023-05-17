@@ -1,0 +1,14 @@
+.logout-btn {
+    background: linear-gradient(45deg, #fcf6bd, #e4c1f9);
+    border: none;
+    border-radius: 50%;
+    width: 50px;
+    height: 50px;
+    position: absolute;
+    top: -25px;
+    right: -25px;
+}
+
+.profile-box {
+    background: linear-gradient(45deg, #e4c1f9, #fcf6bd);
+}

@@ -1,1 +1,12 @@
-<p>myprofile works!</p>
+.<div class="container">
+    <div class="mx-auto profile-box text-center bg-info w-25 mt-5 rounded
+        shadow-lg py-4
+        position-relative">
+        <button (click)="logout()" class="logout-btn shadow-lg"><i class="bi bi-box-arrow-left"></i></button>
+        <h3>User Profile</h3>
+        <h5>Email:{{user.email}}</h5>
+        <h5>Password:{{user.password}}</h5>
+        <h5>Full Name:{{user.fullname}}</h5>
+        <h5>Company Name:{{user.companyname}}</h5>
+    </div>
+</div>

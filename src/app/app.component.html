@@ -1,2 +1,9 @@
-<h1>{{title}}</h1>
+<nav class="shadow-lg">
+    <h2>{{title}}</h2>
+    <div *ngIf="userava">
+        <button [routerLink]="'auth/login'">Login</button>
+        <button [routerLink]="'auth/register'">Register</button>
+    </div>
+</nav>
 <router-outlet></router-outlet>
+<lib-ng-toast></lib-ng-toast>

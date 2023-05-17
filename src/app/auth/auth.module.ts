@@ -4,6 +4,8 @@ import { CommonModule } from '@angular/common';
 import { AuthRoutingModule } from './auth-routing.module';
 import { LoginComponent } from './login/login.component';
 import { RegistrationComponent } from './registration/registration.component';
+import { FormsModule } from '@angular/forms';
+import { NgToastModule } from 'ng-angular-popup';
 
 
 @NgModule({
@@ -13,7 +15,9 @@ import { RegistrationComponent } from './registration/registration.component';
   ],
   imports: [
     CommonModule,
-    AuthRoutingModule
+    AuthRoutingModule,
+    FormsModule,
+    
   ]
 })
 export class AuthModule { }
