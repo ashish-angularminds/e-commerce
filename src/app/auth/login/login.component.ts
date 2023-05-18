@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { Route, Router } from '@angular/router';
+import { Router } from '@angular/router';
 import { NgToastService } from 'ng-angular-popup';
 import { user } from 'src/app/user';
 
