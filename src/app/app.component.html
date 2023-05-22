@@ -1,9 +1,5 @@
-<nav class="shadow-lg">
-    <h2>{{title}}</h2>
-    <div *ngIf="userava">
-        <button [routerLink]="'auth/login'">Login</button>
-        <button [routerLink]="'auth/register'">Register</button>
-    </div>
+<nav class="shadow-lg d-flex justify-content-center align-items-center w-100">
+    <h2 class="text-capitalize">{{title}}</h2>
 </nav>
 <router-outlet></router-outlet>
 <lib-ng-toast></lib-ng-toast>

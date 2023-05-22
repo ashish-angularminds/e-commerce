@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+import { AuthService } from 'src/app/service/auth.service';
 import { user } from 'src/app/user';
 
 @Component({
@@ -9,15 +10,19 @@ import { user } from 'src/app/user';
 })
 export class MyprofileComponent implements OnInit {
 
-  constructor(private router: Router) { }
+  constructor(private router: Router, private http: AuthService) { }
 
-  user!: user;
+  user!: any;
   ngOnInit() {
-    this.user = JSON.parse(localStorage.getItem('activeuser')!);
+    let token = localStorage.getItem('activeuser')!;
+    this.http.get(token).subscribe(
+      res => { console.log(res); this.user = res; },
+      err => { console.log(err); this.router.navigate(['auth', 'login']) },
+    );
   }
 
   logout() {
     localStorage.removeItem('activeuser');
-    this.router.navigate(['']);
+    this.router.navigate(['auth', 'login']);
   }
 }

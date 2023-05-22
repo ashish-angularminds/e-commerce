@@ -1,53 +1,42 @@
-<div class="container h-75">
+<div class="container h-100">
     <div class="row d-flex justify-content-center align-items-center h-100">
         <div class="col-4">
             <form #loginForm="ngForm" (ngSubmit)="register()" class="card
                 border-0
                 shadow-lg p-5">
-                <div class="input-box">
+                <div class="form-floating mb-3">
                     <input type="email" name="email"
-                        [(ngModel)]="User.email">
-                    <span class="cust-label"
-                        [ngClass]="{'fix-label':User.email !== ''}">Enter
-                        Email</span>
-                    <span class="cust-line"
-                        [ngStyle]="{'bottom':User.email === '' ?
-                        '' : '75%' }"></span>
+                        [(ngModel)]="User.email"
+                        class="form-control border-dark" placeholder="Email
+                        address">
+                    <label for="floatingInput">Email address</label>
                 </div>
                 <br>
-                <div class="input-box">
+                <div class="form-floating mb-3">
                     <input type="password" name="password"
-                        [(ngModel)]="User.password">
-                    <span class="cust-label"
-                        [ngClass]="{'fix-label':User.password !== ''}">Enter
-                        Password</span>
-                    <span class="cust-line"
-                        [ngStyle]="{'bottom':User.password === '' ?
-                        '' : '75%' }"></span>
+                        [(ngModel)]="User.password"
+                        class="form-control border-dark" placeholder="Password">
+                    <label for="floatingInput">Password</label>
                 </div>
                 <br>
-                <div class="input-box">
+                <div class="form-floating mb-3">
                     <input type="text" name="fullname"
-                        [(ngModel)]="User.fullname">
-                    <span class="cust-label"
-                        [ngClass]="{'fix-label':User.fullname !== ''}">Enter
-                        Full Name</span>
-                    <span class="cust-line"
-                        [ngStyle]="{'bottom':User.fullname === '' ?
-                        '' : '75%' }"></span>
+                        [(ngModel)]="User.name"
+                        class="form-control border-dark" placeholder="Password">
+                    <label for="floatingInput">Full Name</label>
                 </div>
                 <br>
-                <div class="input-box">
+                <div class="form-floating mb-3">
                     <input type="text" name="companyname"
-                        [(ngModel)]="User.companyname">
-                    <span class="cust-label"
-                        [ngClass]="{'fix-label':User.companyname !== ''}">Enter
-                        Company Name</span>
-                    <span class="cust-line"
-                        [ngStyle]="{'bottom':User.companyname === '' ?
-                        '' : '75%' }"></span>
+                        [(ngModel)]="User.company"
+                        class="form-control border-dark" placeholder="Password">
+                    <label for="floatingInput">Company Name</label>
                 </div>
-                <button class="btn btn-outline-dark mx-5 my-3">Regiter</button>
+                <button class="btn btn-dark mt-3">Regiter</button>
+                <a class="mt-3 text-dark text-center"
+                    [routerLink]="'auth/login'">Click
+                    here
+                    for Login</a>
             </form>
         </div>
     </div>
