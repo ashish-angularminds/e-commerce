@@ -6,15 +6,16 @@ import { CompanysettingComponent } from './companysetting/companysetting.compone
 import { FormsModule } from '@angular/forms';
 
 
+
 @NgModule({
   declarations: [
     MyprofileComponent,
-    CompanysettingComponent
+    CompanysettingComponent,
   ],
   imports: [
     CommonModule,
     SettingRoutingModule,
-    FormsModule
+    FormsModule,
   ]
 })
 export class SettingModule { }

@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { NgToastService } from 'ng-angular-popup';
+import { NgxUiLoaderService } from 'ngx-ui-loader';
 import { Observable, bufferToggle } from 'rxjs';
 import { SettingService } from 'src/app/service/setting.service';
 import { user } from 'src/app/user';
@@ -11,7 +12,7 @@ import { user } from 'src/app/user';
 })
 export class CompanysettingComponent implements OnInit {
 
-  constructor(private settingservice: SettingService, private toast: NgToastService) { }
+  constructor(private settingservice: SettingService, private toast: NgToastService, private loader: NgxUiLoaderService) { }
 
   User: user = {
     email: '',
@@ -57,13 +58,12 @@ export class CompanysettingComponent implements OnInit {
 
   creatuser() {
     this.settingservice.createuser(this.User).subscribe(res => {
-      console.log(res);
-      this.users.push(this.User);
       this.toast.success({
         detail: 'Registration Successful',
         summary: 'User is Registrated...',
         duration: 3000,
       });
+      this.loadlist();
     },
       err => {
         console.log(err);
@@ -76,7 +76,8 @@ export class CompanysettingComponent implements OnInit {
   }
 
   loadlist() {
-    this.settingservice.getuser(this.pagination).subscribe(data => this.users = data);
+    this.loader.start();
+    this.settingservice.getuser(this.pagination).subscribe(data => { this.users = data; this.loader.stop() });
   }
 
   changepage(id: number) {

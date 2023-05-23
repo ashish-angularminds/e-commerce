@@ -13,20 +13,23 @@
                 [(ngModel)]="org.email"
                 [className]="orgflag?'d-none':'form-control border-0 bg-dark text-white'">
         </div>
-        <div class="mx-2">
+        <div class>
             <button type="button"
-                class="btn btn-outline-dark btn-close-white fw-bold me-2"
+                class="btn btn-outline-dark btn-close-white fw-bold"
                 data-bs-toggle="modal"
                 data-bs-target="#exampleModal" data-bs-whatever="@mdo">Create
-                Use</button>
-            <button class="btn btn-outline-dark btn-close-white fw-bold"
-                (click)="updateorg()">{{orgflag?'Update Company Info':'Save the Changes'}}</button>
+                User</button>
+            <button class="mx-2 btn btn-outline-dark btn-close-white fw-bold"
+                (click)="updateorg()">{{orgflag?'Update Company Info':'Save the Changes'}}
+            </button>
+            <button class="btn btn-outline-dark btn-close-white"><i
+                    class="bi bi-house" [routerLink]="'/setting/my-profile'"></i></button>
         </div>
     </div>
     <div class="row">
-        <div class="col border border-dark-subtle rounded p-1">
+        <div class="col p-1">
             <table class="table text-center">
-                <thead class=" table-dark rounded">
+                <thead class=" table-dark">
                     <tr>
                         <th scope="col">Email</th>
                         <!-- <th scope="col">Password</th> -->
@@ -83,9 +86,9 @@
             </table>
         </div>
     </div>
-    <div class="row">
-        <div class="col d-flex justify-content-start ">
-            <ul class="pagination">
+    <div class="row mt-2 d-flex justify-content-between">
+        <div class="col-2">
+            <ul class="pagination text-dark">
                 <li *ngFor="let i of pages" class="page-item"
                     [className]="pagination.page==i+1? 'active':'page-item'">
                     <a class="page-link" (click)="changepage(i+1)">{{i+1}}</a>
@@ -117,7 +120,7 @@
                     aria-label="Close"></button>
             </div>
             <div class="modal-body">
-                <form #loginForm="ngForm" (ngSubmit)="creatuser()">
+                <form #addForm="ngForm" (ngSubmit)="creatuser();addForm.reset()">
                     <div class="form-floating mb-3">
                         <input type="email" name="email"
                             [(ngModel)]="User.email"
@@ -149,8 +152,9 @@
                             placeholder="Role" required>
                         <label for="floatingInput">Role</label>
                     </div>
-                    <button type="submit" [disabled]="!loginForm.valid"
-                        class="btn btn-dark mt-3" data-bs-dismiss="modal">Regiter</button>
+                    <button type="submit" [disabled]="!addForm.valid"
+                        class="btn btn-dark mt-3" data-bs-dismiss="modal">
+                        Regiter</button>
                 </form>
             </div>
         </div>
@@ -189,7 +193,7 @@
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
-                <h1 class="modal-title fs-5" id="exampleModalLabel">Change Role</h1>
+                <h1 class="modal-title fs-5" id="exampleModalLabel">Change Info</h1>
                 <button type="button" class="btn-close" data-bs-dismiss="modal"
                     aria-label="Close"></button>
             </div>
