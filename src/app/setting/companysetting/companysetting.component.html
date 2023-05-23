@@ -1,0 +1,228 @@
+<div class="container">
+    <div
+        class="d-flex p-2 justify-content-between align-items-center bg-dark text-white my-5 rounded">
+        <div class="mx-2 d-flex">
+            <input
+                class="form-control border-0 bg-dark text-white fw-bold fs-4"
+                type="text" [disabled]="orgflag"
+                [value]="users.at(0)?._org?.name"
+                name="name" [(ngModel)]="org.name">
+            <input
+                type="email" [disabled]="orgflag"
+                name="email" [value]="users.at(0)?._org?.email"
+                [(ngModel)]="org.email"
+                [className]="orgflag?'d-none':'form-control border-0 bg-dark text-white'">
+        </div>
+        <div class="mx-2">
+            <button type="button"
+                class="btn btn-outline-dark btn-close-white fw-bold me-2"
+                data-bs-toggle="modal"
+                data-bs-target="#exampleModal" data-bs-whatever="@mdo">Create
+                Use</button>
+            <button class="btn btn-outline-dark btn-close-white fw-bold"
+                (click)="updateorg()">{{orgflag?'Update Company Info':'Save the Changes'}}</button>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col border border-dark-subtle rounded p-1">
+            <table class="table text-center">
+                <thead class=" table-dark rounded">
+                    <tr>
+                        <th scope="col">Email</th>
+                        <!-- <th scope="col">Password</th> -->
+                        <th scope="col">Name</th>
+                        <th scope="col">Role</th>
+                        <th scope="col">Action</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let u of users">
+                        <th scope="col"><input
+                                class="form-control border-0 bg-white text-center"
+                                type="text"
+                                [value]="u.email" disabled></th>
+                        <!-- <th><input class="form-control border-0 bg-white"
+                                type="text"
+                                value="Password" disabled></th> -->
+                        <th><input
+                                class="form-control border-0 bg-white text-center"
+                                type="text"
+                                [value]="u.name" disabled></th>
+                        <th><input
+                                class="form-control border-0 bg-white text-center"
+                                type="text"
+                                [value]="u.role" disabled></th>
+                        <th class="d-flex justify-content-center">
+                            <div class="dropdown">
+                                <button class="btn btn-outline-dark"
+                                    type="button" data-bs-toggle="dropdown"
+                                    aria-expanded="false">
+                                    Update
+                                </button>
+                                <ul class="dropdown-menu"
+                                    (click)="selectedid=u._id">
+                                    <li><a class="dropdown-item"
+                                            data-bs-toggle="modal"
+                                            data-bs-target="#roleModal">
+                                            User Role
+                                        </a>
+                                    </li>
+                                    <li><a class="dropdown-item"
+                                            data-bs-toggle="modal"
+                                            data-bs-target="#infoModal">
+                                            User Info
+                                        </a>
+                                    </li>
+                                </ul>
+                            </div>
+                            <button class="btn btn-outline-dark mx-2"
+                                (click)="selectedid=u._id; deleteuser()">Delete</button>
+                        </th>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col d-flex justify-content-start ">
+            <ul class="pagination">
+                <li *ngFor="let i of pages" class="page-item"
+                    [className]="pagination.page==i+1? 'active':'page-item'">
+                    <a class="page-link" (click)="changepage(i+1)">{{i+1}}</a>
+                </li>
+            </ul>
+        </div>
+        <div class="col-2">
+            <div class="input-group mb-3">
+                <label class="input-group-text" for="inputGroupSelect01">Sort by</label>
+                <select class="form-select" id="inputGroupSelect01"
+                    [(ngModel)]="pagination.sortBy" name="sortby"
+                    (change)="loadlist()">
+                    <option value="role">Role</option>
+                    <option value="name">Name</option>
+                </select>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Add User Module -->
+<div class="modal fade" id="exampleModal" tabindex="-1"
+    aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h1 class="modal-title fs-5" id="exampleModalLabel">Add User</h1>
+                <button type="button" class="btn-close" data-bs-dismiss="modal"
+                    aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <form #loginForm="ngForm" (ngSubmit)="creatuser()">
+                    <div class="form-floating mb-3">
+                        <input type="email" name="email"
+                            [(ngModel)]="User.email"
+                            class="form-control border-dark" placeholder="Email
+                            address" required>
+                        <label for="floatingInput">Email address</label>
+                    </div>
+                    <br>
+                    <div class="form-floating mb-3">
+                        <input type="password" name="password"
+                            [(ngModel)]="User.password"
+                            class="form-control border-dark"
+                            placeholder="Password" required>
+                        <label for="floatingInput">Password</label>
+                    </div>
+                    <br>
+                    <div class="form-floating mb-3">
+                        <input type="text" name="fullname"
+                            [(ngModel)]="User.name"
+                            class="form-control border-dark"
+                            placeholder="Password" required>
+                        <label for="floatingInput">Full Name</label>
+                    </div>
+                    <br>
+                    <div class="form-floating mb-3">
+                        <input type="text" name="role"
+                            [(ngModel)]="User.role"
+                            class="form-control border-dark"
+                            placeholder="Role" required>
+                        <label for="floatingInput">Role</label>
+                    </div>
+                    <button type="submit" [disabled]="!loginForm.valid"
+                        class="btn btn-dark mt-3" data-bs-dismiss="modal">Regiter</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="roleModal" tabindex="-1"
+    aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h1 class="modal-title fs-5" id="exampleModalLabel">Change Role</h1>
+                <button type="button" class="btn-close" data-bs-dismiss="modal"
+                    aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <div class="input-group mb-3">
+                    <label class="input-group-text" for="inputGroupSelect01">
+                        Select Role
+                    </label>
+                    <select class="form-select" [(ngModel)]="role.role">
+                        <option value="user">User</option>
+                        <option value="admin">Admin</option>
+                    </select>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-dark" (click)="changerole()"
+                    data-bs-dismiss="modal">Submit</button>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="modal fade" id="infoModal" tabindex="-1"
+    aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h1 class="modal-title fs-5" id="exampleModalLabel">Change Role</h1>
+                <button type="button" class="btn-close" data-bs-dismiss="modal"
+                    aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <form #updateForm="ngForm" (ngSubmit)="changeinfo()">
+                    <div class="form-floating mb-3">
+                        <input type="email" name="email"
+                            [(ngModel)]="infouser.email"
+                            class="form-control border-dark" placeholder="Email
+                            address" required>
+                        <label for="floatingInput">Email address</label>
+                    </div>
+                    <br>
+                    <div class="form-floating mb-3">
+                        <input type="password" name="password"
+                            [(ngModel)]="infouser.password"
+                            class="form-control border-dark"
+                            placeholder="Password" required>
+                        <label for="floatingInput">Password</label>
+                    </div>
+                    <br>
+                    <div class="form-floating mb-3">
+                        <input type="text" name="fullname"
+                            [(ngModel)]="infouser.name"
+                            class="form-control border-dark"
+                            placeholder="Password" required>
+                        <label for="floatingInput">Full Name</label>
+                    </div>
+                    <br>
+                    <button type="submit" [disabled]="!updateForm.valid"
+                        class="btn btn-dark mt-3" data-bs-dismiss="modal">Update</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>

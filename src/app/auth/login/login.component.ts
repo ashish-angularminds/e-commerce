@@ -35,7 +35,7 @@ export class LoginComponent implements OnInit {
         });
         let a: any = res;
         localStorage.setItem('activeuser', a.token);
-        this.route.navigate(['/home/my-profile']);
+        this.route.navigate(['/setting/my-profile']);
       },
       err => {
         console.log(err);

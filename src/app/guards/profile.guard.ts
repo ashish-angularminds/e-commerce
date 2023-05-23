@@ -43,8 +43,7 @@ export class ProfileGuard implements CanActivate {
         return true;
       }),
       catchError(err => {
-        this.router.navigate(['auth', 'login'])
-        return throwError(err);
+        return this.router.navigate(['auth', 'login']);
       }));
   }
 }

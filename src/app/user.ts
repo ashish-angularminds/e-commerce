@@ -3,4 +3,9 @@ export interface user {
     password: string,
     name?: string,
     company?: string,
+    role?: string,
+    _org?: {
+        name?: string;
+        email?: string;
+    }
 }
