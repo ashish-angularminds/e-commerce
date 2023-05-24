@@ -63,7 +63,7 @@
                                     Update
                                 </button>
                                 <ul class="dropdown-menu"
-                                    (click)="selectedid=u._id">
+                                    (click)="selectedid=u._id;loadoldinfo(u)">
                                     <li><a class="dropdown-item"
                                             data-bs-toggle="modal"
                                             data-bs-target="#roleModal">
@@ -74,6 +74,12 @@
                                             data-bs-toggle="modal"
                                             data-bs-target="#infoModal">
                                             User Info
+                                        </a>
+                                    </li>
+                                    <li><a class="dropdown-item"
+                                            data-bs-toggle="modal"
+                                            data-bs-target="#passModal">
+                                            User Password
                                         </a>
                                     </li>
                                 </ul>
@@ -141,16 +147,19 @@
                         <input type="text" name="fullname"
                             [(ngModel)]="User.name"
                             class="form-control border-dark"
-                            placeholder="Password" required>
+                            placeholder="fullname" required>
                         <label for="floatingInput">Full Name</label>
                     </div>
                     <br>
-                    <div class="form-floating mb-3">
-                        <input type="text" name="role"
-                            [(ngModel)]="User.role"
-                            class="form-control border-dark"
-                            placeholder="Role" required>
-                        <label for="floatingInput">Role</label>
+                    <div class="input-group mb-3">
+                        <label class="input-group-text border-dark"
+                            for="inputGroupSelect02">Role</label>
+                        <select class="form-select border-dark"
+                            id="inputGroupSelect02"
+                            [(ngModel)]="User.role" name="role">
+                            <option value="admin">Admin</option>
+                            <option value="user">User</option>
+                        </select>
                     </div>
                     <button type="submit" [disabled]="!addForm.valid"
                         class="btn btn-dark mt-3" data-bs-dismiss="modal">
@@ -188,6 +197,34 @@
         </div>
     </div>
 </div>
+
+<div class="modal fade" id="passModal" tabindex="-1"
+    aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h1 class="modal-title fs-5" id="exampleModalLabel">Change
+                    Password</h1>
+                <button type="button" class="btn-close" data-bs-dismiss="modal"
+                    aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <div class="form-floating mb-3">
+                    <input type="password" name="password"
+                        [(ngModel)]="userpass.password"
+                        class="form-control border-dark"
+                        placeholder="Password" required>
+                    <label for="floatingInput">Password</label>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-dark" (click)="changepassword()"
+                    data-bs-dismiss="modal">Submit</button>
+            </div>
+        </div>
+    </div>
+</div>
+
 <div class="modal fade" id="infoModal" tabindex="-1"
     aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog">
@@ -205,14 +242,6 @@
                             class="form-control border-dark" placeholder="Email
                             address" required>
                         <label for="floatingInput">Email address</label>
-                    </div>
-                    <br>
-                    <div class="form-floating mb-3">
-                        <input type="password" name="password"
-                            [(ngModel)]="infouser.password"
-                            class="form-control border-dark"
-                            placeholder="Password" required>
-                        <label for="floatingInput">Password</label>
                     </div>
                     <br>
                     <div class="form-floating mb-3">

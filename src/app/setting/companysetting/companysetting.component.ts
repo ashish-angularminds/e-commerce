@@ -38,9 +38,11 @@ export class CompanysettingComponent implements OnInit {
   }
   infouser = {
     email: '',
-    password: '',
     name: ''
-  };
+  }
+  userpass = {
+    password: ''
+  }
 
   selectedid: any = '';
 
@@ -146,5 +148,27 @@ export class CompanysettingComponent implements OnInit {
         console.log(this.selectedid);
       }
     );
+  }
+
+  changepassword() {
+    this.settingservice.changeinfo(this.userpass, this.selectedid).subscribe(
+      res => {
+        this.toast.success({
+          detail: 'Password Changed',
+          summary: '...',
+          duration: 3000,
+        })
+        this.loadlist();
+        console.log(res)
+      },
+      err => {
+        console.log(err);
+      }
+    )
+  }
+
+  loadoldinfo(u: any) {
+    this.infouser.name = u.name;
+    this.infouser.email = u.email;
   }
 }
