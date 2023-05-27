@@ -6,14 +6,12 @@ import { FormsModule } from '@angular/forms';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { NgToastModule } from 'ng-angular-popup';
 import { HttpClientModule } from '@angular/common/http';
-
+import { RECAPTCHA_V3_SITE_KEY, RecaptchaV3Module } from 'ng-recaptcha';
 import {
   NgxUiLoaderModule,
   NgxUiLoaderConfig,
-  SPINNER,
-  POSITION,
-  PB_DIRECTION,
 } from "ngx-ui-loader";
+import { environment } from './environment';
 const ngxUiLoaderConfig: NgxUiLoaderConfig = {
   "bgsColor": "#000000",
   "bgsOpacity": 0.5,
@@ -57,8 +55,12 @@ const ngxUiLoaderConfig: NgxUiLoaderConfig = {
     NgToastModule,
     HttpClientModule,
     NgxUiLoaderModule.forRoot(ngxUiLoaderConfig),
+    RecaptchaV3Module,
   ],
-  providers: [],
+  providers: [{
+    provide: RECAPTCHA_V3_SITE_KEY,
+    useValue: environment.recaptcha.siteKey,
+  }],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

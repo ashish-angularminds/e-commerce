@@ -1,6 +1,6 @@
 <div class="container h-75">
     <div class="row d-flex justify-content-center align-items-center h-100">
-        <div class="col-4">
+        <div class="col-lg-4 col-sm-12">
             <form #loginForm="ngForm" (ngSubmit)="login()" class="card border-0
                 shadow-lg p-5">
                 <div class="form-floating mb-3">
@@ -19,9 +19,42 @@
                 </div>
                 <button class="btn btn-dark mt-3">Login</button>
                 <a class="mt-2 text-dark text-center"
+                    data-bs-toggle="modal"
+                    data-bs-target="#exampleModal">Forget
+                    Password</a>
+                <a class="mt-2 text-dark text-center"
                     [routerLink]="'/auth/register'">Click here for
                     registration</a>
             </form>
+        </div>
+    </div>
+</div>
+
+<!-- Modal -->
+<div class="modal fade" id="exampleModal" tabindex="-1"
+    aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h1 class="modal-title fs-5" id="exampleModalLabel">Enter
+                    Password</h1>
+                <button type="button" class="btn-close" data-bs-dismiss="modal"
+                    aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <div class="form-floating mb-3">
+                    <input type="email" class="form-control border-dark"
+                        id="floatingInput"
+                        placeholder="name@example.com"
+                        [(ngModel)]="email" name="email">
+                    <label for="floatingInput">Email address</label>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-outline-dark"
+                    (click)="forgetpassword()" data-bs-dismiss="modal">Save
+                    changes</button>
+            </div>
         </div>
     </div>
 </div>

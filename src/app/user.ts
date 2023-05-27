@@ -7,5 +7,6 @@ export interface user {
     _org?: {
         name?: string;
         email?: string;
-    }
+    },
+    captcha?: string
 }

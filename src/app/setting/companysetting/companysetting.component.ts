@@ -1,31 +1,35 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit, Output } from '@angular/core';
 import { NgToastService } from 'ng-angular-popup';
 import { NgxUiLoaderService } from 'ngx-ui-loader';
-import { Observable, bufferToggle } from 'rxjs';
 import { SettingService } from 'src/app/service/setting.service';
-import { user } from 'src/app/user';
-
 @Component({
   selector: 'app-companysetting',
   templateUrl: './companysetting.component.html',
   styleUrls: ['./companysetting.component.css']
 })
+
 export class CompanysettingComponent implements OnInit {
 
-  constructor(private settingservice: SettingService, private toast: NgToastService, private loader: NgxUiLoaderService) { }
+  constructor(private settingservice: SettingService, private toast: NgToastService,
+    private loader: NgxUiLoaderService) { }
 
-  User: user = {
-    email: '',
-    password: '',
+  @Output() infouser: any = {
     name: '',
-    role: '',
+    email: ''
+  };
+  flag = false;
+  change(u: any) {
+    this.flag = true;
+    this.infouser.name = u.name;
+    this.infouser.email = u.email;
   }
+  @Output() selectedid: any;
 
+  
   org = {
     name: '',
     email: ''
   }
-  orgflag = true;
 
   pagination = {
     sortBy: 'role',
@@ -33,18 +37,11 @@ export class CompanysettingComponent implements OnInit {
     page: 1
   }
 
-  role = {
-    role: ""
-  }
-  infouser = {
-    email: '',
-    name: ''
-  }
   userpass = {
     password: ''
   }
 
-  selectedid: any = '';
+  companyname!: string;
 
   pages: number[] = [];
   users: any[] = [];
@@ -58,28 +55,13 @@ export class CompanysettingComponent implements OnInit {
     });
   }
 
-  creatuser() {
-    this.settingservice.createuser(this.User).subscribe(res => {
-      this.toast.success({
-        detail: 'Registration Successful',
-        summary: 'User is Registrated...',
-        duration: 3000,
-      });
-      this.loadlist();
-    },
-      err => {
-        console.log(err);
-        this.toast.error({
-          detail: 'Registration failed',
-          summary: err.error.message,
-          duration: 3000,
-        });
-      });
-  }
-
   loadlist() {
     this.loader.start();
-    this.settingservice.getuser(this.pagination).subscribe(data => { this.users = data; this.loader.stop() });
+    this.settingservice.getuser(this.pagination).subscribe(data => {
+      this.users = data;
+      this.companyname = this.users.at(0)._org.name as string;
+      this.loader.stop();
+    });
   }
 
   changepage(id: number) {
@@ -87,49 +69,13 @@ export class CompanysettingComponent implements OnInit {
     this.loadlist();
   }
 
+  loadorg() {
+    this.org.name = this.users!.at(0)!._org!.name as string;
+    this.org.email = this.users!.at(0)!._org!.email as string;
+  }
   updateorg() {
-    this.orgflag = this.orgflag ? false : true;
-
-    if (this.orgflag) {
-      this.settingservice.updateorg(this.org).subscribe(data => console.log(data));
-      this.loadlist();
-    }
-    else {
-      this.org.name = this.users!.at(0)!._org!.name as string;
-      this.org.email = this.users!.at(0)!._org!.email as string;
-    }
-  }
-
-  changerole() {
-    this.settingservice.changerole(this.role, this.selectedid).subscribe(res => {
-      this.toast.success({
-        detail: 'Role Changed',
-        summary: '...',
-        duration: 3000,
-      })
-      this.loadlist()
-      console.log(res);
-    },
-      err => {
-        console.log(err);
-      }
-    )
-  }
-  changeinfo() {
-    this.settingservice.changeinfo(this.infouser, this.selectedid).subscribe(
-      res => {
-        this.toast.success({
-          detail: 'Info Changed',
-          summary: '...',
-          duration: 3000,
-        })
-        this.loadlist();
-      },
-      err => {
-        console.log(err);
-      }
-    )
-    console.log(this.infouser);
+    this.settingservice.updateorg(this.org).subscribe(data => console.log(data));
+    this.loadlist();
   }
 
   deleteuser() {
@@ -165,10 +111,5 @@ export class CompanysettingComponent implements OnInit {
         console.log(err);
       }
     )
-  }
-
-  loadoldinfo(u: any) {
-    this.infouser.name = u.name;
-    this.infouser.email = u.email;
-  }
+  } 
 }

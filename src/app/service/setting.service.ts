@@ -33,4 +33,20 @@ export class SettingService {
   deleteuser(id: string) {
     return this.http.delete<any>(`https://shop-api.ngminds.com/users/${id}`, { headers: this.header });
   }
+
+  changepassword(payload: any) {
+    return this.http.post('https://shop-api.ngminds.com/users/auth/change-password', payload, { headers: this.header });
+  }
+
+  sendverificationmail() {
+    return this.http.post('https://shop-api.ngminds.com/auth/send-verification-email', { headers: this.header });
+  }
+
+  verifyaccount(parameters: any) {
+    return this.http.post('https://shop-api.ngminds.com/auth/verify-email', { params: parameters });
+  }
+
+  googlelogin(payload: any) {
+    return this.http.post('https://shop-api.ngminds.com/auth/login/google', payload);
+  }
 }

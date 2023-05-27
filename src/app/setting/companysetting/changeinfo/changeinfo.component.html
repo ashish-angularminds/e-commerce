@@ -1,0 +1,34 @@
+<div class="modal fade" id="infoModal" tabindex="-1"
+    aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h1 class="modal-title fs-5" id="exampleModalLabel">Change Info</h1>
+                <button type="button" class="btn-close" data-bs-dismiss="modal"
+                    aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <form #updateForm="ngForm" (ngSubmit)="changeinfo()">
+                    <div class="form-floating mb-3">
+                        <input type="email" name="email"
+                            [(ngModel)]="infouser.email"
+                            class="form-control border-dark" placeholder="Email
+                            address" required>
+                        <label for="floatingInput">Email address</label>
+                    </div>
+                    <br>
+                    <div class="form-floating mb-3">
+                        <input type="text" name="fullname"
+                            [(ngModel)]="infouser.name"
+                            class="form-control border-dark"
+                            placeholder="Password" required>
+                        <label for="floatingInput">Full Name</label>
+                    </div>
+                    <br>
+                    <button type="submit" [disabled]="!updateForm.valid"
+                        class="btn btn-dark mt-3" data-bs-dismiss="modal">Update</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>

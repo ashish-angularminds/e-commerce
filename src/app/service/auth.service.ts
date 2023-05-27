@@ -13,16 +13,24 @@ export class AuthService implements OnInit {
   }
 
   set(payload: any) {
-    return this.http.post('https://shop-api.ngminds.com/auth/register?captcha=false', payload);
+    return this.http.post('https://shop-api.ngminds.com/auth/register', payload);
   }
 
   login(payload: any) {
-    return this.http.post('https://shop-api.ngminds.com/auth/login?captcha=false', payload);
+    return this.http.post('https://shop-api.ngminds.com/auth/login', payload);
   }
 
   get(token: string) {
-    let auth: string = 'Authorization';
-    let header = new HttpHeaders({ [auth]: 'Bearer ' + token });
+    let header = new HttpHeaders({ ['Authorization']: 'Bearer ' + token });
     return this.http.get<any>('https://shop-api.ngminds.com/auth/self', { headers: header })
   }
+
+  forgetpassword(payload: any) {
+    return this.http.post('https://shop-api.ngminds.com/auth/forgot-password', payload);
+  }
+
+  resetpassword(payload: any, parameters: any) {
+    return this.http.post('https://shop-api.ngminds.com/auth/reset-password', payload, { params: parameters });
+  }
+
 }

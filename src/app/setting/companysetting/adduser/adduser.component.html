@@ -1,0 +1,54 @@
+<!-- Add User Module -->
+<div class="modal fade" id="exampleModal" tabindex="-1"
+    aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h1 class="modal-title fs-5" id="exampleModalLabel">Add User</h1>
+                <button type="button" class="btn-close" data-bs-dismiss="modal"
+                    aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <form #addForm="ngForm" (ngSubmit)="creatuser();addForm.reset()">
+                    <div class="form-floating mb-3">
+                        <input type="email" name="email"
+                            [(ngModel)]="User.email"
+                            class="form-control border-dark" placeholder="Email
+                            address" required>
+                        <label for="floatingInput">Email address</label>
+                    </div>
+                    <br>
+                    <div class="form-floating mb-3">
+                        <input type="password" name="password"
+                            [(ngModel)]="User.password"
+                            class="form-control border-dark"
+                            placeholder="Password" required>
+                        <label for="floatingInput">Password</label>
+                    </div>
+                    <br>
+                    <div class="form-floating mb-3">
+                        <input type="text" name="fullname"
+                            [(ngModel)]="User.name"
+                            class="form-control border-dark"
+                            placeholder="fullname" required>
+                        <label for="floatingInput">Full Name</label>
+                    </div>
+                    <br>
+                    <div class="input-group mb-3">
+                        <label class="input-group-text border-dark"
+                            for="inputGroupSelect02">Role</label>
+                        <select class="form-select border-dark"
+                            id="inputGroupSelect02"
+                            [(ngModel)]="User.role" name="role">
+                            <option value="admin">Admin</option>
+                            <option value="user">User</option>
+                        </select>
+                    </div>
+                    <button type="submit" [disabled]="!addForm.valid"
+                        class="btn btn-dark mt-3" data-bs-dismiss="modal">
+                        Regiter</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
