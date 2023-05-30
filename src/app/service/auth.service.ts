@@ -12,6 +12,11 @@ export class AuthService implements OnInit {
   ngOnInit() {
   }
 
+  setheader(token: string) {
+    let header = new HttpHeaders({ ['Authorization']: 'Bearer ' + token });
+    return header;
+  }
+
   set(payload: any) {
     return this.http.post('https://shop-api.ngminds.com/auth/register', payload);
   }
@@ -21,8 +26,7 @@ export class AuthService implements OnInit {
   }
 
   get(token: string) {
-    let header = new HttpHeaders({ ['Authorization']: 'Bearer ' + token });
-    return this.http.get<any>('https://shop-api.ngminds.com/auth/self', { headers: header })
+    return this.http.get<any>('https://shop-api.ngminds.com/auth/self', { headers: this.setheader(token) })
   }
 
   forgetpassword(payload: any) {
@@ -33,4 +37,15 @@ export class AuthService implements OnInit {
     return this.http.post('https://shop-api.ngminds.com/auth/reset-password', payload, { params: parameters });
   }
 
+  sendverificationmail(token:string) {
+    return this.http.post('https://shop-api.ngminds.com/auth/send-verification-email', null, { 'headers': this.setheader(token) });
+  }
+
+  verifyaccount(parameters: any) {
+    return this.http.post('https://shop-api.ngminds.com/auth/verify-email', null, { params: parameters });
+  }
+
+  googlelogin(payload: any) {
+    return this.http.post('https://shop-api.ngminds.com/auth/login/google', payload);
+  }
 }

@@ -8,6 +8,8 @@ import { AdduserComponent } from './companysetting/adduser/adduser.component';
 import { ChangeroleComponent } from './companysetting/changerole/changerole.component';
 import { ChangeinfoComponent } from './companysetting/changeinfo/changeinfo.component';
 import { ChangemypasswordComponent } from './companysetting/changemypassword/changemypassword.component';
+import { GoogleLoginProvider, SocialAuthServiceConfig, SocialLoginModule } from '@abacritt/angularx-social-login';
+import { environment } from '../environment';
 
 
 
@@ -24,6 +26,21 @@ import { ChangemypasswordComponent } from './companysetting/changemypassword/cha
     CommonModule,
     SettingRoutingModule,
     FormsModule,
-  ]
+    // SocialLoginModule,
+  ],
+  // providers: [
+  //   {
+  //     provide: 'SocialAuthServiceConfig',
+  //     useValue: {
+  //       authLogin: false,
+  //       providers: [
+  //         {
+  //           id: GoogleLoginProvider.PROVIDER_ID,
+  //           provider: new GoogleLoginProvider(environment.google_clientid.clientId),
+  //         },
+  //       ],
+  //     } as SocialAuthServiceConfig,
+  //   },
+  // ]
 })
 export class SettingModule { }

@@ -1,22 +1,24 @@
-.<div class="container">
-    <div class="mx-auto text-center bg-dark text-light w-25 mt-5
-        rounded
-        shadow-lg py-4
-        position-relative">
-        <button (click)="logout()" class="logout-btn btn btn-lg shadow-lg
-            position-absolute
-            border-0 btn-dark top-0 end-0">
+<div style="height: 70vh;"
+    class="container mt-5 d-flex justify-content-center align-items-center position-relative">
+    <div class="bg-info circle position-absolute rounded-circle"></div>
+    <div
+        class="side-bar shadow-lg px-0 py-2 d-flex flex-column justify-content-between rounded-1 me-2">
+        <button (click)="logout()"
+            class="btn border-0 bg-transparent text-black">
             <i class="bi bi-box-arrow-left"></i>
         </button>
         <button [routerLink]="'/setting/company-setting'"
-            class="logout-btn btn btn-lg shadow-lg
-            position-absolute
-            border-0 btn-dark top-0 start-0">
+            class="btn border-0 bg-transparent text-black">
             <i class="bi bi-gear"></i>
         </button>
+    </div>
+    <div
+        class="main-content text-center w-25 rounded shadow-lg py-4 position-relative">
+        <button (click)="verify()" [classList]=classes>
+            <i class="bi bi-person-check fs-4"></i></button>
         <h3>User Profile</h3>
-        <h5>Email:{{user?.name}}</h5>
-        <h5>Full Name:{{user?.name}}</h5>
-        <h5>Company Name:{{user?._org.name}}</h5>
+        <h5>Email: {{user?.name}}</h5>
+        <h5>Full Name: {{user?.name}}</h5>
+        <h5>Company Name: {{user?._org.name}}</h5>
     </div>
 </div>

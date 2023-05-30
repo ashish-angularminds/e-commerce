@@ -1,0 +1,25 @@
+.side-bar {
+    width: 50px;
+    height: 200px;
+    background: #c9c9c976;
+    backdrop-filter: blur(3px);
+}
+
+.main-content {
+    background: #c9c9c976;
+    backdrop-filter: blur(3px);
+}
+
+.circle {
+    width: 150px;
+    height: 150px;
+    left: 32%;
+    top: 50%;
+    z-index: -1;
+    background: linear-gradient(-40deg, #B799FF, #AEE2FF);
+}
+
+.tl {
+    top: -20px;
+    right: -20px;
+}

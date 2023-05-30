@@ -12,7 +12,8 @@ export class LoginGuard implements CanActivate {
   canActivate(
     route: ActivatedRouteSnapshot,
     state: RouterStateSnapshot): Observable<boolean | UrlTree> | Promise<boolean | UrlTree> | boolean | UrlTree {
-    return true;
+    let id = localStorage.getItem('activeuser');
+    return id == undefined ? true : this.routes.navigate(['setting', 'my-profile']);
   }
 
 }

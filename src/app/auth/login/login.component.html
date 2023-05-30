@@ -1,4 +1,4 @@
-<div class="container h-75">
+<div class="container h-75 mt-5">
     <div class="row d-flex justify-content-center align-items-center h-100">
         <div class="col-lg-4 col-sm-12">
             <form #loginForm="ngForm" (ngSubmit)="login()" class="card border-0
@@ -25,6 +25,11 @@
                 <a class="mt-2 text-dark text-center"
                     [routerLink]="'/auth/register'">Click here for
                     registration</a>
+                <div
+                    class="w-100 line border-bottom border-dashed border-dark my-4"></div>
+                <asl-google-signin-button class="mx-auto" type='standard'
+                    size='large'
+                    theme="filled_black" shape="pill"></asl-google-signin-button>
             </form>
         </div>
     </div>
@@ -55,6 +60,7 @@
                     (click)="forgetpassword()" data-bs-dismiss="modal">Save
                     changes</button>
             </div>
+
         </div>
     </div>
 </div>
