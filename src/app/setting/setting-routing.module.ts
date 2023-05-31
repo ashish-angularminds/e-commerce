@@ -13,12 +13,6 @@ const routes: Routes = [
   {
     path: 'company-setting',
     component: CompanysettingComponent,
-    // children: [
-    //   {
-    //     path: 'add',
-    //     component: AdduserComponent
-    //   }
-    // ]
   }
 ];
 

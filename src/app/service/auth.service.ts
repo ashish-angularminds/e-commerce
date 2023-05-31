@@ -1,7 +1,5 @@
 import { Injectable, OnInit } from '@angular/core';
-import { user } from '../user';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { pluck } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
