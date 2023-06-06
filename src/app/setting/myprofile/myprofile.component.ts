@@ -37,11 +37,6 @@ export class MyprofileComponent implements OnInit {
     )
   }
 
-  logout() {
-    localStorage.removeItem('activeuser');
-    this.router.navigate(['auth', 'login']);
-  }
-
   verify() {
     this.http.sendverificationmail(this.localToken).subscribe(
       res => {

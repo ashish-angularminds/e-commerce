@@ -1,6 +1,5 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { LoginGuard } from './guards/login.guard';
 import { ProfileGuard } from './guards/profile.guard';
 
 const routes: Routes = [
@@ -17,6 +16,11 @@ const routes: Routes = [
   {
     path: 'setting',
     loadChildren: () => import('./setting/setting.module').then((m) => m.SettingModule),
+    canActivate: [ProfileGuard]
+  },
+  {
+    path: 'products',
+    loadChildren: () => import('./products/products.module').then((m) => m.ProductsModule),
     canActivate: [ProfileGuard]
   },
   { path: '**', redirectTo: '/auth/login', pathMatch: 'full' },

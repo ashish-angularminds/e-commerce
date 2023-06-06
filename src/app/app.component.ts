@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
+import { Event, NavigationEnd, Router } from '@angular/router';
 import { AuthService } from './service/auth.service';
 
 @Component({
@@ -10,16 +10,19 @@ import { AuthService } from './service/auth.service';
 export class AppComponent implements OnInit {
 
   constructor(private router: Router) { }
+
+  flag = false;
+
   ngOnInit() {
-    // if (localStorage.getItem('activeuser') != undefined) {
-    //   this.userava = true;
-    //   this.router.navigate(['home', 'my-profile']);
-    // }
-    // else {
-    //   this.userava = false;
-    //   this.router.navigate(['auth', 'login']);
-    // }
+    this.router.events.subscribe((e: Event) => {
+      if (e instanceof NavigationEnd) {
+        if (/products/.test(e.url) || /home/.test(e.url) || /setting/.test(e.url)) {
+          this.flag = true;
+        }
+        else {
+          this.flag = false;
+        }
+      }
+    });
   }
-  title = 'e-commerce';
-  userava = false;
 }

@@ -1,11 +1,14 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { LoginComponent } from '../auth/login/login.component';
 import { MyprofileComponent } from './myprofile/myprofile.component';
 import { CompanysettingComponent } from './companysetting/companysetting.component';
-import { AdduserComponent } from './companysetting/adduser/adduser.component';
 
 const routes: Routes = [
+  {
+    path: '',
+    redirectTo: 'my-profile',
+    pathMatch: 'full'
+  },
   {
     path: 'my-profile',
     component: MyprofileComponent

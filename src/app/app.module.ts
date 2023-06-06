@@ -12,6 +12,8 @@ import {
   NgxUiLoaderConfig,
 } from "ngx-ui-loader";
 import { environment } from './environment';
+import { NavbarComponent } from './navbar/navbar.component';
+import { SidebarComponent } from './sidebar/sidebar.component';
 
 
 const ngxUiLoaderConfig: NgxUiLoaderConfig = {
@@ -48,6 +50,8 @@ const ngxUiLoaderConfig: NgxUiLoaderConfig = {
 @NgModule({
   declarations: [
     AppComponent,
+    NavbarComponent,
+    SidebarComponent,
   ],
   imports: [
     BrowserModule,

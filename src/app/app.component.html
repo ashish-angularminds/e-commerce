@@ -1,7 +1,7 @@
-<nav class="text-center w-100 bg-dark shadow-lg">
-    <h1 class="text-capitalize text-white">{{title}}</h1>
-
-</nav>
-<router-outlet></router-outlet>
+<app-navbar *ngIf="flag"></app-navbar>
+<app-sidebar *ngIf="flag"></app-sidebar>
+<div [style]="flag? 'margin-top: 56px;margin-left: 40px;':''">
+    <router-outlet></router-outlet>
+</div>
 <lib-ng-toast></lib-ng-toast>
 <ngx-ui-loader></ngx-ui-loader>

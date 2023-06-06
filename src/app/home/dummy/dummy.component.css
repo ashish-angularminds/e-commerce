@@ -1,0 +1,156 @@
+img {
+    width: 100%;
+    height: 550px;
+    object-fit: cover;
+}
+
+.card {
+    transition: all 1s;
+}
+
+.card::after {
+    position: absolute;
+    top: 0;
+    left: 0;
+    content: '';
+    width: 1px;
+    height: 1px;
+    border-radius: 4px;
+    background: linear-gradient(rgb(165, 93, 248), rgb(241, 99, 194));
+    animation: run1 15s infinite ease-in-out;
+}
+
+@keyframes run1 {
+    0% {
+        width: 4px;
+        height: 4px;
+        top: -2px;
+        left: -2px;
+    }
+
+    12.5% {
+        width: 150px;
+        height: 4px;
+    }
+
+    25% {
+        width: 4px;
+        height: 4px;
+        top: -2px;
+        left: 100%;
+    }
+
+    37.5% {
+        width: 4px;
+        height: 60px;
+    }
+
+    50% {
+        width: 4px;
+        height: 4px;
+        top: 100%;
+        left: 100%;
+    }
+
+    62.5% {
+        width: 150px;
+        height: 4px;
+    }
+
+    75% {
+        width: 4px;
+        height: 4px;
+        top: 100%;
+        left: -2px;
+    }
+
+    75% {
+        width: 4px;
+        height: 4px;
+        top: 100%;
+        left: -2px;
+    }
+
+    87.5% {
+        width: 4px;
+        height: 60px;
+    }
+
+    100% {
+        width: 4px;
+        height: 4px;
+        top: -2px;
+        left: -2px;
+    }
+}
+
+
+
+
+/* .card-bg {
+    perspective: 1000px;
+}
+
+.card-bg:hover .card-main {
+    transform: rotateY(360deg);
+}
+
+.card-main {
+    transition: all 1s;
+    transform-style: preserve-3d;
+    position: relative;
+    height: 50%;
+    width: 100%;
+}
+
+.card,
+.card-main::before {
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    backface-visibility: hidden;
+}
+
+/* .card {
+    background-color: #74cff3;
+} */
+
+/* .card-main::before {
+    text-align: center;
+    content: 'a';
+    width: 100%;
+
+    background-color: #9d87ff;
+    transform: rotateY(180deg);
+} */
+
+button {
+    z-index: 2;
+}
+
+.btn {
+    position: relative;
+}
+
+.cir {
+    z-index: 1;
+    position: absolute;
+    top: -25px;
+    left: -25px;
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    background: #9d87ff71;
+    transition: all .5s, transform .25s;
+}
+
+.button {
+    z-index: 2;
+    position: absolute;
+    background: transparent;
+}
+
+/* .button:hover {
+    scale: 1.5;
+    background-color: #9d87ff !important;
+} */
