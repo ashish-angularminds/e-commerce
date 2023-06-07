@@ -17,7 +17,8 @@ export class CreateProductComponent {
   product = new FormGroup({
     name: new FormControl(),
     description: new FormControl(),
-    price: new FormControl()
+    price: new FormControl(),
+    images: new FormControl()
   });
 
   onFileSelect(event: any) {
@@ -35,6 +36,8 @@ export class CreateProductComponent {
           detail: 'Product added successfully',
           duration: 3000
         })
+        this.product.reset();
+        document.getElementById('dropdown-menu')!.innerHTML = '';
         console.log(res);
       },
       err => {

@@ -1,1 +1,108 @@
-<p>update-product works!</p>
+<div class="modal fade" id="updateproduct" data-bs-backdrop="static"
+    data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel"
+    aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h1 class="modal-title fs-5" id="staticBackdropLabel">
+                    Update Details</h1>
+                <button type="button" class="btn-close" data-bs-dismiss="modal"
+                    aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <div class="form-floating mb-3 mt-3">
+                    <input type="text" name="name"
+                        [(ngModel)]="product.name"
+                        class="form-control border-dark" placeholder="name
+                                address" required>
+                    <label for="floatingInput">Name</label>
+                </div>
+
+                <div class="form-floating mb-3">
+                    <input type="text" name="description"
+                        [(ngModel)]="product.description"
+                        class="form-control border-dark"
+                        placeholder="description" required>
+                    <label for="floatingInput">Description</label>
+                </div>
+
+                <div class="form-floating mb-3">
+                    <input type="number" name="price"
+                        [(ngModel)]="product.price"
+                        class="form-control border-dark"
+                        placeholder="price" required>
+                    <label for="floatingInput">Price</label>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary"
+                    data-bs-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-success"
+                    (click)="updatedetails()" data-bs-dismiss="modal">Update</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Image Modal -->
+<div class="modal fade" id="updateimg" data-bs-backdrop="static"
+    data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel"
+    aria-hidden="true">
+    <div class="modal-dialog modal-xl">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h1 class="modal-title fs-5" id="staticBackdropLabel">Modal
+                    title</h1>
+                <button type="button" class="btn-close" data-bs-dismiss="modal"
+                    aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <div class="row">
+                    <div class="col-8 border-black border-end">
+                        <div class="d-flex flex-wrap"
+                            id="img-box">
+                            <div
+                                class="border-end border-black d-flex flex-wrap">
+                                <div
+                                    class="position-relative"
+                                    (click)="deleteimg(img?.public_id, $event)"
+                                    *ngFor="let img of images">
+                                    <span style="height: 25px;width: 25px;"
+                                        role="button"
+                                        (click)="deleteimg(img?.public_id, $event)"
+                                        class="bi bi-x-circle text-danger border-0 rounded-circle bg-transparent position-absolute top-0 left-0">
+                                    </span>
+                                    <img [src]="img?.url" alt="img"
+                                        class="img-thumbnail object-fit-contain m-2"
+                                        style="width: 100px;height: 100px;">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-4 d-flex align-items-center">
+                        <div class="input-group rounded border border-dark mb-3">
+                            <input type="file" class="form-control"
+                                id="inputGroupFile02"
+                                (change)="onFileSelect($event)">
+                            <div class="btn-group dropend">
+                                <label class="input-group-text"
+                                    for="inputGroupFile02"
+                                    data-bs-toggle="dropdown">Upload</label>
+                                <div id="dropdown-menu" style="min-width: auto;"
+                                    class="dropdown-menu border border-dark p-2 ms-4">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary"
+                    data-bs-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-success"
+                    data-bs-dismiss="modal"
+                    (click)="updateimg()">Update</button>
+            </div>
+        </div>
+    </div>
+</div>
