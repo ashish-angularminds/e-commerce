@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+import { NgxUiLoaderService } from 'ngx-ui-loader';
 import { ProductService } from 'src/app/service/product.service';
 
 @Component({
@@ -9,16 +10,17 @@ import { ProductService } from 'src/app/service/product.service';
 })
 export class ProductsListComponent implements OnInit {
 
-  constructor(private productservice: ProductService, private router: Router) { }
+  constructor(private productservice: ProductService, private router: Router, private loader: NgxUiLoaderService) { }
 
   pagination = {
     sortBy: 'name',
-    limit: 9,
+    limit: 6,
     page: 1
   };
   results: any = [];
   des = '';
   ngOnInit(): void {
+    this.loader.start();
     this.getproductslist();
   }
 
@@ -42,8 +44,10 @@ export class ProductsListComponent implements OnInit {
       res => {
         console.log(res);
         this.results = res.results;
+        this.loader.stop();
       },
       err => {
+        this.loader.stop();
         console.log(err);
       }
     )

@@ -1,10 +1,10 @@
-import { GoogleLoginProvider, SocialAuthService, SocialUser } from '@abacritt/angularx-social-login';
+import { SocialAuthService, SocialUser } from '@abacritt/angularx-social-login';
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { NgToastService } from 'ng-angular-popup';
 import { ReCaptchaV3Service } from 'ng-recaptcha';
+import { NgxUiLoaderService } from 'ngx-ui-loader';
 import { AuthService } from 'src/app/service/auth.service';
-import { user } from 'src/app/user';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-login',
@@ -13,8 +13,8 @@ import { user } from 'src/app/user';
 })
 export class LoginComponent implements OnInit {
 
-  constructor(private route: Router, private toast: NgToastService, private http: AuthService,
-    private recaptchaV3Service: ReCaptchaV3Service,
+  constructor(private route: Router, private http: AuthService,
+    private recaptchaV3Service: ReCaptchaV3Service, private loader: NgxUiLoaderService,
     private authService: SocialAuthService) { }
 
   user!: SocialUser;
@@ -27,7 +27,21 @@ export class LoginComponent implements OnInit {
     captcha: '',
   }
 
+  Toast = Swal.mixin({
+    toast: true,
+    position: 'top-end',
+    showConfirmButton: false,
+    timer: 3000,
+    timerProgressBar: true,
+    didOpen: (toast) => {
+      toast.addEventListener('mouseenter', Swal.stopTimer)
+      toast.addEventListener('mouseleave', Swal.resumeTimer)
+    }
+  })
+
+
   ngOnInit() {
+    this.loader.start();
     this.authService.signOut();
     this.recaptchaV3Service.execute('importantAction').subscribe((token) => {
       this.authService.authState.subscribe((user) => {
@@ -37,45 +51,50 @@ export class LoginComponent implements OnInit {
           res => {
             this.route.navigate(['setting', 'my-profile']);
             this.loginsuccess(res);
+            this.loader.stop();
           },
           err => {
-            this.toast.error({
-              detail: 'Authentication failed',
-              summary: err.error.message,
-              duration: 5000,
+            this.Toast.fire({
+              icon: 'error',
+              title: 'Authentication failed',
+              text: err.error.message
             });
+            this.loader.stop();
           }
         );
       });
     });
+    this.loader.stop();
   }
 
   loginsuccess(res: any) {
-    this.toast.success({
-      detail: 'Authentication Successful',
-      summary: 'User is loged in...',
-      duration: 5000,
-    });
+    this.Toast.fire({
+      icon: 'success',
+      title: 'Login successfully'
+    })
     let a: any = res;
     localStorage.setItem('activeuser', a.token);
   }
 
   alluser!: any;
   login() {
+    this.loader.start();
     this.recaptchaV3Service.execute('importantAction').subscribe((token: string) => {
       this.loginUser.captcha = token;
       this.http.login(this.loginUser).subscribe(
         res => {
+          this.loader.stop();
           this.loginsuccess(res);
           let dom = document.querySelector('.grecaptcha-badge') as HTMLElement;
           dom.style.display = 'none';
           this.route.navigate(['setting', 'my-profile']);
         },
         err => {
-          this.toast.error({
-            detail: 'Authentication failed',
-            summary: err.error.message,
-            duration: 5000,
+          this.loader.stop();
+          this.Toast.fire({
+            icon: 'error',
+            title: 'Authentication failed',
+            text: err.error.message
           });
         }
       )
@@ -83,20 +102,24 @@ export class LoginComponent implements OnInit {
   }
 
   forgetpassword() {
+    this.loader.start();
     this.recaptchaV3Service.execute('importantAction').subscribe((token: string) => {
       this.http.forgetpassword({ email: this.email, captcha: token }).subscribe(
         res => {
-          this.toast.success({
-            detail: 'Email Send Successfully',
-            summary: 'Check your email',
-            duration: 3000
-          })
+          this.loader.stop();
+          this.Toast.fire({
+            icon: 'success',
+            title: 'Login successfully',
+            text: 'Check your email'
+          });
         },
         err => {
-          this.toast.error({
-            summary: err.error.message,
-            duration: 3000
-          })
+          this.loader.stop();
+          this.Toast.fire({
+            icon: 'error',
+            title: 'Authentication failed',
+            text: err.error.message
+          });
         }
       );
     });

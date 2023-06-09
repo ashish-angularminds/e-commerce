@@ -1,40 +1,46 @@
-<div class="container h-100 pt-5">
-    <div class="container w-50 mx-auto pt-5">
-        <form [formGroup]="product"
-            class="card shadow-lg border-0 w-75 px-5 py-4 mx-auto "
+<div class="container-fluid w-100 row py-4 m-0">
+    <div class="container-sm col-xl-4 col-lg-8 col-md-12 mx-auto p-0">
+        <form
+            class="card shadow-lg border-0 w-100 px-md-4 p-3 mx-auto"
             (ngSubmit)="creatproduct()">
-            <h1>Add Product</h1>
+            <h1 class="p-0">Add Product</h1>
             <div class="form-floating mb-3 mt-3">
                 <input type="text" name="name"
-                    formControlName="name"
+                    [(ngModel)]="product.name"
                     class="form-control border-dark" placeholder="name
                             address" required>
                 <label for="floatingInput">Name</label>
             </div>
 
-            <div class="form-floating mb-3">
-                <input type="text" name="description"
-                    formControlName="description"
-                    class="form-control border-dark"
-                    placeholder="description" required>
-                <label for="floatingInput">Description</label>
+            <div class="NgxEditor__Wrapper mb-3 border-black">
+                <ngx-editor-menu [editor]="editor" [toolbar]="toolbar">
+                </ngx-editor-menu>
+                <ngx-editor [editor]="editor" [(ngModel)]="product.description"
+                    [disabled]="false" name="description"
+                    [placeholder]="'Type here...'"></ngx-editor>
             </div>
 
-            <div class="input-group rounded border border-dark mb-3">
-                <input type="file" class="form-control" formControlName="images"
-                    id="inputGroupFile02" (change)="onFileSelect($event)">
-                <div class="btn-group dropend">
-                    <label class="input-group-text" for="inputGroupFile02"
-                        data-bs-toggle="dropdown">Upload</label>
-                    <div id="dropdown-menu" style="min-width: auto;"
-                        class="dropdown-menu border border-dark p-2 ms-4">
+            <div class="row rounded border border-dark p-2 m-0 mb-3">
+                <div class="col p-0 overflow-auto" style="height: 176px;" id="imgpre">
+                    <img class="img-thumbnail m-1 object-fit-contain"
+                        [src]="item"
+                        *ngFor="let item of images"
+                        style="height: 80px;width: 80px;">
+                </div>
+                <div class="col p-0">
+                    <div
+                        class="input-group">
+                        <ngx-dropzone (change)="onFileSelect($event)"
+                            class="w-100">
+                            <ngx-dropzone-label>Drop images here...</ngx-dropzone-label>
+                        </ngx-dropzone>
                     </div>
                 </div>
             </div>
 
             <div class="form-floating mb-3">
                 <input type="number" name="price"
-                    formControlName="price"
+                    [(ngModel)]="product.price"
                     class="form-control border-dark"
                     placeholder="price" required>
                 <label for="floatingInput">Price</label>

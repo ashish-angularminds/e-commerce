@@ -1,51 +1,84 @@
-import { Component } from '@angular/core';
-import { product } from '../product';
+import { Component, OnInit } from '@angular/core';
+import { Editor, Toolbar } from 'ngx-editor';
 import { ProductService } from 'src/app/service/product.service';
 import { FormControl, FormGroup } from '@angular/forms';
 import { NgToastService } from 'ng-angular-popup';
+import Swal from 'sweetalert2';
+import { NgxUiLoaderService } from 'ngx-ui-loader';
 
 @Component({
   selector: 'app-create-product',
   templateUrl: './create-product.component.html',
   styleUrls: ['./create-product.component.css']
 })
-export class CreateProductComponent {
+export class CreateProductComponent implements OnInit {
 
-  constructor(private productservice: ProductService, private toast: NgToastService) { }
+  constructor(private productservice: ProductService, private loader: NgxUiLoaderService) { }
 
   files = new FormData();
-  product = new FormGroup({
-    name: new FormControl(),
-    description: new FormControl(),
-    price: new FormControl(),
-    images: new FormControl()
+  product = ({
+    name: '',
+    description: '',
+    price: '',
   });
+  images: any[] = [];
 
   onFileSelect(event: any) {
-    let e = event.target.files[0];
-    this.files.append('images', e);
-    document.getElementById('dropdown-menu')!.innerHTML += `<img style="width:100px;height:100px;" class="m-2 rounded" src="${URL.createObjectURL(event.target.files[0])}" />`
+    let f: File[] = [];
+    f.push(...event.addedFiles);
+    f.forEach(item => {
+      this.images.push(URL.createObjectURL(item));
+      this.files.append('new_images', item);
+    });
+    console.log(event);
   }
   creatproduct() {
-    this.files.append('name', this.product.value.name);
-    this.files.append('description', this.product.value.description);
-    this.files.append('price', this.product.value.price);
+    this.loader.start();
+    this.files.append('name', this.product.name);
+    this.files.append('description', this.product.description || '');
+    this.files.append('price', this.product.price);
     this.productservice.create(this.files).subscribe(
       res => {
-        this.toast.success({
-          detail: 'Product added successfully',
-          duration: 3000
+        Swal.fire({
+          title: 'Product Added Successfully!',
+          icon: 'success',
+          showConfirmButton: false,
+          timer: 1500
         })
-        this.product.reset();
-        document.getElementById('dropdown-menu')!.innerHTML = '';
-        console.log(res);
+        this.product.description = '';
+        this.product.name = '';
+        this.product.price = '';
+        document.getElementById('imgpre')!.innerHTML = '';
+        this.files = new FormData();
+        this.loader.stop();
       },
       err => {
-        this.toast.error({
-          summary: err.error.message,
-          duration: 3000
+        Swal.fire({
+          title: 'Error!',
+          text: err.error.message,
+          icon: 'error',
+          showConfirmButton: false,
+          timer: 2000
         })
         console.log(err);
+        this.loader.stop();
       })
   }
+
+  editor: any;
+  html = '';
+  ngOnInit(): void {
+    this.editor = new Editor();
+  }
+
+  toolbar: Toolbar = [
+    ['bold', 'italic'],
+    ['underline', 'strike'],
+    ['code', 'blockquote'],
+    ['ordered_list', 'bullet_list'],
+    [{ heading: ['h1', 'h2', 'h3', 'h4', 'h5', 'h6'] }],
+    ['link', 'image'],
+    ['text_color', 'background_color'],
+    ['align_left', 'align_center', 'align_right', 'align_justify'],
+  ];
 }

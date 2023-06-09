@@ -1,6 +1,12 @@
-/* p {
-    font-family: 'Urbanist', sans-serif !important;
-} */
+ul {
+    padding: 0;
+    list-style: none !important;
+}
+
 h4 {
     letter-spacing: -0.5px;
+}
+
+li {
+    padding: 0;
 }

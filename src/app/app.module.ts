@@ -1,4 +1,4 @@
-import { CUSTOM_ELEMENTS_SCHEMA, NgModule } from '@angular/core';
+import { CUSTOM_ELEMENTS_SCHEMA, NgModule, createComponent } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -14,7 +14,7 @@ import {
 import { environment } from './environment';
 import { NavbarComponent } from './navbar/navbar.component';
 import { SidebarComponent } from './sidebar/sidebar.component';
-
+import { SweetAlert2Module } from '@sweetalert2/ngx-sweetalert2';
 
 const ngxUiLoaderConfig: NgxUiLoaderConfig = {
   "bgsColor": "#000000",
@@ -62,6 +62,7 @@ const ngxUiLoaderConfig: NgxUiLoaderConfig = {
     HttpClientModule,
     NgxUiLoaderModule.forRoot(ngxUiLoaderConfig),
     RecaptchaV3Module,
+    SweetAlert2Module,
   ],
   providers: [{
     provide: RECAPTCHA_V3_SITE_KEY,

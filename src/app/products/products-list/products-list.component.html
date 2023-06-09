@@ -45,6 +45,7 @@
                 [(ngModel)]="pagination.limit"
                 aria-label="Floating label select example"
                 (click)="getproductslist()">
+                <option value="6">6</option>
                 <option value="9">9</option>
                 <option value="12">12</option>
                 <option value="15">15</option>
@@ -79,15 +80,16 @@
                             </h5>
                             <div class="card-text lh-1"
                                 *ngIf="item.description.length>=80">
-                                <p>{{loadDes(item.description)}}
+                                <p [innerHTML]="loadDes(item.description)" class="ts">
                                     <b
                                         class="fs-3 border-0 text-decoration-none text-danger"
                                         role="button" style="line-height: 0;">...</b>
                                 </p>
                             </div>
-                            <p *ngIf="item.description.length<80">{{item.description}}</p>
+                            <p *ngIf="item.description.length<80"
+                                [innerHTML]="item.description"></p>
                             <h5 class="card-text">
-                                &#8377;{{item.price}}
+                                {{item.price| currency:'INR'}}
                             </h5>
                         </div>
                     </div>

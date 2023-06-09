@@ -12,6 +12,10 @@ export class NavbarComponent {
   flag = false;
 
   ngOnInit() {
+    this.checkroute();
+  }
+
+  checkroute() {
     this.router.events.subscribe((e: Event) => {
       if (e instanceof NavigationEnd) {
         if (/products/.test(e.url) || /home/.test(e.url)) {
@@ -22,8 +26,6 @@ export class NavbarComponent {
         }
       }
     });
-
-    console.log();
   }
 
   activelink(id: number) {
@@ -38,7 +40,7 @@ export class NavbarComponent {
         }
       }
     })
-
+    this.checkroute();
   }
 
   logout() {

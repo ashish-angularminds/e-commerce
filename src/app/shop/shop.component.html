@@ -1,0 +1,60 @@
+<div class="container pt-5">
+    <div class="row shadow-lg rounded p-5">
+
+        <div class="col-3 my-auto">
+            <h2>Image Cropper</h2>
+            <div class="input-group h-100" (click)="getevent($event)">
+                <ngx-dropzone (change)="fileChangeEvent($event)"
+                    class="w-100">
+                    <ngx-dropzone-label>Drop images here...</ngx-dropzone-label>
+                </ngx-dropzone>
+            </div>
+            <button type="button" class="btn btn-primary my-3"
+                data-bs-toggle="modal"
+                data-bs-target="#exampleModal">
+                Submit
+            </button>
+        </div>
+
+        <div class="col-4 my-auto">
+            <img
+                [class]="croppedImage?'shadow-lg rounded p-4 object-fit-contain img-fluid mx-auto d-block':''"
+                [src]="croppedImage" />
+        </div>
+
+        <div class="col-5 my-auto">
+            <image-cropper style="max-height: 60vh;"
+                [imageChangedEvent]="imageChangedEvent"
+                [maintainAspectRatio]="true"
+                [aspectRatio]="4 / 4"
+                format="png"
+                [imageURL]=img
+                (imageCropped)="imageCropped($event)"
+                (imageLoaded)="imageLoaded()"
+                (cropperReady)="cropperReady()"
+                (loadImageFailed)="loadImageFailed()"></image-cropper>
+        </div>
+
+    </div>
+</div>
+
+<!-- Modal -->
+<div class="modal fade" id="exampleModal" tabindex="-1"
+    aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                Customer Profile
+            </div>
+            <div
+                class="modal-body p-5 d-flex flex-column justify-content-center align-items-center">
+                <img
+                    class="shadow-lg rounded p-4 object-fit-contain img-fluid mx-auto d-block"
+                    [src]="croppedImage" />
+                <br>
+                <h2><strong>Customer</strong></h2>
+                <br>
+            </div>
+        </div>
+    </div>
+</div>

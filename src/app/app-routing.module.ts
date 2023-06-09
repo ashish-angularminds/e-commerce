@@ -23,6 +23,7 @@ const routes: Routes = [
     loadChildren: () => import('./products/products.module').then((m) => m.ProductsModule),
     canActivate: [ProfileGuard]
   },
+  { path: 'shop', loadChildren: () => import('./shop/shop.module').then(m => m.ShopModule) },
   { path: '**', redirectTo: '/auth/login', pathMatch: 'full' },
 ];
 

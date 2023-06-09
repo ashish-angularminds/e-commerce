@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { Router } from '@angular/router';
 import { NgToastService } from 'ng-angular-popup';
 import { ReCaptchaV3Service } from 'ng-recaptcha';
+import { NgxUiLoaderService } from 'ngx-ui-loader';
 import { AuthService } from 'src/app/service/auth.service';
 import { user } from 'src/app/user';
 
@@ -13,7 +14,7 @@ import { user } from 'src/app/user';
 export class RegistrationComponent {
 
   constructor(private route: Router, private toast: NgToastService, private service: AuthService,
-    private recaptchaV3Service: ReCaptchaV3Service) { }
+    private recaptchaV3Service: ReCaptchaV3Service, private loader: NgxUiLoaderService) { }
 
   User: user = {
     email: '',
@@ -24,6 +25,7 @@ export class RegistrationComponent {
   }
   // alluser: user[] = [];
   register() {
+    this.loader.start();
     this.recaptchaV3Service.execute('importantAction').subscribe((token: string) => {
       this.User.captcha = token;
       this.service.set(this.User).subscribe(
@@ -34,6 +36,7 @@ export class RegistrationComponent {
             summary: 'User is Registrated...',
             duration: 5000,
           });
+          this.loader.stop();
           this.route.navigate(['/auth/login']);
         },
         err => {
@@ -43,27 +46,9 @@ export class RegistrationComponent {
             summary: err.error.message,
             duration: 5000,
           });
+          this.loader.stop();
         },
       );
     })
-
-
-    // this.alluser = JSON.parse(localStorage.getItem('users') || '[{"email":"admin@123.com","password":"123"}]');
-    // let test = false;
-    // this.alluser.map((u) => {
-    //   if (u.email === this.User.email) {
-    //     test = true
-    //   }
-    // });
-    // if (test) {
-    // }
-    // else {
-    // this.alluser.push(this.User);
-    // localStorage.setItem('users', JSON.stringify(this.alluser))
-    // console.log('Error:-', this.responce.error.message);
-    // this.route.navigate(['/auth/login']);
-    // }
-    // console.log(this.alluser)
-    // alert(this.responce);
   }
 }

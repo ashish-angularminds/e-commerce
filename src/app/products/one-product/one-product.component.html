@@ -1,6 +1,7 @@
 <div class="container pt-5">
-    <div class="row column-gap-4 pt-5">
-        <div class="col-auto d-flex flex-md-column flex-row">
+    <div class="row column-gap-2 pt-5">
+        <div class="col-auto d-flex flex-md-column flex-row overflow-auto"
+            style="height: 450px;">
             <div *ngFor="let item of product?.images">
                 <img [src]="item.url"
                     style="height: 100px;width: 100px;"
@@ -8,54 +9,38 @@
                     (click)="selectedimg=item.url">
             </div>
         </div>
-        <div class="col-auto">
+        <div class="col-3">
             <img [src]="selectedimg" class="img-fluid">
         </div>
-        <div class="col py-4 px-0">
-            <h3 style="word-spacing: -2px;font-weight: bolder;">{{product?.name}}</h3>
+        <div class="col overflow-auto" style="height: 70vh;">
+            <h3 class="fw-bolder text-capitalize" style="word-spacing: -2px">{{product?.name}}</h3>
             <div class="line w-auto bg-black me-5 my-3" style="height: 1px;"></div>
-            <h5>Description</h5>
+            <div class="d-flex justify-content-between">
+                <h3><b>{{product?.price | currency:'INR'}}</b></h3>
+                <div class="pe-5">
+                    <button class="btn btn-outline-success"
+                        data-bs-toggle="dropdown">Update</button>
+                    <ul class="dropdown-menu">
+                        <li><a class="dropdown-item"
+                                data-bs-target="#updateproduct"
+                                role="button"
+                                data-bs-toggle="modal">Update Details</a></li>
+                        <li><a class="dropdown-item" data-bs-target="#updateimg"
+                                role="button"
+                                data-bs-toggle="modal">Update Images</a></li>
+                    </ul>
+                    <button class="btn btn-outline-danger mx-3"
+                        (click)="deleteproduct()">Delete</button>
+                </div>
+
+            </div>
+
             <br>
-            <p>{{product?.description}}</p>
+            <h4><strong>Description</strong></h4>
             <br>
-            <h3><b>&#8377;{{product?.price}}</b></h3>
-            <br>
-            <button class="btn btn-outline-success"
-                data-bs-toggle="dropdown">Update</button>
-            <ul class="dropdown-menu">
-                <li><a class="dropdown-item" data-bs-target="#updateproduct"
-                        role="button"
-                        data-bs-toggle="modal">Update Details</a></li>
-                <li><a class="dropdown-item" data-bs-target="#updateimg"
-                        role="button"
-                        data-bs-toggle="modal">Update Images</a></li>
-            </ul>
-            <button class="btn btn-outline-danger mx-3" data-bs-toggle="modal"
-                data-bs-target="#confirmmodel">Delete</button>
+            <p [innerHTML]="product?.description"></p>
         </div>
     </div>
 </div>
 
-<div class="modal fade" tabindex="-1" id="confirmmodel">
-    <div class="modal-dialog modal-dialog-centered">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title">Modal title</h5>
-                <button type="button" class="btn-close" data-bs-dismiss="modal"
-                    aria-label="Close"></button>
-            </div>
-            <div class="modal-body">
-                <p>Modal body text goes here.</p>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-primary"
-                    data-bs-dismiss="modal">Close</button>
-                <button type="button" class="btn btn-danger"
-                    data-bs-dismiss="modal"
-                    (click)="deleteProduct()">Delete</button>
-            </div>
-        </div>
-    </div>
-</div>
-
-<app-update-product [id]="product?._id"></app-update-product>
+<app-update-product [callbackFunction]="myCallbackFunction"></app-update-product>
