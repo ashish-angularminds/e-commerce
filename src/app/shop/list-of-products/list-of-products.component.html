@@ -1,0 +1,101 @@
+<div class="container-fluid row py-2 px-0 m-0">
+    <div
+        class="col-xxl-2 d-none d-xxl-block rounded mt-3 px-3 py-5 ms-2 me-3 sticky-xl-top shadow-lg"
+        style="height: 100%; width: auto; top: 70px;">
+        <div class="d-flex justify-content-between">
+            <h2 class="fw-bold">Filters</h2>
+            <ul class="pagination" role="button">
+                <li class="page-item">
+                    <a class="page-link text-white bg-dark"
+                        aria-label="Previous" (click)="changePage(-1)">
+                        <span aria-hidden="true">&laquo;</span>
+                    </a>
+                </li>
+                <li class="page-item"><a class="page-link text-black">{{pagination.page}}</a></li>
+                <li class="page-item">
+                    <a class="page-link text-white bg-dark"
+                        aria-label="Next" (click)="changePage(1)">
+                        <span aria-hidden="true">&raquo;</span>
+                    </a>
+                </li>
+            </ul>
+        </div>
+
+        <div class="form-floating my-2">
+            <input type="email" class="form-control border-black"
+                id="floatingInput" placeholder="name@example.com">
+            <!-- [(ngModel)]="pagination.name" (keyup)="getproductslist()" -->
+            <label for="floatingInput">Search</label>
+        </div>
+
+        <div class="form-floating my-3">
+            <select class="form-select border-black" id="floatingSelect"
+                [(ngModel)]="pagination.sortBy"
+                aria-label="Floating label select example"
+                (click)="getproductslist()">
+                <option value="name">Name</option>
+                <option value="price">Price</option>
+                <option value="images">images</option>
+            </select>
+            <label for="floatingSelect">Sort By</label>
+        </div>
+
+        <div class="form-floating">
+            <select class="form-select border-black" id="limit"
+                [(ngModel)]="pagination.limit"
+                aria-label="Floating label select example"
+                (click)="getproductslist()">
+                <option value="5">5</option>
+                <option value="10">10</option>
+                <option value="20">20</option>
+                <option value="40">40</option>
+                <option value="80">80</option>
+            </select>
+            <label for="floatingSelect">Limit</label>
+        </div>
+
+    </div>
+    <div class="col-xxl-10 col-lg-12 p-0 row">
+        <div class="col-lg-4 col-md-6 col-sm-12 g-3"
+            *ngFor="let item of results">
+            <div class="card shadow-lg border-0" style="max-width: 540px;"
+                (click)="oneProduct(item._id)">
+                <div class="row g-0">
+                    <div class="col-md-6">
+                        <img [src]="item.images[0].url"
+                            style="height: 250px; width: 100%; object-fit: contain; "
+                            class="img-fluid rounded p-3 "
+                            alt="product image">
+                    </div>
+                    <div class="col-md-6 d-flex align-items-center">
+                        <div class="card-body">
+                            <h4 *ngIf="item.name.length>=40"
+                                class="card-title text-capitalize lh-1 fw-bold m-0 p-0">{{loadTitle(item.name)}}<b
+                                    class="text-danger">...</b></h4>
+                            <h4 *ngIf="item.name.length<40"
+                                class="card-title text-capitalize lh-1 fw-bold m-0 p-0">{{item.name}}</h4>
+                            <div class="w-100 bg-black my-1"
+                                style="height: 1px;"></div>
+                            <h5 class="card-text mb-0">
+                                <b>Description:<br></b>
+                            </h5>
+                            <div class="card-text lh-1"
+                                *ngIf="item.description.length>=80">
+                                <p [innerHTML]="loadDes(item.description)" class="ts">
+                                    <b
+                                        class="fs-3 border-0 text-decoration-none text-danger"
+                                        role="button" style="line-height: 0;">...</b>
+                                </p>
+                            </div>
+                            <p *ngIf="item.description.length<80"
+                                [innerHTML]="item.description"></p>
+                            <h5 class="card-text">
+                                {{item.price| currency:'INR'}}
+                            </h5>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

@@ -8,12 +8,14 @@ import { Event, NavigationEnd, Router } from '@angular/router';
 })
 export class SidebarComponent implements OnInit {
   constructor(private router: Router) { }
+  flag = true;
   productFlag = false;
-  settingFlag = true;
+  settingFlag = false;
   ngOnInit(): void {
+    this.checkroute();
     this.router.events.subscribe((e: Event) => {
       if (e instanceof NavigationEnd) {
-        if (/products/.test(e.url)) {
+        if (/product/.test(e.url)) {
           this.productFlag = true;
           this.settingFlag = false;
         }
@@ -21,11 +23,21 @@ export class SidebarComponent implements OnInit {
           this.settingFlag = true;
           this.productFlag = false;
         }
-        else {
-          this.productFlag = false;
-          this.settingFlag = false;
-        }
       }
     })
+  }
+
+
+  checkroute() {
+    this.router.events.subscribe((e: Event) => {
+      if (e instanceof NavigationEnd) {
+        if (!(/auth/.test(e.url))) {
+          this.flag = true;
+        }
+        else {
+          this.flag = false;
+        }
+      }
+    });
   }
 }

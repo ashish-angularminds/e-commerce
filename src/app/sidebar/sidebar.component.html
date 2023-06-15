@@ -1,21 +1,21 @@
-<aside style="width: min-content;"
+<aside *ngIf="flag" style="width: min-content;"
     class="position-fixed top-0 z-0 navbar navbar-dark bg-dark min-vh-100 p-2 d-flex flex-column justify-content-center">
     <ul class="navbar-nav d-flex flex-column w-auto gap-4 fs-4"
         *ngIf="productFlag">
         <li class="nav-item"><a class="nav-link"
-                [routerLink]="'products/products-list'"><i
+                [routerLink]="'/product/products-list'"><i
                     class="bi bi-list-ul"></i></a></li>
         <li class="nav-item"><a class="nav-link"
-                [routerLink]="'products/create-product'"><i
+                [routerLink]="'/product/create-product'"><i
                     class="bi bi-bag-plus-fill"></i></a></li>
     </ul>
     <ul class="navbar-nav d-flex flex-column w-auto gap-4 fs-4"
         *ngIf="settingFlag">
         <li class="nav-item"><a class="nav-link"
-                [routerLink]="'setting/my-profile'"><i
+                [routerLink]="'/setting/my-profile'"><i
                     class="bi bi-person-circle"></i></a></li>
         <li class="nav-item"><a class="nav-link"
-                [routerLink]="'setting/company-setting'"><i
+                [routerLink]="'/setting/company-setting'"><i
                     class="bi bi-list-ul"></i></a></li>
     </ul>
 </aside>

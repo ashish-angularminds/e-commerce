@@ -18,10 +18,10 @@ export class NavbarComponent {
   checkroute() {
     this.router.events.subscribe((e: Event) => {
       if (e instanceof NavigationEnd) {
-        if (/products/.test(e.url) || /home/.test(e.url)) {
+        if (!(/auth/.test(e.url))) {
           this.flag = true;
         }
-        else if (/setting/.test(e.url)) {
+        else {
           this.flag = false;
         }
       }
@@ -45,6 +45,6 @@ export class NavbarComponent {
 
   logout() {
     localStorage.removeItem('activeuser');
-    this.router.navigate(['auth', 'login']);
+    this.router.navigate(['auth','login']);
   }
 }
