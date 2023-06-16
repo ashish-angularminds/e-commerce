@@ -15,6 +15,7 @@ import { environment } from './environment';
 import { NavbarComponent } from './navbar/navbar.component';
 import { SidebarComponent } from './sidebar/sidebar.component';
 import { SweetAlert2Module } from '@sweetalert2/ngx-sweetalert2';
+import { DescriptionPipe } from './pipe/description.pipe';
 
 const ngxUiLoaderConfig: NgxUiLoaderConfig = {
   "bgsColor": "#000000",

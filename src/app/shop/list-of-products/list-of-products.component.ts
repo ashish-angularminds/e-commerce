@@ -1,6 +1,5 @@
 import { Component, OnInit } from '@angular/core';
 import { ProductsService } from '../services/products.service';
-import { pluck } from 'rxjs';
 import { Router } from '@angular/router';
 import { NgxUiLoaderService } from 'ngx-ui-loader';
 
@@ -11,14 +10,14 @@ import { NgxUiLoaderService } from 'ngx-ui-loader';
 })
 export class ListOfProductsComponent implements OnInit {
 
-  constructor(private service:ProductsService, private router: Router, private loader: NgxUiLoaderService){}
+  constructor(private service: ProductsService, private router: Router, private loader: NgxUiLoaderService) { }
 
-  results:any;
-  pagination={
+  results: any;
+  pagination = {
     // name:'',
-    sortBy:'name',
-    limit:5,
-    page:1
+    sortBy: 'name',
+    limit: 5,
+    page: 1
   }
   des = '';
 
@@ -65,7 +64,8 @@ export class ListOfProductsComponent implements OnInit {
     this.getproductslist();
   }
 
-  oneProduct(id: string) {
-    this.router.navigate(['single-product',`${id}`]);
+  product: any;
+  singleProduct(prod: any) {
+    this.product = prod;
   }
 }

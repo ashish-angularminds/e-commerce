@@ -4,6 +4,7 @@ import { NgToastService } from 'ng-angular-popup';
 import { Editor, Toolbar } from 'ngx-editor';
 import { ProductService } from '../../service/product/product.service'
 import Swal from 'sweetalert2';
+import { NgxUiLoaderService } from 'ngx-ui-loader';
 
 @Component({
   selector: 'app-update-product',
@@ -12,7 +13,8 @@ import Swal from 'sweetalert2';
 })
 export class UpdateProductComponent implements OnInit {
 
-  constructor(private service: ProductService, private toast: NgToastService, private activated: ActivatedRoute) { }
+  constructor(private service: ProductService, private toast: NgToastService, private activated: ActivatedRoute,
+    private loader: NgxUiLoaderService) { }
 
   @Input() callbackFunction = (): void => { };
   product = {
@@ -22,31 +24,37 @@ export class UpdateProductComponent implements OnInit {
   }
   images: any = [];
   id: any;
-
+  files = new FormData();
+  tempfiles: File[] = [];
+  convertedfiles: any = [];
 
   onFileSelect(event: any) {
-    let files = new FormData();
-    let f: File[] = [];
-    f.push(...event.addedFiles);
-    f.forEach(item => {
-      files.append('new_images', item);
+    this.tempfiles.push(...event.addedFiles);
+    this.convertedfiles = [];
+    this.tempfiles.forEach(i => {
+      this.convertedfiles.push(URL.createObjectURL(i));
     })
+
     // for (let i = 0; i < f.length - 1; i++) {
     //   files.append('new_images', f[i]);
     // }
     // f.forEach((e: any) => {
     //   files.append('new_images', e);
     // });
-    this.updateimg(files);
   }
 
-  deleteimg(id: string) {
-    let files = new FormData();
-    files.append('delete', id);
-    this.updateimg(files);
+  deletetempimg(index: number) {
+    this.tempfiles.splice(index, 1);
+    this.convertedfiles.splice(index, 1);
+  }
+
+  deleteimg(id: string, i: number) {
+    this.files.append('delete', id);
+    document.getElementById(`img-${i}`)!.style.opacity = '0.4';
   }
 
   updatedetails() {
+    this.loader.start();
     this.service.update(this.id, this.product).subscribe(
       res => {
         Swal.fire({
@@ -56,8 +64,10 @@ export class UpdateProductComponent implements OnInit {
           timer: 2000
         });
         this.loadimg();
+        this.loader.stop();
       },
       err => {
+        console.log(err);
         Swal.fire({
           title: 'Error!',
           text: err.error.message,
@@ -65,12 +75,17 @@ export class UpdateProductComponent implements OnInit {
           showConfirmButton: false,
           timer: 2000
         });
+        this.loader.stop();
       }
     );
   }
 
-  updateimg(file: FormData) {
-    this.service.updateimg(this.id, file).subscribe(
+  updateimg() {
+    this.loader.start();
+    this.tempfiles.forEach(item => {
+      this.files.append('new_images', item);
+    });
+    this.service.updateimg(this.id, this.files).subscribe(
       res => {
         Swal.fire({
           title: 'Images Updated Successfully!',
@@ -78,9 +93,14 @@ export class UpdateProductComponent implements OnInit {
           showConfirmButton: false,
           timer: 2000
         });
+        this.files = new FormData();
+        this.tempfiles = [];
+        this.convertedfiles = [];
         this.loadimg();
+        this.loader.stop();
       },
       err => {
+        console.log(err);
         Swal.fire({
           title: 'Error!',
           text: err.error.message,
@@ -88,6 +108,7 @@ export class UpdateProductComponent implements OnInit {
           showConfirmButton: false,
           timer: 2000
         });
+        this.loader.stop();
       }
     )
   }
@@ -113,7 +134,6 @@ export class UpdateProductComponent implements OnInit {
     ['align_left', 'align_center', 'align_right', 'align_justify'],
   ];
 
-
   loadimg() {
     this.service.getone(this.id).subscribe(
       res => {
@@ -135,10 +155,4 @@ export class UpdateProductComponent implements OnInit {
       }
     );
   }
-
-  onRemove(event: any) {
-    console.log(event);
-  }
-
-  
 }

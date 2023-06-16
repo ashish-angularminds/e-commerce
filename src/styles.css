@@ -3,7 +3,13 @@ body {
     font-family: 'Sulphur Point', sans-serif;
 }
 
-.ts>ul {
+.ts>ul,
+ol,
+dl {
     padding: 0;
     list-style: none !important;
+}
+
+.lh-0 {
+    line-height: 0.5;
 }
