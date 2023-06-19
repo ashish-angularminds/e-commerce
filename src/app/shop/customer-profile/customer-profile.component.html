@@ -1,0 +1,23 @@
+<div class="container" style="height: 75vh;">
+    <div class="row d-flex justify-content-center align-items-center w-100 h-100">
+        <div class="col-lg-6 col-md-12 position-relative">
+
+            <div class="bg-info circle position-absolute rounded-circle"></div>
+
+            <div class="row rounded shadow-lg main-content p-0">
+                <div class="col-4 p-0 position-relative img">
+                    <i class="bi bi-pencil-square position-absolute top-50 start-50 fs-2 text-white"
+                        data-bs-toggle="modal" data-bs-target="#updateprofileimgform"></i>
+                    <img class="img-fluid rounded-start " [src]="user.picture" alt="Customer image">
+                </div>
+                <div class="col-8 p-5 d-flex flex-column align-items-start justify-content-center">
+                    <h3 class="text-capitalize">{{user.name}}</h3>
+                    <h5>{{user.email}}</h5>
+                    <button class="btn btn-dark" data-bs-toggle="modal"
+                        data-bs-target="#updateprofileform">Edit</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<app-customer-update [setprofile]="setprofile" [user]="user"></app-customer-update>

@@ -10,6 +10,9 @@ import { SingleProductComponent } from './single-product/single-product.componen
 import { FormsModule } from '@angular/forms';
 import { HomeModule } from '../home/home.module';
 import { CustomerRegistrationComponent } from './customer-registration/customer-registration.component';
+import { CustomerLoginComponent } from './customer-login/customer-login.component';
+import { CustomerProfileComponent } from './customer-profile/customer-profile.component';
+import { CustomerUpdateComponent } from './customer-update/customer-update.component';
 
 
 @NgModule({
@@ -17,7 +20,10 @@ import { CustomerRegistrationComponent } from './customer-registration/customer-
     ShopComponent,
     ListOfProductsComponent,
     SingleProductComponent,
-    CustomerRegistrationComponent
+    CustomerRegistrationComponent,
+    CustomerLoginComponent,
+    CustomerProfileComponent,
+    CustomerUpdateComponent
   ],
   imports: [
     CommonModule,

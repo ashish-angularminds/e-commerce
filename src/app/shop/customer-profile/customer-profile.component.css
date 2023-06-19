@@ -1,0 +1,27 @@
+.circle {
+    width: 150px;
+    height: 150px;
+    left: 88%;
+    top: 60%;
+    z-index: -1;
+    background: linear-gradient(-40deg, #B799FF, #AEE2FF);
+}
+
+.main-content {
+    background: #e5e5e557;
+    backdrop-filter: blur(3px);
+}
+
+.img:hover img {
+    filter: blur(8px);
+}
+
+.img i {
+    z-index: 1000;
+    display: none;
+    transform: translate(-50%, -50%);
+}
+
+.img:hover i {
+    display: block !important;
+}
