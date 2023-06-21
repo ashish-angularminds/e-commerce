@@ -1,13 +1,13 @@
-<button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#registrationform">
+<!-- <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#registrationform">
     Launch static backdrop modal
-</button>
+</button> -->
 
-<div class="modal fade" id="registrationform" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
-    aria-labelledby="staticBackdropLabel" aria-hidden="true">
+<div class="modal fade" id="loginform" data-bs-backdrop="static" tabindex="-1" aria-labelledby="staticBackdropLabel1"
+    aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content">
             <div class="modal-header">
-                <h1 class="modal-title fs-5" id="staticBackdropLabel">Customer Login</h1>
+                <h1 class="modal-title fs-5" id="staticBackdropLabel1">Customer Login</h1>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
@@ -25,7 +25,8 @@
                         <label for="floatingInput">Password</label>
                     </div>
 
-                    <button class="btn btn-dark w-100">Login</button>
+                    <button class="btn btn-dark w-100" data-bs-dismiss="modal"
+                        [disabled]="!loginForm.dirty">Login</button>
                     <!-- <a class="mt-3 text-dark text-center" [routerLink]="'/auth/login'">Click
                         here
                         for Login</a> -->

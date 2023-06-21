@@ -1,23 +1,242 @@
 <div class="container" style="height: 75vh;">
     <div class="row d-flex justify-content-center align-items-center w-100 h-100">
-        <div class="col-lg-6 col-md-12 position-relative">
+        <div class="col-lg-6 col-md-12 position-relative shadow-lg">
 
-            <div class="bg-info circle position-absolute rounded-circle"></div>
+            <div class="circle position-absolute rounded-circle"></div>
 
-            <div class="row rounded shadow-lg main-content p-0">
+            <div class="row rounded main-content p-0">
                 <div class="col-4 p-0 position-relative img">
                     <i class="bi bi-pencil-square position-absolute top-50 start-50 fs-2 text-white"
                         data-bs-toggle="modal" data-bs-target="#updateprofileimgform"></i>
+                    <i class="bi bi-trash3 position-absolute top-50 start-50 fs-2 text-white" (click)="delete()"></i>
                     <img class="img-fluid rounded-start " [src]="user.picture" alt="Customer image">
                 </div>
-                <div class="col-8 p-5 d-flex flex-column align-items-start justify-content-center">
-                    <h3 class="text-capitalize">{{user.name}}</h3>
-                    <h5>{{user.email}}</h5>
-                    <button class="btn btn-dark" data-bs-toggle="modal"
-                        data-bs-target="#updateprofileform">Edit</button>
+                <div class="col-8">
+                    <div class="row h-100">
+                        <div class="col-11 p-5 d-flex flex-column align-items-start justify-content-center">
+                            <h3 class="text-capitalize">{{user.name}}</h3>
+                            <h5>{{user.email}}</h5>
+                        </div>
+                        <div class="col-1 h-100 p-0">
+                            <div class="btn-group-vertical row d-flex flex-column p-0 m-0 h-100 w-100" role="group"
+                                aria-label="Vertical radio toggle button group">
+                                <button class="btn btn-outline-secondary btn-dark col p-0 rounded-start-0 border-0"
+                                    data-bs-toggle="modal" data-bs-target="#updateprofileform">
+                                    <i class="bi bi-pencil-square"></i>
+                                </button>
+                                <button class="btn btn-outline-secondary btn-dark col p-0 border-start-0 border-end-0"
+                                    (click)="deleteaccount()">
+                                    <i class="bi bi-trash3"></i>
+                                </button>
+                                <button class="btn btn-outline-secondary btn-dark col p-0 border-start-0 border-end-0"
+                                    data-bs-toggle="modal" data-bs-target="#passwordform">
+                                    <i class="bi bi-person-lock"></i>
+                                </button>
+                                <button class="btn btn-outline-secondary btn-dark col p-0 border-start-0 border-end-0"
+                                    data-bs-toggle="modal" data-bs-target="#addressform" (click)="addressflag=false;">
+                                    <i class="bi bi-house-add"></i>
+                                </button>
+                                <button (click)="getaddress()"
+                                    class="btn btn-outline-secondary btn-dark col p-0 rounded-start-0 border-0 border-top border-secondary"
+                                    data-bs-toggle="collapse" data-bs-target="#collapseWidthExample"
+                                    aria-expanded="false" aria-controls="collapseWidthExample">
+                                    <i class="bi bi-houses"></i>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
                 </div>
+            </div>
+            <div class="row position-absolute w-100 overflow-y-auto" style="max-height: 250px;">
+                <div class="collapse p-0" id="collapseWidthExample">
+                    <div class="overflow-hidden main-content rounded p-3">
+                        <address
+                            class="card card-body p-0 main-content bg-light-subtle d-flex flex-row justify-content-between"
+                            *ngFor="let a of addresss;index as i">
+                            <!-- <h5>Address {{i+1}}</h5> -->
+                            <i class="w-75 ps-3 py-2">{{a.street}}, <br>
+                                {{a.addressLine2}}, <br>
+                                {{a.city}}, <br>
+                                {{a.state}}-{{a.pin}}
+                            </i>
+                            <div class="btn-group-vertical" role="group">
+                                <button id="addresstrigger" class="btn" (click)="changeaddress(a);addressflag=true"
+                                    data-bs-toggle="modal" data-bs-target="#addressform">
+                                    <i class="bi bi-pencil-square"></i>
+                                </button>
+                                <button class="btn" (click)="deleteaddress(a._id)">
+                                    <i class="bi bi-trash3"></i>
+                                </button>
+                            </div>
+                        </address>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+</div>
+
+
+
+
+<!----------------------------------------------- all modals --------------------------------------------->
+<div class="modal fade" id="updateprofileform" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
+    aria-labelledby="staticBackdropLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h1 class="modal-title fs-5" id="staticBackdropLabel">Update Customer Profile</h1>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <form #profileForm="ngForm" (ngSubmit)="editProfile()" class="">
+
+                    <div class="form-floating mb-3">
+                        <input type="email" name="email" [(ngModel)]="edituser.email" class="form-control border-dark"
+                            placeholder="Email
+                        address">
+                        <label for="floatingInput">Email address</label>
+                    </div>
+                    <div class="form-floating mb-3">
+                        <input type="text" name="name" [(ngModel)]="edituser.name" class="form-control border-dark"
+                            placeholder="Name">
+                        <label for="floatingInput">Name</label>
+                    </div>
+
+                    <button class="btn btn-dark w-100" data-bs-dismiss="modal">Update</button>
+                </form>
             </div>
         </div>
     </div>
 </div>
-<app-customer-update [setprofile]="setprofile" [user]="user"></app-customer-update>
+
+<div class="modal fade" id="updateprofileimgform" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
+    aria-labelledby="staticBackdropLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-xl">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h1 class="modal-title fs-5" id="staticBackdropLabel">Update Customer Profile</h1>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+
+                <div class="row p-5">
+
+                    <div class="col-3 my-auto">
+                        <h2>Image Cropper</h2>
+                        <div class="input-group h-100" (click)="getevent($event)">
+                            <ngx-dropzone (change)="fileChangeEvent($event)" class="w-100">
+                                <ngx-dropzone-label>Drop images here...</ngx-dropzone-label>
+                            </ngx-dropzone>
+                        </div>
+                    </div>
+
+                    <div class="col-6 my-auto">
+                        <image-cropper style="max-height: 60vh;" [imageChangedEvent]="imageChangedEvent"
+                            [maintainAspectRatio]="true" [aspectRatio]="4 / 4" format="png" [imageURL]=img
+                            (imageCropped)="imageCropped($event)" (imageLoaded)="imageLoaded()"
+                            (cropperReady)="cropperReady()" (loadImageFailed)="loadImageFailed()"></image-cropper>
+                    </div>
+
+                    <div class="col-3 my-auto">
+                        <img [class]="croppedImage?'shadow-lg rounded p-2 object-fit-contain img-fluid mx-auto d-block':''"
+                            [src]="croppedImage" />
+                    </div>
+
+                </div>
+
+            </div>
+
+            <div class="modal-footer">
+                <button type="button" class="btn btn-primary my-3" (click)="upload()" data-bs-dismiss="modal">
+                    Update
+                </button>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="addressform" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
+    aria-labelledby="staticBackdropLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header py-2 px-3">
+                <h1 class="modal-title fs-5" id="staticBackdropLabel">Address</h1>
+                <button (click)="emptyaddress()" type="button" class="btn-close" data-bs-dismiss="modal"
+                    aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <form #addressForm="ngForm" class="">
+
+                    <div class="form-floating mb-3">
+                        <input type="text" name="addressLine2" [(ngModel)]="address.addressLine2"
+                            class="form-control border-dark" placeholder="addressLine2">
+                        <label for="floatingInput">Address Line</label>
+                    </div>
+                    <div class="form-floating mb-3">
+                        <input type="text" name="street" [(ngModel)]="address.street" class="form-control border-dark"
+                            placeholder="street">
+                        <label for="floatingInput">Street</label>
+                    </div>
+                    <div class="form-floating mb-3">
+                        <input type="text" name="city" [(ngModel)]="address.city" class="form-control border-dark"
+                            placeholder="city">
+                        <label for="floatingInput">City</label>
+                    </div>
+                    <div class="form-floating mb-3">
+                        <input type="text" name="state" [(ngModel)]="address.state" class="form-control border-dark"
+                            placeholder="state">
+                        <label for="floatingInput">State</label>
+                    </div>
+                    <div class="form-floating mb-3">
+                        <input type="number" name="pin" [(ngModel)]="address.pin" class="form-control border-dark"
+                            placeholder="pin">
+                        <label for="floatingInput">Pin Code</label>
+                    </div>
+
+                    <button *ngIf="!addressflag" [disabled]="!addressForm.dirty" class="btn btn-dark w-100"
+                        (click)="addaddress();addressForm.reset" data-bs-dismiss="modal">Add</button>
+                    <button *ngIf="addressflag" [disabled]="!addressForm.dirty" class="btn btn-dark w-100"
+                        (click)="updateaddress()" data-bs-dismiss="modal">Update</button>
+
+                    <!-- <a class="mt-3 text-dark text-center" [routerLink]="'/auth/login'">Click
+                        here
+                        for Login</a> -->
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="passwordform" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
+    aria-labelledby="staticBackdropLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h1 class="modal-title fs-5" id="staticBackdropLabel">Change Password</h1>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <form #passwordForm="ngForm" (ngSubmit)="changepassword()" class="">
+
+                    <div class="form-floating mb-3">
+                        <input type="password" name="old_password" [(ngModel)]="passwords.old_password"
+                            class="form-control border-dark" placeholder="Password">
+                        <label for="floatingInput">Old Password</label>
+                    </div>
+                    <div class="form-floating mb-3">
+                        <input type="text" name="new_password" [(ngModel)]="passwords.new_password"
+                            class="form-control border-dark" placeholder="new_password">
+                        <label for="floatingInput">New Password</label>
+                    </div>
+
+                    <button (click)="passwordForm.reset" class="btn btn-dark w-100"
+                        data-bs-dismiss="modal">Update</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>

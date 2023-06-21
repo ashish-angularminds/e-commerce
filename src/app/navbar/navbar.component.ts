@@ -1,5 +1,7 @@
 import { Component } from '@angular/core';
-import { Event, NavigationEnd, Router } from '@angular/router';
+import { ActivatedRoute, Event, NavigationEnd, Router } from '@angular/router';
+import { CustomerService } from '../shop/services/customer/customer.service';
+import { NavbarService } from './service/navbar.service';
 
 @Component({
   selector: 'app-navbar',
@@ -7,44 +9,62 @@ import { Event, NavigationEnd, Router } from '@angular/router';
   styleUrls: ['./navbar.component.css']
 })
 export class NavbarComponent {
-  constructor(private router: Router) { }
+  constructor(private router: Router, private navbarservice: NavbarService, private activted: ActivatedRoute) { }
 
-  flag = false;
+  navbar = this.navbarservice;
 
   ngOnInit() {
-    this.checkroute();
+    this.router.events.subscribe((e: Event) => {
+      if (e instanceof NavigationEnd) {
+        this.navbarservice.sellerlogin = localStorage.getItem('activeuser');
+        this.navbarservice.customerlogin = localStorage.getItem('loginuser');
+
+        if (!(/shop/.test(e.url))) {
+          this.navbarservice.flag = true;
+        }
+        else {
+          this.navbarservice.flag = false;
+        }
+      }
+    });
+    this.navbarservice.changeprofilestate();
   }
 
   checkroute() {
     this.router.events.subscribe((e: Event) => {
       if (e instanceof NavigationEnd) {
-        if (!(/auth/.test(e.url))) {
-          this.flag = true;
+        this.navbarservice.sellerlogin = localStorage.getItem('activeuser');
+        this.navbarservice.customerlogin = localStorage.getItem('loginuser');
+
+        if (!(/shop/.test(e.url))) {
+          this.navbarservice.flag = true;
         }
         else {
-          this.flag = false;
+          this.navbarservice.flag = false;
         }
       }
     });
   }
 
-  activelink(id: number) {
-    let arr = document.querySelectorAll('li > a');
-    arr.forEach((item, index) => {
-      if (index <= 1) {
-        if (index == id) {
-          item.className = 'nav-link active';
-        }
-        else {
-          item.className = 'nav-link';
-        }
-      }
-    })
+  activelink(event: any) {
+    document.querySelectorAll('.nav-item > a').forEach((item) => { item.className = 'nav-link' });
+    event.target.className = 'nav-link active'
     this.checkroute();
   }
 
-  logout() {
-    localStorage.removeItem('activeuser');
-    this.router.navigate(['auth','login']);
+  logoutcustomer() {
+    localStorage.removeItem('loginuser');
+    this.navbarservice.changeprofilestate();
+    if ((/profile/.test(this.router.url))) {
+      this.router.navigate(["/"]);
+    }
+    this.navbarservice.check();
   }
+
+  logoutseller() {
+    localStorage.removeItem('activeuser');
+    this.router.navigate(['auth/login']);
+    this.navbarservice.check();
+  }
+
 }

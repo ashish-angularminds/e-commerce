@@ -23,6 +23,9 @@ export class SidebarComponent implements OnInit {
           this.settingFlag = true;
           this.productFlag = false;
         }
+        else {
+          this.flag = false;
+        }
       }
     })
   }

@@ -1,14 +1,70 @@
-<nav class="navbar navbar-dark bg-dark position-fixed top-0 z-1 w-100" *ngIf="flag">
+<nav class="navbar navbar-dark bg-dark position-fixed top-0 z-1 w-100">
     <div class="container-fluid d-flex justify-content-between">
         <a class="navbar-brand text-capitalize" href="#">E-Commers</a>
         <ul class="navbar-nav d-flex flex-row w-auto gap-4">
-            <li class="nav-item" (click)="activelink(0)">
-                <a class="nav-link" [routerLink]="'product'">Products</a></li>
-            <li class="nav-item" (click)="activelink(1)">
-                <a class="nav-link" [routerLink]="'setting'">Settings</a></li>
-            <li class="nav-item" (click)="activelink(2)">
-                <a class="nav-link" [routerLink]="'shop'">Shop</a></li>
+            <li class="nav-item" (click)="activelink($event)" *ngIf="navbar.flag">
+                <a class="nav-link fw-bolder" [routerLink]="'product'">Products</a>
+            </li>
+            <li class="nav-item" (click)="activelink($event)" *ngIf="navbar.flag">
+                <a class="nav-link fw-bolder" [routerLink]="'setting'">Settings</a>
+            </li>
+            <li class="nav-item" (click)="activelink($event)" *ngIf="!navbar.flag">
+                <a class="nav-link fw-bolder" [routerLink]="'shop'">All Products</a>
+            </li>
         </ul>
-        <button class="btn btn-outline-light" (click)="logout()">Logout</button>
+
+        <div *ngIf="navbar.flag">
+            <button class="text-white p-0 fs-3 bg-transparent border-0 dropstart dropdown">
+                <div class="dropdown" *ngIf="!navbar.sellerlogin">
+                    <i class="bi bi-person-circle" role="button" data-bs-toggle="dropdown" aria-expanded="false"></i>
+                    <ul class="dropdown-menu dropdown-menu-dark">
+                        <li [routerLink]="'auth/register'">
+                            <a class="dropdown-item">Register</a>
+                        </li>
+                        <li [routerLink]="'auth/login'">
+                            <a class="dropdown-item">Login</a>
+                        </li>
+                    </ul>
+                </div>
+                <div class="dropdown" *ngIf="navbar.sellerlogin">
+                    <i class="bi bi-person-circle" role="button" data-bs-toggle="dropdown" aria-expanded="false"></i>
+                    <ul class="dropdown-menu dropdown-menu-dark">
+                        <li [routerLink]="'/setting/my-profile'">
+                            <a class="dropdown-item">Profile</a>
+                        </li>
+                        <li (click)="logoutseller()">
+                            <a class="dropdown-item">Logout</a>
+                        </li>
+                    </ul>
+                </div>
+            </button>
+        </div>
+
+        <div *ngIf="!navbar.flag" class="d-flex gap-4">
+            <button class="btn btn-outline-light" (click)="navbar.flag=false"
+                [routerLink]="'/setting/my-profile'">Become a Seller</button>
+            <button class="text-white p-0 fs-3 bg-transparent border-0">
+                <div class="dropstart" *ngIf="navbar.customerlogin">
+                    <img class="rounded-circle" [src]="navbar.img" alt="" style="height: 30px; width: 30px;"
+                        role="button" data-bs-toggle="dropdown">
+                    <ul class="dropdown-menu dropdown-menu-dark">
+                        <li><a class="dropdown-item" [routerLink]="'shop/profile'">Profile</a></li>
+                        <li><a class="dropdown-item" (click)="logoutcustomer()">Logout</a></li>
+                    </ul>
+                </div>
+
+                <div class="dropstart" *ngIf="!navbar.customerlogin">
+                    <i class="bi bi-person-circle" data-bs-toggle="dropdown"></i>
+                    <ul class="dropdown-menu dropdown-menu-dark">
+                        <li data-bs-toggle="modal" data-bs-target="#registrationform">
+                            <a class="dropdown-item">Customer Register</a>
+                        </li>
+                        <li data-bs-toggle="modal" data-bs-target="#loginform">
+                            <a class="dropdown-item">Customer Login</a>
+                        </li>
+                    </ul>
+                </div>
+            </button>
+        </div>
     </div>
 </nav>

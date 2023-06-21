@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { ProductsService } from '../services/products.service';
 import { Router } from '@angular/router';
 import { NgxUiLoaderService } from 'ngx-ui-loader';
+import { NavbarService } from 'src/app/navbar/service/navbar.service';
 
 @Component({
   selector: 'app-list-of-products',
@@ -10,7 +11,8 @@ import { NgxUiLoaderService } from 'ngx-ui-loader';
 })
 export class ListOfProductsComponent implements OnInit {
 
-  constructor(private service: ProductsService, private router: Router, private loader: NgxUiLoaderService) { }
+  constructor(private service: ProductsService, private router: Router, private loader: NgxUiLoaderService,
+    private navbar: NavbarService) { }
 
   results: any;
   pagination = {
@@ -22,6 +24,7 @@ export class ListOfProductsComponent implements OnInit {
   des = '';
 
   ngOnInit(): void {
+    this.navbar.flag = false;
     this.loader.start();
     this.getproductslist();
   }
