@@ -3,6 +3,8 @@ import { ProductsService } from '../services/products.service';
 import { Router } from '@angular/router';
 import { NgxUiLoaderService } from 'ngx-ui-loader';
 import { NavbarService } from 'src/app/navbar/service/navbar.service';
+import { Store } from '@ngrx/store';
+import { Product } from 'src/app/cart/store/product';
 
 @Component({
   selector: 'app-list-of-products',
@@ -12,7 +14,7 @@ import { NavbarService } from 'src/app/navbar/service/navbar.service';
 export class ListOfProductsComponent implements OnInit {
 
   constructor(private service: ProductsService, private router: Router, private loader: NgxUiLoaderService,
-    private navbar: NavbarService) { }
+    private navbar: NavbarService, private store: Store<{ cart: { product: Product[] } }>) { }
 
   results: any;
   pagination = {
@@ -27,6 +29,7 @@ export class ListOfProductsComponent implements OnInit {
     this.navbar.flag = false;
     this.loader.start();
     this.getproductslist();
+    this.store.select('cart').subscribe(data => this.cartdata = data);
   }
 
   loadTitle(str: string) {
@@ -67,8 +70,22 @@ export class ListOfProductsComponent implements OnInit {
     this.getproductslist();
   }
 
+  cartdata: any;
+  checkcart(item: any) {
+    let pd: any | undefined;
+    console.log(this.cartdata);
+    this.cartdata.products.forEach((data: Product) => {
+      if (item._id === data.productId) {
+        pd = data;
+      }
+    });
+    return pd;
+  }
+
   product: any;
-  singleProduct(prod: any) {
+  cartproduct: Product | undefined;
+  singleProduct(prod: any, pd: any) {
     this.product = prod;
+    this.cartproduct = pd;
   }
 }

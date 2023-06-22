@@ -5,6 +5,7 @@ const routes: Routes = [
   { path:'', redirectTo:'shop', pathMatch:'full'},
   { path: '', loadChildren: () => import('./seller/seller.module').then(m => m.SellerModule) },
   { path: 'shop', loadChildren: () => import('./shop/shop.module').then(m => m.ShopModule) },
+  { path: 'cart', loadChildren: () => import('./cart/cart.module').then(m => m.CartModule) },
   { path: '**', redirectTo: 'shop', pathMatch: 'full' },
 ];
 

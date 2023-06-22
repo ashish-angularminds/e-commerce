@@ -1,0 +1,24 @@
+<div class="container-fluid shadow-lg rounded p-0">
+    <h2 class="p-3 border-top border-bottom border-dark-subtle text-dark-emphasis">Cart Items</h2>
+    <ul class="list-group list-group-flush">
+        <li class="list-group-item" *ngFor="let item of outputproducts$|async">
+            <div class="row">
+                <div class="col-10">
+                    <h5 class="mb-1">{{item.name}}</h5>
+                    <p class="mb-1">Price: {{item.price | currency:'INR'}}</p>
+                </div>
+                <div class="col-2 d-flex align-items-center">
+                    <div class="btn-group" role="group" aria-label="Basic example">
+                        <button type="button" class="btn btn-outline-success" (click)="dec(item.productId,item.qty)">
+                            <i class="bi bi-dash-lg"></i>
+                        </button>
+                        <a class="btn btn-success">{{item.qty}}</a>
+                        <button type="button" class="btn btn-outline-success" (click)="inc(item.productId)">
+                            <i class="bi bi-plus-lg"></i>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </li>
+    </ul>
+</div>

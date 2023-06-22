@@ -1,4 +1,7 @@
 import { Component, Input, OnInit } from '@angular/core';
+import { Store } from '@ngrx/store';
+import { addproduct } from 'src/app/cart/store/cart.actions';
+import { Product } from 'src/app/cart/store/product';
 
 @Component({
   selector: 'app-single-product',
@@ -7,11 +10,27 @@ import { Component, Input, OnInit } from '@angular/core';
 })
 export class SingleProductComponent implements OnInit {
 
+  constructor(private store: Store<{ cart: { product: Product[] } }>) { }
+
   @Input() product: any;
+  @Input() cartproduct: Product | undefined;
+
   selectedimg: any;
+  cartdata: any;
 
   ngOnInit(): void {
-    // this.selectedimg = this.product.images.get(0).url;
-    // console.log(this.product.images[0]);
+  }
+
+  add() {
+    let p: Product = {
+      productId: this.product._id,
+      name: this.product.name,
+      price: this.product.price,
+      qty: 1,
+      subTotal: this.product.price
+    }
+    this.store.dispatch(addproduct({ product: p }));
+    this.store.select('cart').subscribe(data => localStorage.setItem('cart', JSON.stringify(data)));
+    this.cartproduct = p;
   }
 }

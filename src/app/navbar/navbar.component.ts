@@ -1,6 +1,5 @@
 import { Component } from '@angular/core';
 import { ActivatedRoute, Event, NavigationEnd, Router } from '@angular/router';
-import { CustomerService } from '../shop/services/customer/customer.service';
 import { NavbarService } from './service/navbar.service';
 
 @Component({
@@ -14,20 +13,7 @@ export class NavbarComponent {
   navbar = this.navbarservice;
 
   ngOnInit() {
-    this.router.events.subscribe((e: Event) => {
-      if (e instanceof NavigationEnd) {
-        this.navbarservice.sellerlogin = localStorage.getItem('activeuser');
-        this.navbarservice.customerlogin = localStorage.getItem('loginuser');
-
-        if (!(/shop/.test(e.url))) {
-          this.navbarservice.flag = true;
-        }
-        else {
-          this.navbarservice.flag = false;
-        }
-      }
-    });
-    this.navbarservice.changeprofilestate();
+    this.checkroute();
   }
 
   checkroute() {
@@ -36,11 +22,11 @@ export class NavbarComponent {
         this.navbarservice.sellerlogin = localStorage.getItem('activeuser');
         this.navbarservice.customerlogin = localStorage.getItem('loginuser');
 
-        if (!(/shop/.test(e.url))) {
-          this.navbarservice.flag = true;
+        if ((/shop/.test(e.url)) || (/cart/.test(e.url))) {
+          this.navbarservice.flag = false;
         }
         else {
-          this.navbarservice.flag = false;
+          this.navbarservice.flag = true;
         }
       }
     });

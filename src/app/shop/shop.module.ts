@@ -12,6 +12,8 @@ import { HomeModule } from '../home/home.module';
 import { CustomerRegistrationComponent } from './customer-registration/customer-registration.component';
 import { CustomerLoginComponent } from './customer-login/customer-login.component';
 import { CustomerProfileComponent } from './customer-profile/customer-profile.component';
+import { StoreModule } from '@ngrx/store';
+import { cartReducer } from '../cart/store/cart.reducer';
 
 
 @NgModule({
@@ -29,7 +31,8 @@ import { CustomerProfileComponent } from './customer-profile/customer-profile.co
     ImageCropperModule,
     NgxDropzoneModule,
     FormsModule,
-    HomeModule
+    HomeModule,
+    StoreModule.forFeature('cart', cartReducer)
   ]
 })
 export class ShopModule { }
