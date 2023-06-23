@@ -1,7 +1,7 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { Store } from '@ngrx/store';
-import { addproduct } from 'src/app/cart/store/cart.actions';
-import { Product } from 'src/app/cart/store/product';
+import { addproduct } from 'src/app/shop/cart/store/cart.actions';
+import { Product } from 'src/app/shop/cart/store/product';
 
 @Component({
   selector: 'app-single-product',

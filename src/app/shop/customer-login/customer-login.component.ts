@@ -1,9 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 import { CustomerService } from '../services/customer/customer.service';
 import { ReCaptchaV3Service } from 'ng-recaptcha';
-import { NavbarComponent } from 'src/app/navbar/navbar.component';
 import { NavbarService } from 'src/app/navbar/service/navbar.service';
 import Swal from 'sweetalert2';
+import { Store } from '@ngrx/store';
+import { Product } from '../cart/store/product';
+import { checklogin } from '../cart/store/cart.actions';
 
 @Component({
   selector: 'app-customer-login',
@@ -11,6 +13,9 @@ import Swal from 'sweetalert2';
   styleUrls: ['./customer-login.component.css']
 })
 export class CustomerLoginComponent implements OnInit {
+
+  constructor(private service: CustomerService, private recaptchaV3Service: ReCaptchaV3Service,
+    private navbar: NavbarService, private store: Store<{ cart: { product: Product[] } }>) { }
 
   Toast = Swal.mixin({
     toast: true,
@@ -32,9 +37,6 @@ export class CustomerLoginComponent implements OnInit {
 
   }
 
-  constructor(private service: CustomerService, private recaptchaV3Service: ReCaptchaV3Service,
-    private navbar: NavbarService) { }
-
   user = {
     email: '',
     password: '',
@@ -44,6 +46,7 @@ export class CustomerLoginComponent implements OnInit {
   login() {
     this.recaptchaV3Service.execute('importantAction').subscribe((token: string) => {
       this.user.captcha = token;
+      console.log(token);
       this.service.login(this.user).subscribe(
         (res: any) => {
           console.log(res);
@@ -54,6 +57,7 @@ export class CustomerLoginComponent implements OnInit {
             icon: 'success',
             title: 'Login Successful'
           });
+          this.store.dispatch(checklogin());
         },
         err => {
           console.log(err);

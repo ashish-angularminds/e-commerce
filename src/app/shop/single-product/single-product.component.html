@@ -24,8 +24,9 @@
                                 <h3><b>{{product?.price | currency:'INR'}}</b></h3>
                                 <button class="btn btn-outline-success" (click)="add()" *ngIf="!cartproduct">Add To
                                     Cart</button>
-                                <button class="btn btn-outline-primary" [routerLink]="'/cart'" data-bs-dismiss="modal"
-                                    *ngIf="cartproduct" (click)="cartproduct=undefined">Go To Cart</button>
+                                <button class="btn btn-outline-primary" [routerLink]="'/shop/cart'"
+                                    data-bs-dismiss="modal" *ngIf="cartproduct" (click)="cartproduct=undefined">Go To
+                                    Cart</button>
                             </div>
                             <br>
                             <h4><strong>Description</strong></h4>

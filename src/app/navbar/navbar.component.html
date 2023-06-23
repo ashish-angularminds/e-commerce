@@ -41,8 +41,11 @@
         </div>
 
         <div *ngIf="!navbar.flag" class="d-flex gap-4">
-            <button class="btn btn-outline-light" (click)="navbar.flag=false"
-                [routerLink]="'/setting/my-profile'">Become a Seller</button>
+            <button class="btn btn-outline-light border-0 rounded-5" (click)="navbar.flag=false"
+                [routerLink]="'/setting/my-profile'">Become a
+                Seller</button>
+            <button class="btn rounded-circle fs-5 btn-outline-light border-0" [routerLink]="'/shop/cart'"><i
+                    class="bi bi-cart3"></i></button>
             <button class="text-white p-0 fs-3 bg-transparent border-0">
                 <div class="dropstart" *ngIf="navbar.customerlogin">
                     <img class="rounded-circle" [src]="navbar.img" alt="" style="height: 30px; width: 30px;"

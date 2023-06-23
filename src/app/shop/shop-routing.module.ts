@@ -4,13 +4,15 @@ import { ListOfProductsComponent } from './list-of-products/list-of-products.com
 import { CustomerProfileComponent } from './customer-profile/customer-profile.component';
 import { ShopComponent } from './shop.component';
 import { CustomerGuard } from './guards/customer.guard';
+import { CartComponent } from './cart/cart.component';
 
 const routes: Routes = [
   {
     path: '', component: ShopComponent,
     children: [
       { path: '', component: ListOfProductsComponent },
-      { path: 'profile', component: CustomerProfileComponent, canActivate: [CustomerGuard] }
+      { path: 'profile', component: CustomerProfileComponent, canActivate: [CustomerGuard] },
+      { path: 'cart', loadChildren: () => import('./cart/cart.module').then(m => m.CartModule) },
     ]
   },
 ];

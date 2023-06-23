@@ -4,7 +4,7 @@ import { Router } from '@angular/router';
 import { NgxUiLoaderService } from 'ngx-ui-loader';
 import { NavbarService } from 'src/app/navbar/service/navbar.service';
 import { Store } from '@ngrx/store';
-import { Product } from 'src/app/cart/store/product';
+import { Product } from 'src/app/shop/cart/store/product';
 
 @Component({
   selector: 'app-list-of-products',

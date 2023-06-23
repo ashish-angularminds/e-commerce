@@ -14,6 +14,7 @@ export class NavbarComponent {
 
   ngOnInit() {
     this.checkroute();
+    this.navbarservice.changeprofilestate();
   }
 
   checkroute() {

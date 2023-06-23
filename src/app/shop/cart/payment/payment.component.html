@@ -1,0 +1,45 @@
+<div class="container d-flex align-items-center" style="min-height: 90vh;">
+    <div class="container row">
+        <div class="col d-flex justify-content-end">
+            <div class="card border-0 p-4 shadow rounded w-75 h-75 my-auto bg-gradient">
+                <div class="card-header bg-transparent border-0 w-100 d-flex justify-content-between">
+                    <h3 class="fw-bolder">Bank.</h3>
+                    <i>Credit</i>
+                </div>
+                <div class="card-body">
+                    <h4> {{card.cardNumber}} </h4>
+                    <h6> VALID THRU {{card.expiry }} </h6>
+                    <h6> CVV {{card.cvv}} </h6>
+                </div>
+                <div class="card-footer bg-transparent border-0">
+                    <h4> {{card.nameOnCard}} </h4>
+                </div>
+            </div>
+        </div>
+        <div class="col">
+            <form #paymentForm="ngForm" class="shadow rounded w-50 p-4" (ngSubmit)="placeorder()">
+                <div class="form-floating mb-3">
+                    <input type="text" class="form-control" id="floatingInput" placeholder="Card"
+                        [(ngModel)]="card.nameOnCard" name="Card" required="">
+                    <label for="floatingInput">Name on Card</label>
+                </div>
+                <div class="form-floating mb-3">
+                    <input type="text" class="form-control" id="floatingPassword" placeholder="Number"
+                        [(ngModel)]="card.cardNumber" name="Number" maxlength="16" minlength="16" required="">
+                    <label for="floatingPassword">Card Number</label>
+                </div>
+                <div class="form-floating mb-3">
+                    <input type="month" class="form-control" id="floatingDate" placeholder="Date"
+                        [(ngModel)]="expirydate" name="Date" required="">
+                    <label for="floatingDate">Expiry Date</label>
+                </div>
+                <div class="form-floating mb-3">
+                    <input type="text" maxlength="3" minlength="3" class="form-control" id="floatingCVV"
+                        placeholder="CVV" [(ngModel)]="card.cvv" name="CVV" required="">
+                    <label for="floatingCVV">CVV</label>
+                </div>
+                <button [disabled]="paymentForm.invalid" type="submit" class="btn btn-dark w-100">Place Order</button>
+            </form>
+        </div>
+    </div>
+</div>

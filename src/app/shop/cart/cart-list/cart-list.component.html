@@ -43,32 +43,31 @@
             </h2>
             <div id="collapseTwo" class="accordion-collapse collapse" aria-labelledby="headingTwo"
                 data-bs-parent="#accordionExample">
-                <div class="accordion-body">
-                    <div *ngIf="false" class="w-100 d-flex justify-content-center align-items-center flex-column py-5">
+                <div class="accordion-body" *ngIf="!(storelogin|async)">
+                    <h2>You are not Login!</h2>
+                </div>
+                <div class="accordion-body" *ngIf="storelogin|async">
+
+                    <div *ngIf="!(address|async)"
+                        class="w-100 d-flex justify-content-center align-items-center flex-column py-5">
                         <h5 class="text-dark-emphasis">No Address present</h5>
                         <button class="btn btn-lg btn-dark">Add Address</button>
                     </div>
-                    <div class="w-100">
+
+                    <div class="w-100" *ngIf="address|async">
                         <ul class="list-group list-group-flush">
-                            <li class="list-group-item">
-                                <input class="form-check-input me-1" type="radio" name="listGroupRadio" value=""
-                                    id="firstRadio" checked>
-                                <label class="form-check-label ps-2" for="firstRadio">
-                                    <address>First radio</address>
-                                </label>
-                            </li>
-                            <li class="list-group-item">
-                                <input class="form-check-input me-1" type="radio" name="listGroupRadio" value=""
-                                    id="secondRadio">
-                                <label class="form-check-label ps-2" for="secondRadio">
-                                    <address>First radio</address>
-                                </label>
-                            </li>
-                            <li class="list-group-item">
-                                <input class="form-check-input me-1" type="radio" name="listGroupRadio" value=""
-                                    id="thirdRadio">
-                                <label class="form-check-label ps-2" for="thirdRadio">
-                                    <address>First radio</address>
+                            <li class="list-group-item" *ngFor="let item of address|async;index as i">
+                                <input class="form-check-input me-1" type="radio" name="listGroupRadio" [value]="i"
+                                    [id]="i">
+                                <label class="form-check-label ps-2" [for]="i">
+                                    <address>
+                                        <i>
+                                            {{item.street}} <br>
+                                            {{item.addressLine2}} <br>
+                                            {{item.city}} <br>
+                                            {{item.state}}-{{item.pin}}
+                                        </i>
+                                    </address>
                                 </label>
                             </li>
                         </ul>

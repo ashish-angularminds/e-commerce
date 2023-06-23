@@ -13,7 +13,7 @@ import { CustomerRegistrationComponent } from './customer-registration/customer-
 import { CustomerLoginComponent } from './customer-login/customer-login.component';
 import { CustomerProfileComponent } from './customer-profile/customer-profile.component';
 import { StoreModule } from '@ngrx/store';
-import { cartReducer } from '../cart/store/cart.reducer';
+import { cartReducer } from './cart/store/cart.reducer';
 
 
 @NgModule({
