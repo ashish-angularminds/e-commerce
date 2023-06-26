@@ -51,7 +51,6 @@
                     <div *ngIf="!(address|async)"
                         class="w-100 d-flex justify-content-center align-items-center flex-column py-5">
                         <h5 class="text-dark-emphasis">No Address present</h5>
-                        <button class="btn btn-lg btn-dark">Add Address</button>
                     </div>
 
                     <div class="w-100" *ngIf="address|async">
@@ -72,6 +71,11 @@
                             </li>
                         </ul>
                     </div>
+                    <div class="w-100 d-flex justify-content-end border-top pt-3">
+                        <button class="btn btn-dark" routerLink="/shop/profile">Add
+                            Address</button>
+                    </div>
+
                 </div>
             </div>
         </div>

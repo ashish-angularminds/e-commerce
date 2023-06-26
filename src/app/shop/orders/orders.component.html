@@ -1,0 +1,84 @@
+<div class="container py-5">
+    <div class="card">
+        <div class="card-header">
+            <h2>Order History</h2>
+        </div>
+        <div class="card-body py-0">
+            <table class="table table-hover align-middle" style="border-spacing: 0 1em;border-collapse: separate;">
+                <tbody>
+                    <tr *ngFor="let item of orders;index as i" class=" shadow rounded" (click)="oneorder(item)"
+                        data-bs-toggle="modal" data-bs-target="#detailsmodel">
+                        <td class="">
+                            <img class="object-fit-cover img-thumbnail" style="width: 100px;aspect-ratio: 2/2;"
+                                [src]="getimages(item.items[0].name)">
+                        </td>
+                        <td class="px-4">
+                            <strong *ngFor="let subitem of item.items;index as in">
+                                {{subitem.name|description:'title'}}
+                                <b *ngIf="in<item.items.length-1">,</b>
+                            </strong>
+                            <br>
+                            <small> {{item.createdAt|date}} </small>
+                        </td>
+                        <td>{{item.status}}</td>
+                        <td class="pe-5"> {{item.total|currency:'INR'}} </td>
+                    </tr>
+                </tbody>
+            </table>
+
+        </div>
+    </div>
+</div>
+
+<!--------------------------------------- modal ----------------------------------->
+<div class="modal fade" id="detailsmodel" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
+    aria-labelledby="staticBackdropLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-xl">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h1 class="modal-title fs-5" id="staticBackdropLabel">Order Summary</h1>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"
+                    (click)="single=null"></button>
+            </div>
+            <div class="modal-body px-5" *ngIf="single">
+                <div class="row shadow rounded p-3">
+                    <div class="col">
+                        <address>
+                            <strong>Address</strong> <br>
+                            {{single?.address.addressLine2}} <br>
+                            {{single?.address.street}} <br>
+                            {{single?.address.city}} <br>
+                            {{single?.address.state}} - {{single?.address.pin}}
+                        </address>
+                    </div>
+                    <div class="col border-start">
+                        <h6> Total: {{single?.total|currency:'INR'}}</h6>
+                        <h6> Delivery Fee: {{single?.deliveryFee|currency:'INR'}}</h6>
+                        <h6> Payment Status: {{single?.paymentStatus}}</h6>
+                        <h6> Status: {{single?.status}}</h6>
+                        <h6> Created At: {{single?.createdAt|date}}</h6>
+                    </div>
+                </div>
+
+                <div class="row overflow-y-auto" style="max-height: 50vh;">
+                    <div class="row mx-auto w-75 my-3 shadow rounded p-3" *ngFor="let item of single?.items">
+                        <div class="col-1">
+                            <img class="img-fluid" [src]="getimages(item?.name)" alt="">
+                        </div>
+                        <div class="col">
+                            <h5>{{item?.name}}</h5>
+                            <h5> {{item?.price|currency:'INR'}} X {{item?.qty}}</h5>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-danger" (click)="cancelorder(single._id)" data-bs-dismiss="modal">
+                    Cancel Order </button>
+                <button type="button" class="btn btn-danger" *ngIf="single?.paymentStatus=='Pending'"
+                    [routerLink]="'/shop/cart/confirm/'+ single._id" data-bs-dismiss="modal">
+                    Complete Order(Pay)</button>
+            </div>
+        </div>
+    </div>
+</div>

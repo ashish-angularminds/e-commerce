@@ -5,6 +5,7 @@ import { CustomerProfileComponent } from './customer-profile/customer-profile.co
 import { ShopComponent } from './shop.component';
 import { CustomerGuard } from './guards/customer.guard';
 import { CartComponent } from './cart/cart.component';
+import { OrdersComponent } from './orders/orders.component';
 
 const routes: Routes = [
   {
@@ -13,7 +14,8 @@ const routes: Routes = [
       { path: '', component: ListOfProductsComponent },
       { path: 'profile', component: CustomerProfileComponent, canActivate: [CustomerGuard] },
       { path: 'cart', loadChildren: () => import('./cart/cart.module').then(m => m.CartModule) },
-    ]
+      { path: 'orders', component: OrdersComponent, canActivate: [CustomerGuard] },
+    ],
   },
 ];
 

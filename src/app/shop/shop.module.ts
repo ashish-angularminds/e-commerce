@@ -14,6 +14,7 @@ import { CustomerLoginComponent } from './customer-login/customer-login.componen
 import { CustomerProfileComponent } from './customer-profile/customer-profile.component';
 import { StoreModule } from '@ngrx/store';
 import { cartReducer } from './cart/store/cart.reducer';
+import { OrdersComponent } from './orders/orders.component';
 
 
 @NgModule({
@@ -24,6 +25,7 @@ import { cartReducer } from './cart/store/cart.reducer';
     CustomerRegistrationComponent,
     CustomerLoginComponent,
     CustomerProfileComponent,
+    OrdersComponent,
   ],
   imports: [
     CommonModule,
