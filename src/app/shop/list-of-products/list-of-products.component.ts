@@ -6,24 +6,32 @@ import { NavbarService } from 'src/app/navbar/service/navbar.service';
 import { Store } from '@ngrx/store';
 import { Product } from 'src/app/shop/cart/store/product';
 
+interface pag {
+  name?: string,
+  sortBy: string,
+  limit: number,
+  page: number
+}
+
 @Component({
   selector: 'app-list-of-products',
   templateUrl: './list-of-products.component.html',
   styleUrls: ['./list-of-products.component.css']
 })
+
 export class ListOfProductsComponent implements OnInit {
 
   constructor(private service: ProductsService, private router: Router, private loader: NgxUiLoaderService,
     private navbar: NavbarService, private store: Store<{ cart: { product: Product[] } }>) { }
 
   results: any;
-  pagination = {
-    // name:'',
+  pagination: pag = {
     sortBy: 'name',
-    limit: 5,
+    limit: 10,
     page: 1
   }
   des = '';
+  search = '';
 
   ngOnInit(): void {
     this.navbar.flag = false;
@@ -48,6 +56,16 @@ export class ListOfProductsComponent implements OnInit {
   }
 
   getproductslist() {
+    if (this.search.length > 0)
+      this.pagination.name = this.search;
+    else {
+      this.pagination = {
+        sortBy: 'name',
+        limit: 10,
+        page: 1
+      }
+    }
+
     this.service.getlist(this.pagination).subscribe(
       res => {
         console.log(res);

@@ -6,10 +6,10 @@
         <div class="card-body py-0">
             <table class="table table-hover align-middle" style="border-spacing: 0 1em;border-collapse: separate;">
                 <tbody>
-                    <tr *ngFor="let item of orders;index as i" class=" shadow rounded" (click)="oneorder(item)"
+                    <tr *ngFor="let item of orders;index as i" class=" shadow rounded" (click)="oneorder(item._id)"
                         data-bs-toggle="modal" data-bs-target="#detailsmodel">
                         <td class="">
-                            <img class="object-fit-cover img-thumbnail" style="width: 100px;aspect-ratio: 2/2;"
+                            <img class="object-fit-contain img-thumbnail" style="width: 100px;aspect-ratio: 2/2;"
                                 [src]="getimages(item.items[0].name)">
                         </td>
                         <td class="px-4">
@@ -37,8 +37,7 @@
         <div class="modal-content">
             <div class="modal-header">
                 <h1 class="modal-title fs-5" id="staticBackdropLabel">Order Summary</h1>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"
-                    (click)="single=null"></button>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body px-5" *ngIf="single">
                 <div class="row shadow rounded p-3">
@@ -72,12 +71,19 @@
                     </div>
                 </div>
             </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-danger" (click)="cancelorder(single._id)" data-bs-dismiss="modal"
-                    *ngIf="single?.status!=='Cancelled'"> Cancel Order </button>
-                <button type="button" class="btn btn-danger" *ngIf="single?.status=='Pending'"
-                    [routerLink]="'/shop/cart/confirm/'+ single._id" data-bs-dismiss="modal">
-                    Complete Order(Pay)</button>
+            <div class="modal-footer d-flex flex-row justify-content-between align-items-center">
+                <div class="input-group w-50 mb-3">
+                    <select class="form-select border border-black" id="selectaction"
+                        [disabled]="single?.status === 'Cancelled'">
+                        <option value="0" selected>Choose a action...</option>
+                        <option value="cancel">Cancel</option>
+                        <option value="dispatch">Dispatch</option>
+                        <option value="deliver">Deliver</option>
+                    </select>
+                </div>
+                <button type="button" class="btn btn-success" (click)="changeaction(single._id)"
+                    [disabled]="single?.status === 'Cancelled'">
+                    Submit </button>
             </div>
         </div>
     </div>

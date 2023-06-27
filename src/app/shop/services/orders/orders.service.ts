@@ -13,8 +13,8 @@ export class OrdersService {
     return header;
   }
 
-  get(token: string) {
-    return this.httpclient.get<any>('https://shop-api.ngminds.com/shop/orders', { headers: this.setheader(token) })
+  get(token: string, payload: any) {
+    return this.httpclient.get<any>('https://shop-api.ngminds.com/shop/orders', { headers: this.setheader(token), params: payload })
   }
 
   getsingle(token: string, id: string) {

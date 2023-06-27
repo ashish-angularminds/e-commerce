@@ -1,6 +1,6 @@
 <div class="container-fluid row py-2 px-0 m-0">
-    <div class="col-xxl-2 d-none d-xxl-block rounded mt-3 px-3 py-5 ms-2 me-3 sticky-xl-top shadow-lg"
-        style="height: 100%; width: auto; top: 70px;">
+    <div class="col-xxl-2 d-none d-xxl-block rounded mt-3 px-3 py-5 me-4 sticky-xl-top shadow-lg"
+        style="height: 100%; width: auto; top: 70px;margin-left: -10px;">
         <div class="d-flex justify-content-between">
             <h2 class="fw-bold">Filters</h2>
             <ul class="pagination" role="button">
@@ -19,8 +19,8 @@
         </div>
 
         <div class="form-floating my-2">
-            <input type="email" class="form-control border-black" id="floatingInput" placeholder="name@example.com">
-            <!-- [(ngModel)]="pagination.name" (keyup)="getproductslist()" -->
+            <input type="email" class="form-control border-black" id="floatingInput" placeholder="name@example.com"
+                [(ngModel)]="search" (keyup)="getproductslist()">
             <label for="floatingInput">Search</label>
         </div>
 
@@ -37,7 +37,6 @@
         <div class="form-floating">
             <select class="form-select border-black" id="limit" [(ngModel)]="pagination.limit"
                 aria-label="Floating label select example" (click)="getproductslist()">
-                <option value="5">5</option>
                 <option value="10">10</option>
                 <option value="20">20</option>
                 <option value="40">40</option>
@@ -49,9 +48,9 @@
     </div>
     <div class="col-xxl-10 col-lg-12 p-0 row">
         <div class="col-lg-4 col-md-6 col-sm-12 g-3" *ngFor="let item of results">
-            <div class="card shadow-lg border-0 rounded-3" style="max-width: 540px;" (click)="singleProduct(item,checkcart(item))"
-                data-bs-toggle="modal" data-bs-target="#singleproduct">
-                <div class="row g-0">
+            <div class="card shadow-lg border-0 rounded-3" style="max-width: 540px;"
+                (click)="singleProduct(item,checkcart(item))" data-bs-toggle="modal" data-bs-target="#singleproduct">
+                <div class="row g-0" style="min-height: 250px;">
                     <div class="col-md-6">
                         <img [src]="item.images[0].url"
                             style="height: 250px; object-position: left;border-radius: 10px 0 0 10px;"
@@ -61,11 +60,12 @@
                         <div class="card-body">
                             <h5 class="card-title text-capitalize ls lh-1 text-wrap m-0 p-0 fw-bold">
                                 {{item.name | description:'title'}}</h5>
-                            <div class="w-100 bg-black my-1" style="height: 1px;"></div>
-                            <h6 class="card-text mb-0">
+                            <div class="w-100 bg-black my-1"></div>
+                            <h6 class="card-text mb-0" style="max-width: 176px;">
                                 <b>Description:<br></b>
                             </h6>
-                            <p [innerHTML]="item.description |description:'description'"></p>
+                            <p style="overflow-wrap: anywhere;"
+                                [innerHTML]="item.description |description:'description'"></p>
                             <h5 class="card-text">
                                 {{item.price| currency:'INR'}}
                             </h5>

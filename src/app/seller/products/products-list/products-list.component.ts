@@ -14,7 +14,7 @@ export class ProductsListComponent implements OnInit {
 
   pagination = {
     sortBy: 'name',
-    limit: 6,
+    limit: 10,
     page: 1
   };
   results: any = [];

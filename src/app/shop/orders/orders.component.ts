@@ -20,8 +20,9 @@ export class OrdersComponent implements OnInit {
   }
 
   loadall() {
-    this.service.get(localStorage.getItem('loginuser')!).subscribe(data => {
+    this.service.get(localStorage.getItem('loginuser')!, { limit: 100 }).subscribe(data => {
       this.orders = data.results;
+      console.log(data);
       this.orders.forEach((item: any) => {
         item.items.forEach((it: any) => {
           this.ProductsService.getlist({ name: it.name }).subscribe(data => {
@@ -38,11 +39,6 @@ export class OrdersComponent implements OnInit {
   oneorder(item: any) {
     // console.log(item);
     this.single = item;
-    this.single.items.forEach((data: any) => {
-      this.ProductsService.getlist({ name: data.name }).subscribe(data => {
-        this.images.push(data);
-      });
-    })
   }
 
   getimages(n: string) {
