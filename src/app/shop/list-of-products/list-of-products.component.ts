@@ -60,9 +60,9 @@ export class ListOfProductsComponent implements OnInit {
       this.pagination.name = this.search;
     else {
       this.pagination = {
-        sortBy: 'name',
-        limit: 10,
-        page: 1
+        sortBy: this.pagination.sortBy,
+        limit: this.pagination.limit,
+        page: this.pagination.page
       }
     }
 
