@@ -6,7 +6,9 @@ import { Injectable } from '@angular/core';
 })
 export class ProductsService {
 
-  constructor(private httpclient:HttpClient) { }
+  constructor(private httpclient: HttpClient) { }
+
+  flag: boolean = false;
 
   getlist(pagination: any) {
     return this.httpclient.get<any>('https://shop-api.ngminds.com/shop/products', { params: pagination });

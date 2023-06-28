@@ -61,14 +61,14 @@
                             <h5 class="card-title text-capitalize ls lh-1 text-wrap m-0 p-0 fw-bold">
                                 {{item.name | description:'title'}}</h5>
                             <div class="w-100 bg-black my-1"></div>
-                            <h6 class="card-text mb-0" style="max-width: 176px;">
+                            <small class="card-text mb-0" style="max-width: 176px;">
                                 <b>Description:<br></b>
+                            </small>
+                            <small class="" style="overflow-wrap: anywhere;"
+                                [innerHTML]="item.description |description:''"></small>
+                            <h6 class="card-text mt-2" [appDeal]="item.deal"
+                                [innerText]="item.price|customeCurrency:'INR'">
                             </h6>
-                            <p style="overflow-wrap: anywhere;"
-                                [innerHTML]="item.description |description:'description'"></p>
-                            <h5 class="card-text">
-                                {{item.price| currency:'INR'}}
-                            </h5>
                         </div>
                     </div>
                 </div>
@@ -76,4 +76,4 @@
         </div>
     </div>
 </div>
-<app-single-product [product]="product" [cartproduct]="cartproduct"></app-single-product>
+<app-single-product *ngIf="flagcheck()" [product]="product" [cartproduct]="cartproduct"></app-single-product>

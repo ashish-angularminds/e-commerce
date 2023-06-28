@@ -9,7 +9,6 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { SweetAlert2Module } from '@sweetalert2/ngx-sweetalert2';
 import { NgxDropzoneModule } from 'ngx-dropzone';
 import { NgxEditorModule } from 'ngx-editor';
-import { DescriptionPipe } from 'src/app/pipe/description.pipe';
 import { HomeModule } from 'src/app/home/home.module';
 
 @NgModule({

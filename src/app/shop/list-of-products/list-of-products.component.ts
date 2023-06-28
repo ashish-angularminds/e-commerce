@@ -40,21 +40,6 @@ export class ListOfProductsComponent implements OnInit {
     this.store.select('cart').subscribe(data => this.cartdata = data);
   }
 
-  loadTitle(str: string) {
-    let text = '';
-    for (let i = 0; i < 40; i++) {
-      text += str[i];
-    }
-    return text;
-  }
-  loadDes(str: string) {
-    let text = '';
-    for (let i = 0; i < 80; i++) {
-      text += str[i];
-    }
-    return text;
-  }
-
   getproductslist() {
     if (this.search.length > 0)
       this.pagination.name = this.search;
@@ -103,7 +88,12 @@ export class ListOfProductsComponent implements OnInit {
   product: any;
   cartproduct: Product | undefined;
   singleProduct(prod: any, pd: any) {
+    this.service.flag = true;
     this.product = prod;
     this.cartproduct = pd;
+  }
+
+  flagcheck() {
+    return this.service.flag;
   }
 }

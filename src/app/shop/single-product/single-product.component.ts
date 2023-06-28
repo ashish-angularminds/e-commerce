@@ -2,6 +2,7 @@ import { Component, Input, OnInit } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { addproduct } from 'src/app/shop/cart/store/cart.actions';
 import { Product } from 'src/app/shop/cart/store/product';
+import { ProductsService } from '../services/products.service';
 
 @Component({
   selector: 'app-single-product',
@@ -10,9 +11,9 @@ import { Product } from 'src/app/shop/cart/store/product';
 })
 export class SingleProductComponent implements OnInit {
 
-  constructor(private store: Store<{ cart: { product: Product[] } }>) { }
+  constructor(private service: ProductsService, private store: Store<{ cart: { product: Product[] } }>) { }
 
-  @Input() product: any;
+  @Input() product: any = {};
   @Input() cartproduct: Product | undefined;
 
   selectedimg: any;
@@ -32,5 +33,9 @@ export class SingleProductComponent implements OnInit {
     this.store.dispatch(addproduct({ product: p }));
     this.store.select('cart').subscribe(data => localStorage.setItem('cart', JSON.stringify(data)));
     this.cartproduct = p;
+  }
+
+  checkflag() {
+    this.service.flag = false;
   }
 }

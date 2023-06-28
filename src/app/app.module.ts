@@ -15,9 +15,9 @@ import { environment } from './environment';
 import { NavbarComponent } from './navbar/navbar.component';
 import { SidebarComponent } from './sidebar/sidebar.component';
 import { SweetAlert2Module } from '@sweetalert2/ngx-sweetalert2';
-import { DescriptionPipe } from './pipe/description.pipe';
 import { StoreModule } from '@ngrx/store';
 import { StoreDevtoolsModule } from '@ngrx/store-devtools';
+import { CustomeCurrencyPipe } from './pipe/custome-currency.pipe';
 
 const ngxUiLoaderConfig: NgxUiLoaderConfig = {
   "bgsColor": "#000000",

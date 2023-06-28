@@ -15,6 +15,7 @@ import { CustomerProfileComponent } from './customer-profile/customer-profile.co
 import { StoreModule } from '@ngrx/store';
 import { cartReducer } from './cart/store/cart.reducer';
 import { OrdersComponent } from './orders/orders.component';
+import { DealDirective } from '../directives/deal.directive';
 
 
 @NgModule({
@@ -26,6 +27,7 @@ import { OrdersComponent } from './orders/orders.component';
     CustomerLoginComponent,
     CustomerProfileComponent,
     OrdersComponent,
+    DealDirective
   ],
   imports: [
     CommonModule,
