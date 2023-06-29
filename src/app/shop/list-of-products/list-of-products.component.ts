@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { ProductsService } from '../services/products.service';
 import { Router } from '@angular/router';
 import { NgxUiLoaderService } from 'ngx-ui-loader';
@@ -53,7 +53,6 @@ export class ListOfProductsComponent implements OnInit {
 
     this.service.getlist(this.pagination).subscribe(
       res => {
-        console.log(res);
         this.results = res.results;
         this.loader.stop();
       },
@@ -76,7 +75,6 @@ export class ListOfProductsComponent implements OnInit {
   cartdata: any;
   checkcart(item: any) {
     let pd: any | undefined;
-    console.log(this.cartdata);
     this.cartdata.products.forEach((data: Product) => {
       if (item._id === data.productId) {
         pd = data;
@@ -85,15 +83,13 @@ export class ListOfProductsComponent implements OnInit {
     return pd;
   }
 
-  product: any;
   cartproduct: Product | undefined;
   singleProduct(prod: any, pd: any) {
-    this.service.flag = true;
-    this.product = prod;
+    this.service.product.next(prod);
     this.cartproduct = pd;
+    this.service.product.next(prod);
+    this.trigger[0].nativeElement.click();
   }
 
-  flagcheck() {
-    return this.service.flag;
-  }
+  trigger!: ElementRef[];
 }

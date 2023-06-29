@@ -25,7 +25,7 @@ export class CompanysettingComponent implements OnInit {
   }
   @Output() selectedid: any;
 
-  
+
   org = {
     name: '',
     email: ''
@@ -59,7 +59,7 @@ export class CompanysettingComponent implements OnInit {
     this.loader.start();
     this.settingservice.getuser(this.pagination).subscribe(data => {
       this.users = data;
-      this.companyname = this.users.at(0)._org.name as string;
+      this.companyname = this.users.at(0)?._org.name as string;
       this.loader.stop();
     });
   }
@@ -111,5 +111,5 @@ export class CompanysettingComponent implements OnInit {
         console.log(err);
       }
     )
-  } 
+  }
 }

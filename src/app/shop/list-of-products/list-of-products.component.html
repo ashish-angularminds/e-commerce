@@ -49,7 +49,7 @@
     <div class="col-xxl-10 col-lg-12 p-0 row">
         <div class="col-lg-4 col-md-6 col-sm-12 g-3" *ngFor="let item of results">
             <div class="card shadow-lg border-0 rounded-3" style="max-width: 540px;"
-                (click)="singleProduct(item,checkcart(item))" data-bs-toggle="modal" data-bs-target="#singleproduct">
+                (click)="singleProduct(item,checkcart(item))">
                 <div class="row g-0" style="min-height: 250px;">
                     <div class="col-md-6">
                         <img [src]="item.images[0].url"
@@ -76,4 +76,4 @@
         </div>
     </div>
 </div>
-<app-single-product *ngIf="flagcheck()" [product]="product" [cartproduct]="cartproduct"></app-single-product>
+<app-single-product [cartproduct]="cartproduct" (trigger)="trigger=$event"></app-single-product>

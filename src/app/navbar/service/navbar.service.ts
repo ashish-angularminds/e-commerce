@@ -13,17 +13,11 @@ export class NavbarService {
   sellerlogin = localStorage.getItem('activeuser');
   img: any;
 
-  check() {
-    this.customerlogin = localStorage.getItem('loginuser');
-    this.sellerlogin = localStorage.getItem('activeuser');
-  }
   changeprofilestate() {
     this.customerlogin = localStorage.getItem('loginuser');
-    if (this.customerlogin) {
-      this.service.get(this.customerlogin).subscribe(res => {
-        this.img = res.picture;
-        console.log(res);
-      });
-    }
+    this.service.get(this.customerlogin!).subscribe(res => {
+      this.img = res.picture;
+    });
+
   }
 }

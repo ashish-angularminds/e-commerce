@@ -1,5 +1,6 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { Injectable } from '@angular/core';
+import { Injectable, OnInit } from '@angular/core';
+import { BehaviorSubject } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
@@ -20,4 +21,7 @@ export class CartService {
   pay(token: string, payload: any, id: string) {
     return this.httpclient.put<any>(`https://shop-api.ngminds.com/shop/orders/confirm/${id}`, payload, { headers: this.setheader(token) })
   }
+
+
+  login = new BehaviorSubject<boolean>(false);
 }

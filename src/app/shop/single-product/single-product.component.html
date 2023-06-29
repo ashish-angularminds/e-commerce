@@ -3,37 +3,37 @@
     <div class="modal-dialog modal-xl modal-dialog-centered">
         <div class="modal-content">
             <button type="button" class="btn-close m-3 position-absolute top-0 end-0 z-1" data-bs-dismiss="modal"
-                aria-label="Close" (click)="selectedimg=null;cartproduct=undefined;product=null;checkflag()"></button>
+                aria-label="Close" (click)="selectedimg=null;emptyitem()"></button>
 
-            <div class="modal-body">
+            <div class="modal-body" *ngIf="item">
                 <div class="container p-4">
                     <div class="row column-gap-2">
                         <div class="col-auto d-flex flex-md-column flex-row overflow-auto" style="height: 450px;">
-                            <div *ngFor="let item of product?.images">
+                            <div *ngFor="let item of item?.images">
                                 <img [src]="item.url" style="height: 100px;width: 100px;"
                                     class="img-thumbnail object-fit-contain my-1" (click)="selectedimg=item.url">
                             </div>
                         </div>
                         <div class="col-3">
-                            <img [src]="selectedimg? selectedimg:product?.images[0]?.url" class="img-fluid">
+                            <img [src]="selectedimg? selectedimg:item?.images[0]?.url" class="img-fluid">
                         </div>
                         <div class="col overflow-auto" style="height: 70vh;">
-                            <h3 class="fw-bolder text-capitalize" style="word-spacing: -2px">{{product?.name}}</h3>
+                            <h3 class="fw-bolder text-capitalize" style="word-spacing: -2px">{{item?.name}}</h3>
                             <div class="line w-auto bg-black me-5 my-3" style="height: 1px;"></div>
                             <div class="d-flex justify-content-between">
-                                <h6 class="card-text mt-2" [appDeal]="product?.deal"
-                                    [innerText]="product?.price|customeCurrency:'INR'">
-                                </h6>
-                                <button class="btn btn-outline-success" (click)="add()" *ngIf="!cartproduct">Add To
-                                    Cart</button>
+                                <h4 class="card-text mt-2" [appDeal]="item?.deal"
+                                    [innerText]="item?.price|customeCurrency:'INR'">
+                                </h4>
+                                <button class="btn btn-outline-success" (click)="add()" *ngIf="!cartproduct"
+                                    style="height: fit-content;"> Add To Cart</button>
                                 <button class="btn btn-outline-primary" [routerLink]="'/shop/cart'"
-                                    data-bs-dismiss="modal" *ngIf="cartproduct" (click)="cartproduct=undefined">Go To
-                                    Cart</button>
+                                    data-bs-dismiss="modal" *ngIf="cartproduct" style="height: fit-content;">
+                                    Go To Cart</button>
                             </div>
                             <br>
                             <h4><strong>Description</strong></h4>
                             <br>
-                            <p [innerHTML]="product?.description"></p>
+                            <p [innerHTML]="item?.description"></p>
                         </div>
                     </div>
                 </div>
@@ -41,5 +41,6 @@
             </div>
         </div>
     </div>
+    <button hidden data-bs-dismiss="modal" #close></button>
+    <button hidden data-bs-toggle="modal" data-bs-target="#singleproduct" #open></button>
 </div>
-aaaallaaaa

@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { ActivatedRoute, Event, NavigationEnd, Router } from '@angular/router';
 import { NavbarService } from './service/navbar.service';
+import { CartService } from '../shop/services/cart/cart.service';
 
 @Component({
   selector: 'app-navbar',
@@ -8,7 +9,8 @@ import { NavbarService } from './service/navbar.service';
   styleUrls: ['./navbar.component.css']
 })
 export class NavbarComponent {
-  constructor(private router: Router, private navbarservice: NavbarService, private activted: ActivatedRoute) { }
+  constructor(private router: Router, private navbarservice: NavbarService, private activted: ActivatedRoute,
+    private cartservice: CartService) { }
 
   navbar = this.navbarservice;
 
@@ -45,13 +47,12 @@ export class NavbarComponent {
     if ((/profile/.test(this.router.url))) {
       this.router.navigate(["/"]);
     }
-    this.navbarservice.check();
+    this.cartservice.login.next(false);
   }
 
   logoutseller() {
     localStorage.removeItem('activeuser');
     this.router.navigate(['auth/login']);
-    this.navbarservice.check();
   }
 
 }

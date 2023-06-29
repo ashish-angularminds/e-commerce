@@ -1,8 +1,9 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, ElementRef, EventEmitter, Input, OnInit, Output, ViewChild } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { addproduct } from 'src/app/shop/cart/store/cart.actions';
 import { Product } from 'src/app/shop/cart/store/product';
 import { ProductsService } from '../services/products.service';
+import { pluck } from 'rxjs';
 
 @Component({
   selector: 'app-single-product',
@@ -13,29 +14,36 @@ export class SingleProductComponent implements OnInit {
 
   constructor(private service: ProductsService, private store: Store<{ cart: { product: Product[] } }>) { }
 
-  @Input() product: any = {};
-  @Input() cartproduct: Product | undefined;
-
+  @Input() cartproduct: any;
   selectedimg: any;
-  cartdata: any;
+  item: any;
+
+  @ViewChild('close', { static: true }) close!: ElementRef;
+  @ViewChild('open', { static: true }) open!: ElementRef;
+  @Output() trigger = new EventEmitter<ElementRef[]>();
 
   ngOnInit(): void {
+    this.trigger.emit([this.open, this.close]);
+    this.service.product.subscribe(res => {
+      this.item = res;
+    });
   }
 
   add() {
     let p: Product = {
-      productId: this.product._id,
-      name: this.product.name,
-      price: this.product.price,
+      productId: this.item._id,
+      name: this.item.name,
+      price: this.item.price,
       qty: 1,
-      subTotal: this.product.price
+      subTotal: this.item.price
     }
     this.store.dispatch(addproduct({ product: p }));
     this.store.select('cart').subscribe(data => localStorage.setItem('cart', JSON.stringify(data)));
-    this.cartproduct = p;
+    this.cartproduct = true;
   }
 
-  checkflag() {
-    this.service.flag = false;
+  emptyitem() {
+    this.service.product.next(undefined);
   }
+
 }

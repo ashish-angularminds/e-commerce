@@ -4,6 +4,7 @@ import { Product } from '../store/product';
 import { addproduct, checkprice, decreaseqty, increaseqty, removeproduct } from '../store/cart.actions';
 import { Observable, pluck } from 'rxjs';
 import { CustomerService } from '../../services/customer/customer.service';
+import { CartService } from '../../services/cart/cart.service';
 
 @Component({
   selector: 'app-cart-list',
@@ -12,16 +13,25 @@ import { CustomerService } from '../../services/customer/customer.service';
 })
 export class CartListComponent implements OnInit {
 
-  constructor(private service: CustomerService, private store: Store<{ cart: { product: Product[] } }>) { }
+  constructor(private service: CustomerService, private cartservice: CartService,
+    private store: Store<{ cart: { product: Product[] } }>) { }
 
   outputproducts$: Observable<any> = this.store.select('cart').pipe(pluck('products'));
   storelogin: Observable<any> = this.store.select('cart').pipe(pluck('login'));
-  address = this.service.getaddress(localStorage.getItem('loginuser')!);
+  address: any;
 
   i = 0;
   id: any;
+  loginflag: boolean = true;
   ngOnInit(): void {
+    if (localStorage.getItem('loginuser')) {
+      this.cartservice.login.next(true);
+    }
 
+    this.cartservice.login.subscribe(res => {
+      this.loginflag = res;
+      this.address = this.service.getaddress(localStorage.getItem('loginuser')!);
+    });
   }
 
   inc(id: string) {

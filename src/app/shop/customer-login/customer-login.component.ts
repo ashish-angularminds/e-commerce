@@ -6,6 +6,7 @@ import Swal from 'sweetalert2';
 import { Store } from '@ngrx/store';
 import { Product } from '../cart/store/product';
 import { checklogin } from '../cart/store/cart.actions';
+import { CartService } from '../services/cart/cart.service';
 
 @Component({
   selector: 'app-customer-login',
@@ -15,6 +16,7 @@ import { checklogin } from '../cart/store/cart.actions';
 export class CustomerLoginComponent implements OnInit {
 
   constructor(private service: CustomerService, private recaptchaV3Service: ReCaptchaV3Service,
+    private cartservice: CartService,
     private navbar: NavbarService, private store: Store<{ cart: { product: Product[] } }>) { }
 
   Toast = Swal.mixin({
@@ -49,7 +51,6 @@ export class CustomerLoginComponent implements OnInit {
       console.log(token);
       this.service.login(this.user).subscribe(
         (res: any) => {
-          console.log(res);
           localStorage.setItem('loginuser', res.token);
           this.navbar.customerlogin = localStorage.getItem('loginuser');
           this.navbar.changeprofilestate();
@@ -58,6 +59,7 @@ export class CustomerLoginComponent implements OnInit {
             title: 'Login Successful'
           });
           this.store.dispatch(checklogin());
+          this.cartservice.login.next(true);
         },
         err => {
           console.log(err);

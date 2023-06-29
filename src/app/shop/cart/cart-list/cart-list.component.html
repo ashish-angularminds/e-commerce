@@ -43,10 +43,10 @@
             </h2>
             <div id="collapseTwo" class="accordion-collapse collapse" aria-labelledby="headingTwo"
                 data-bs-parent="#accordionExample">
-                <div class="accordion-body" *ngIf="!(storelogin|async)">
+                <div class="accordion-body" *ngIf="!loginflag">
                     <h2>You are not Login!</h2>
                 </div>
-                <div class="accordion-body" *ngIf="storelogin|async">
+                <div class="accordion-body" *ngIf="loginflag">
 
                     <div *ngIf="!(address|async)"
                         class="w-100 d-flex justify-content-center align-items-center flex-column py-5">

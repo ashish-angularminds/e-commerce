@@ -1,52 +1,37 @@
-<div class="container">
-    <div
-        class="d-flex p-2 justify-content-between align-items-center bg-dark text-white my-5 rounded">
-        <button class="btn border-0 text-white rounded-5"
-            [routerLink]="'/setting/my-profile'">
+<div class="container d-grid">
+    <div class="d-flex p-2 justify-content-between align-items-center bg-dark text-white my-5 rounded">
+        <button class="btn border-0 text-white rounded-5" [routerLink]="'/setting/my-profile'">
             <i class="bi bi-arrow-left"></i>
         </button>
 
         <div class="dropdown d-flex">
             <h3 class="m-0 p-0">{{companyname}}</h3>
-            <button type="button"
-                class="p-1 ms-1 bg-dark border-0 text-white"
-                data-bs-toggle="dropdown" aria-expanded="false"
-                data-bs-auto-close="outside" (click)="loadorg()">
+            <button type="button" class="p-1 ms-1 bg-dark border-0 text-white" data-bs-toggle="dropdown"
+                aria-expanded="false" data-bs-auto-close="outside" (click)="loadorg()">
                 <i class="bi bi-vector-pen small"></i>
             </button>
             <form class="dropdown-menu p-4" style="width: 250px;">
                 <div class="mb-3">
-                    <input type="text" class="form-control border-dark"
-                        id="exampleDropdownFormPassword2" placeholder="Name"
-                        name="name" [(ngModel)]="org.name">
+                    <input type="text" class="form-control border-dark" id="exampleDropdownFormPassword2"
+                        placeholder="Name" name="name" [(ngModel)]="org.name">
                 </div>
                 <div class="mb-3">
-                    <input type="email" class="form-control border-dark"
-                        id="exampleDropdownFormEmail2"
-                        placeholder="email@example.com"
-                        name="email"
-                        [(ngModel)]="org.email">
+                    <input type="email" class="form-control border-dark" id="exampleDropdownFormEmail2"
+                        placeholder="email@example.com" name="email" [(ngModel)]="org.email">
                 </div>
-                <button type="submit" class="btn btn-outline-dark"
-                    (click)="updateorg()">Submit</button>
+                <button type="submit" class="btn btn-outline-dark" (click)="updateorg()">Submit</button>
             </form>
         </div>
         <div class="btn-group">
-            <button
-                class="mx-2 rounded-5 bg-dark text-white fw-bold fs-4 border-0 p-0"
-                type="button" data-bs-toggle="dropdown"
-                data-bs-auto-close="true" aria-expanded="false">
+            <button class="mx-2 rounded-5 bg-dark text-white fw-bold fs-4 border-0 p-0" type="button"
+                data-bs-toggle="dropdown" data-bs-auto-close="true" aria-expanded="false">
                 <i class="bi bi-list"></i>
             </button>
             <ul class="dropdown-menu">
-                <li><a type="button"
-                        class="dropdown-item"
-                        data-bs-toggle="modal"
-                        data-bs-target="#exampleModal" data-bs-whatever="@mdo">
+                <li><a type="button" class="dropdown-item" data-bs-toggle="modal" data-bs-target="#exampleModal"
+                        data-bs-whatever="@mdo">
                         Create User</a></li>
-                <li><a class="dropdown-item"
-                        data-bs-toggle="modal"
-                        data-bs-target="#userpasswordModal">
+                <li><a class="dropdown-item" data-bs-toggle="modal" data-bs-target="#userpasswordModal">
                         Change Password</a></li>
             </ul>
         </div>
@@ -64,45 +49,31 @@
                 </thead>
                 <tbody>
                     <tr *ngFor="let u of users">
-                        <th scope="col"><input
-                                class="form-control border-0 bg-white text-center"
-                                type="text"
+                        <th scope="col"><input class="form-control border-0 bg-white text-center" type="text"
                                 [value]="u.email" disabled></th>
                         <!-- <th><input class="form-control border-0 bg-white"
                                 type="text"
                                 value="Password" disabled></th> -->
-                        <th><input
-                                class="form-control border-0 bg-white text-center"
-                                type="text"
-                                [value]="u.name" disabled></th>
-                        <th><input
-                                class="form-control border-0 bg-white text-center"
-                                type="text"
-                                [value]="u.role" disabled></th>
+                        <th><input class="form-control border-0 bg-white text-center" type="text" [value]="u.name"
+                                disabled></th>
+                        <th><input class="form-control border-0 bg-white text-center" type="text" [value]="u.role"
+                                disabled></th>
                         <th class="d-flex justify-content-center">
                             <div class="dropdown">
-                                <button class="btn btn-outline-dark"
-                                    type="button" data-bs-toggle="dropdown"
+                                <button class="btn btn-outline-dark" type="button" data-bs-toggle="dropdown"
                                     aria-expanded="false" (click)="change(u)">
                                     Update
                                 </button>
-                                <ul class="dropdown-menu"
-                                    (click)="selectedid=u._id">
-                                    <li><a class="dropdown-item"
-                                            data-bs-toggle="modal"
-                                            data-bs-target="#roleModal">
+                                <ul class="dropdown-menu" (click)="selectedid=u._id">
+                                    <li><a class="dropdown-item" data-bs-toggle="modal" data-bs-target="#roleModal">
                                             User Role
                                         </a>
                                     </li>
-                                    <li><a class="dropdown-item"
-                                            data-bs-toggle="modal"
-                                            data-bs-target="#infoModal">
+                                    <li><a class="dropdown-item" data-bs-toggle="modal" data-bs-target="#infoModal">
                                             User Info
                                         </a>
                                     </li>
-                                    <li><a class="dropdown-item"
-                                            data-bs-toggle="modal"
-                                            data-bs-target="#passModal">
+                                    <li><a class="dropdown-item" data-bs-toggle="modal" data-bs-target="#passModal">
                                             User Password
                                         </a>
                                     </li>
@@ -119,8 +90,7 @@
     <div class="row mt-2 d-flex justify-content-between">
         <div class="col-2">
             <ul class="pagination text-dark">
-                <li *ngFor="let i of pages" class="page-item"
-                    [className]="pagination.page==i+1? 'active':'page-item'">
+                <li *ngFor="let i of pages" class="page-item" [className]="pagination.page==i+1? 'active':'page-item'">
                     <a class="page-link" (click)="changepage(i+1)">{{i+1}}</a>
                 </li>
             </ul>
@@ -128,8 +98,7 @@
         <div class="col-2">
             <div class="input-group mb-3">
                 <label class="input-group-text" for="inputGroupSelect01">Sort by</label>
-                <select class="form-select" id="inputGroupSelect01"
-                    [(ngModel)]="pagination.sortBy" name="sortby"
+                <select class="form-select" id="inputGroupSelect01" [(ngModel)]="pagination.sortBy" name="sortby"
                     (change)="loadlist()">
                     <option value="role">Role</option>
                     <option value="name">Name</option>
@@ -139,35 +108,29 @@
     </div>
 </div>
 
-<div class="modal fade" id="passModal" tabindex="-1"
-    aria-labelledby="exampleModalLabel" aria-hidden="true">
+<div class="modal fade" id="passModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
                 <h1 class="modal-title fs-5" id="exampleModalLabel">Change
                     Password</h1>
-                <button type="button" class="btn-close" data-bs-dismiss="modal"
-                    aria-label="Close"></button>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
                 <div class="form-floating mb-3">
-                    <input type="password" name="password"
-                        [(ngModel)]="userpass.password"
-                        class="form-control border-dark"
-                        placeholder="Password" required>
+                    <input type="password" name="password" [(ngModel)]="userpass.password"
+                        class="form-control border-dark" placeholder="Password" required>
                     <label for="floatingInput">Password</label>
                 </div>
             </div>
             <div class="modal-footer">
-                <button class="btn btn-dark" (click)="changepassword()"
-                    data-bs-dismiss="modal">Submit</button>
+                <button class="btn btn-dark" (click)="changepassword()" data-bs-dismiss="modal">Submit</button>
             </div>
         </div>
     </div>
 </div>
 
-<app-changeinfo [infouser]="infouser" [selectedid]="selectedid"
-    *ngIf="flag"></app-changeinfo>
+<app-changeinfo [infouser]="infouser" [selectedid]="selectedid" *ngIf="flag"></app-changeinfo>
 <app-adduser></app-adduser>
 <app-changerole [selectedid]="selectedid"></app-changerole>
 <app-changemypassword></app-changemypassword>
