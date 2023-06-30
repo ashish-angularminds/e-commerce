@@ -5,12 +5,12 @@ import { Directive, ElementRef, Input, OnInit } from '@angular/core';
 })
 export class DealDirective implements OnInit {
 
-  constructor(private elmRef: ElementRef) { }
+  constructor(private elmRef: ElementRef<any>) { }
 
   @Input() appDeal: any;
-
+  org: any;
   ngOnInit(): void {
-    let org = this.elmRef.nativeElement.textContent;
+    this.org = this.elmRef.nativeElement.textContent;
     if (this.appDeal) {
       let end: Date = new Date(this.appDeal?.ends);
       setInterval(() => {
@@ -24,11 +24,11 @@ export class DealDirective implements OnInit {
         let sec = diff - ((day * 86400) + (hour * 3600) + (min * 60));
         sec = (Math.ceil(sec * 1) / 1) - 1;
         let str = 'Deal ends in ' + day + 'Days ' + hour + ':' + min + ':' + sec;
-        this.elmRef.nativeElement.innerHTML = `<strong><del>${org}</del> ₹${this.appDeal?.price}</strong> <br><small>(${this.appDeal?.discount} discount) <br>${str}<small>`;
+        this.elmRef.nativeElement.innerHTML = `<strong><del>${this.org}</del> ₹${this.appDeal?.price}</strong> <br><small>(${this.appDeal?.discount} discount) <br>${str}<small>`;
       }, 1000)
     }
     else {
-      this.elmRef.nativeElement.innerHTML = `<strong>${org}</strong>`;
+      this.elmRef.nativeElement.innerHTML = `<strong>${this.org}</strong>`;
     }
   }
 }

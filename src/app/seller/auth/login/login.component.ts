@@ -109,7 +109,7 @@ export class LoginComponent implements OnInit {
           this.loader.stop();
           this.Toast.fire({
             icon: 'success',
-            title: 'Login successfully',
+            title: 'Email Sent',
             text: 'Check your email'
           });
         },
@@ -117,7 +117,6 @@ export class LoginComponent implements OnInit {
           this.loader.stop();
           this.Toast.fire({
             icon: 'error',
-            title: 'Authentication failed',
             text: err.error.message
           });
         }

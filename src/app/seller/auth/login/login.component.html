@@ -1,67 +1,53 @@
-<div
-    class="container min-vh-100 d-flex justify-content-center align-items-center w-100">
+<div class="container min-vh-100 d-flex justify-content-center align-items-center w-100">
     <div class="row w-100 d-flex justify-content-center">
         <div class="col-4">
             <form #loginForm="ngForm" (ngSubmit)="login()" class="card border-0
                 shadow-lg p-5">
                 <div class="form-floating mb-3">
-                    <input type="email" name="email"
-                        [(ngModel)]="loginUser.email"
-                        class="form-control border-dark" placeholder="Email
+                    <input type="email" name="email" [(ngModel)]="loginUser.email" class="form-control border-dark"
+                        placeholder="Email
                         address">
                     <label for="floatingInput">Email address</label>
                 </div>
                 <br>
                 <div class="form-floating mb-3">
-                    <input type="password" name="password"
-                        [(ngModel)]="loginUser.password"
+                    <input type="password" name="password" [(ngModel)]="loginUser.password"
                         class="form-control border-dark" placeholder="Password">
                     <label for="floatingInput">Password</label>
                 </div>
                 <button class="btn btn-dark mt-3">Login</button>
-                <a class="mt-2 text-dark text-center"
-                    data-bs-toggle="modal"
-                    data-bs-target="#exampleModal">Forget
+                <a class="mt-2 text-dark text-center" data-bs-toggle="modal" data-bs-target="#exampleModal">Forget
                     Password</a>
-                <a class="mt-2 text-dark text-center"
-                    [routerLink]="'/auth/register'">Click here for
+                <a class="mt-2 text-dark text-center" [routerLink]="'/auth/register'">Click here for
                     registration</a>
-                <div
-                    class="w-100 line border-bottom border-dashed border-dark my-4"></div>
-                <asl-google-signin-button class="mx-auto" type='standard'
-                    size='large'
-                    theme="filled_black" shape="pill"></asl-google-signin-button>
+                <div class="w-100 line border-bottom border-dashed border-dark my-4"></div>
+                <asl-google-signin-button class="mx-auto" type='standard' size='large' theme="filled_black"
+                    shape="pill"></asl-google-signin-button>
             </form>
         </div>
     </div>
 </div>
 
 <!-- Modal -->
-<div class="modal fade" id="exampleModal" tabindex="-1"
-    aria-labelledby="exampleModalLabel" aria-hidden="true">
+<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
                 <h1 class="modal-title fs-5" id="exampleModalLabel">Enter
                     Password</h1>
-                <button type="button" class="btn-close" data-bs-dismiss="modal"
-                    aria-label="Close"></button>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
                 <div class="form-floating mb-3">
-                    <input type="email" class="form-control border-dark"
-                        id="floatingInput"
-                        placeholder="name@example.com"
-                        [(ngModel)]="email" name="email">
+                    <input type="email" class="form-control border-dark" id="floatingInput"
+                        placeholder="name@example.com" [(ngModel)]="email" name="email">
                     <label for="floatingInput">Email address</label>
                 </div>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-outline-dark"
-                    (click)="forgetpassword()" data-bs-dismiss="modal">Save
-                    changes</button>
+                <button type="button" class="btn btn-outline-dark" (click)="forgetpassword()"
+                    data-bs-dismiss="modal">Next</button>
             </div>
-
         </div>
     </div>
 </div>

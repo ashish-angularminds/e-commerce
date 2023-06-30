@@ -4,7 +4,7 @@ import { CustomerService } from 'src/app/shop/services/customer/customer.service
 import { HttpClientTestingModule, HttpTestingController } from '@angular/common/http/testing';
 import { of } from 'rxjs';
 
-fdescribe('NavbarService', () => {
+describe('NavbarService', () => {
   let service: NavbarService;
   let customerservice: CustomerService;
   let httpMock: HttpTestingController;
@@ -48,6 +48,8 @@ fdescribe('NavbarService', () => {
     }
     customerservice.get(localStorage.getItem('loginuser')!).subscribe(res => {
       expect(res).toEqual(mockdata);
+      service.img = res.picture;
+      expect(service.img).toEqual('http://res.cloudinary.com/abs-am/image/upload/v1687860145/training-api/eeve0lk0bmtxotrb0j7a.jpg');
     })
     tick(1000);
     const request = httpMock.expectOne('https://shop-api.ngminds.com/shop/auth/self');
