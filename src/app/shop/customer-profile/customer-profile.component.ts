@@ -108,6 +108,7 @@ export class CustomerProfileComponent implements OnInit {
     this.service.getaddress(localStorage.getItem('loginuser')!).subscribe(
       res => {
         this.addresss = res;
+        console.log(res);
       },
       err => {
         console.log(err);

@@ -27,16 +27,16 @@ import { SharedmoduleModule } from '../sharedmodule/sharedmodule.module';
     CustomerLoginComponent,
     CustomerProfileComponent,
     OrdersComponent,
-    DealDirective
+    // DealDirective
   ],
   imports: [
     CommonModule,
+    SharedmoduleModule,
     ShopRoutingModule,
     ImageCropperModule,
     NgxDropzoneModule,
     FormsModule,
     StoreModule.forFeature('cart', cartReducer),
-    SharedmoduleModule
   ]
 })
 export class ShopModule { }

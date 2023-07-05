@@ -10,25 +10,29 @@ export class DealDirective implements OnInit {
   @Input() appDeal: any;
   org: any;
   ngOnInit(): void {
-    this.org = this.elmRef.nativeElement.textContent;
+    let ele: HTMLElement = this.elmRef.nativeElement;
+    this.org = this.elmRef?.nativeElement?.textContent;
     if (this.appDeal) {
-      let end: Date = new Date(this.appDeal?.ends);
       setInterval(() => {
-        let today = new Date();
-        let diff = (end.getTime() - today.getTime()) / 1000;
-        let day = (Math.ceil(((diff / 3600) / 24) * 1) / 1) - 1;
-        let hour = (diff / 3600) - day * 24;
-        hour = (Math.ceil(hour * 1) / 1) - 1;
-        let min = (diff / 60) - ((day * 1440) + (hour * 60));
-        min = (Math.ceil(min * 1) / 1) - 1;
-        let sec = diff - ((day * 86400) + (hour * 3600) + (min * 60));
-        sec = (Math.ceil(sec * 1) / 1) - 1;
-        let str = 'Deal ends in ' + day + 'Days ' + hour + ':' + min + ':' + sec;
-        this.elmRef.nativeElement.innerHTML = `<strong><del>${this.org}</del> ₹${this.appDeal?.price}</strong> <br><small>(${this.appDeal?.discount} discount) <br>${str}<small>`;
-      }, 1000)
+        ele.innerHTML = this.countdown(this.appDeal, this.org);
+      }, 1000);
     }
     else {
-      this.elmRef.nativeElement.innerHTML = `<strong>${this.org}</strong>`;
+      ele.innerHTML = `<strong>${this.org}</strong>`;
     }
+  }
+
+  countdown(deal: any, org: string): string {
+    let end: Date = new Date(deal.ends);
+    let today = new Date();
+    let diff = (end.getTime() - today.getTime()) / 1000;
+    let day = (Math.ceil(((diff / 3600) / 24) * 1) / 1) - 1;
+    let hour = (Math.ceil(((diff / 3600) - day * 24) * 1) / 1) - 1;
+    let min = (Math.ceil((diff / 60) - ((day * 1440) + (hour * 60)) * 1) / 1) - 1;
+    let sec = (Math.ceil((diff - ((day * 86400) + (hour * 3600) + (min * 60))) * 1) / 1) - 1;
+    let output =
+      `<strong><del>${org}</del> ₹${deal.price}</strong><br><small>(${deal.discount} discount) 
+      <br>Deal ends in ${day}D:${hour}H:${min}M:${sec}S<small>`;
+    return output;
   }
 }

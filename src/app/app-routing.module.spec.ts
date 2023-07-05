@@ -9,17 +9,15 @@ describe('Router: App', () => {
             declarations: [
             ]
         });
-        route = routes
+        route = routes;
     });
 
     it('should load seller', () => {
-        let a: any = routes[0];
-        console.log(a.loadChildren());
+        let a: any = routes[1];
         expect(a.loadChildren()).toBeTruthy();
     })
     it('should load shop', () => {
-        let a: any = routes[1];
-        console.log(a.loadChildren());
+        let a: any = routes[2];
         expect(a.loadChildren()).toBeTruthy();
     })
 });

@@ -9,7 +9,7 @@ import { CartService } from '../shop/services/cart/cart.service';
   styleUrls: ['./navbar.component.css']
 })
 export class NavbarComponent {
-  constructor(private router: Router, private navbarservice: NavbarService, private activted: ActivatedRoute,
+  constructor(private router: Router, private navbarservice: NavbarService,
     private cartservice: CartService) { }
 
   navbar = this.navbarservice;

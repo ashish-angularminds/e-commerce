@@ -1,22 +1,30 @@
-import { ElementRef } from '@angular/core';
+import { DebugElement, ElementRef } from '@angular/core';
 import { DealDirective } from './deal.directive';
-import { TestBed } from '@angular/core/testing';
+import { ComponentFixture, TestBed, TestComponentRenderer, fakeAsync, tick } from '@angular/core/testing';
 import { TestComponent } from '../sharedmodule/test.component';
 import { By } from '@angular/platform-browser';
 
-fdescribe('DealDirective', () => {
+describe('DealDirective', () => {
+  let testcomponent: TestComponent;
+  let fixture: ComponentFixture<TestComponent>;
+  let inputEl: DebugElement;
   let dealdirective: DealDirective;
-  let fixture: any;
-  let des: any;
+
+  const mokedeal = {
+    ends: "2023-08-02T17:31:13.868Z",
+    price: 10,
+    discount: '0%'
+  }
   beforeEach(async () => {
-    fixture = TestBed.configureTestingModule({
-      declarations: [DealDirective],
-      providers: [DealDirective, { provide: ElementRef, useValue: {} }]
-    })
-    // .createComponent(TestComponent);
+    TestBed.configureTestingModule({
+      declarations: [DealDirective, TestComponent],
+      providers: [DealDirective, { provide: ElementRef<any>, useValue: ElementRef }]
+    }).compileComponents();
+    fixture = TestBed.createComponent(TestComponent);
+    fixture.detectChanges();
+    testcomponent = fixture.componentInstance;
+    inputEl = fixture.debugElement.query(By.css('div'));
     dealdirective = TestBed.inject(DealDirective);
-    // fixture.detectChanges();
-    // des = fixture.debugElement.queryAll(By.directive(DealDirective));
   });
 
 
@@ -25,23 +33,16 @@ fdescribe('DealDirective', () => {
     expect(directive).toBeTruthy();
   });
 
-  it('should get orginal text', () => {
-    // this.org = this.elmRef.nativeElement.textContent;
-    expect(dealdirective.appDeal).toEqual(undefined);
-  })
+  it('should get orginal text', fakeAsync(() => {
+    inputEl.triggerEventHandler('onload', null);
+    fixture.detectChanges();
+    console.log(inputEl?.nativeElement?.innerHTML);
+    expect(inputEl?.nativeElement?.innerHTML).toBe('');
+  }));
 
   it('should check', () => {
-    const mokedeal = {
-      end: "2023-07-02T17:31:13.868Z",
-      price: 0,
-      discount: '0%'
-    }
-
-    dealdirective.appDeal = mokedeal;
-    expect(dealdirective.appDeal).toEqual(mokedeal);
-    if (dealdirective.appDeal) {
-      let end: Date = new Date(dealdirective.appDeal?.ends);
-      
-    }
+    dealdirective.countdown(mokedeal, '10');
+    fixture.detectChanges();
+    expect(dealdirective.countdown(mokedeal, '10')).not.toBeUndefined();
   })
 });
