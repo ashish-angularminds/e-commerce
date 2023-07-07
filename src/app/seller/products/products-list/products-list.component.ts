@@ -42,7 +42,6 @@ export class ProductsListComponent implements OnInit {
   getproductslist() {
     this.productservice.getall(this.pagination).subscribe(
       res => {
-        console.log(res);
         this.results = res.results;
         this.loader.stop();
       },

@@ -5,7 +5,7 @@ import {
   HttpTestingController,
 } from '@angular/common/http/testing';
 
-fdescribe('CartService', () => {
+describe('CartService', () => {
   let service: CartService;
   let httpMock: HttpTestingController;
 

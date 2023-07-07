@@ -60,7 +60,6 @@ export class SellersOrdersComponent implements OnInit {
     else {
       this.service.change(id, temp?.value).subscribe(
         res => {
-          console.log(res);
           this.single = res.order;
           this.loadall();
         },
@@ -69,7 +68,6 @@ export class SellersOrdersComponent implements OnInit {
         }
       );
     }
-    console.log(temp?.value)
   }
 
   oneorder(id: string) {

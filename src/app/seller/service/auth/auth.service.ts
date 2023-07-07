@@ -4,11 +4,9 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 @Injectable({
   providedIn: 'root'
 })
-export class AuthService implements OnInit {
+export class AuthService{
 
   constructor(private http: HttpClient) { }
-  ngOnInit() {
-  }
 
   setheader(token: string) {
     let header = new HttpHeaders({ ['Authorization']: 'Bearer ' + token });

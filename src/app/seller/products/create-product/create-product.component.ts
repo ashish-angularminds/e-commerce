@@ -28,7 +28,6 @@ export class CreateProductComponent implements OnInit {
       this.images.push(URL.createObjectURL(item));
       this.files.append('new_images', item);
     });
-    console.log(event);
   }
   creatproduct() {
     this.loader.start();

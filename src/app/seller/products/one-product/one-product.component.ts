@@ -52,6 +52,7 @@ export class OneProductComponent implements OnInit {
   loadall() {
     this.service.getone(this.id.id).subscribe(
       res => {
+        console.log(res);
         this.product = res;
         this.selectedimg = this.product.images[0].url;
       },
