@@ -1,4 +1,4 @@
-<div class="container-fluid p-0">
+<div class="p-0 container-fluid">
     <div class="accordion accordion-flush" id="accordionExample">
         <div class="accordion-item">
             <h2 class="accordion-header" id="headingOne">
@@ -9,12 +9,21 @@
             </h2>
             <div id="collapseOne" class="accordion-collapse collapse show" aria-labelledby="headingOne"
                 data-bs-parent="#accordionExample">
-                <div class="accordion-body list-group list-group-flush overflow-y-auto" style="max-height: 65vh">
+                <div class="overflow-y-auto accordion-body list-group list-group-flush" style="max-height: 65vh">
                     <li class="list-group-item" *ngFor="let item of outputproducts$|async">
                         <div class="row">
                             <div class="col-10">
                                 <h5 class="mb-1">{{item.name}}</h5>
-                                <p class="mb-1">Price: {{item.price | currency:'INR'}}</p>
+                                <span class="d-flex">
+                                    Price:
+                                    <p [class]="item.deal? 'mb-1 ms-1 text-decoration-line-through':'mb-1 ms-1'">
+                                        {{item.price | currency:'INR'}}
+                                    </p>
+                                    <p *ngIf="item.deal" class="ms-2">
+                                        {{item.deal.price | customeCurrency:'INR'}}
+                                        ({{item.deal.discount}} Discount)
+                                    </p>
+                                </span>
                             </div>
                             <div class="col-2 d-flex align-items-center">
                                 <div class="btn-group" role="group" aria-label="Basic example">
@@ -49,7 +58,7 @@
                 <div class="accordion-body" *ngIf="loginflag">
 
                     <div *ngIf="!(address|async)"
-                        class="w-100 d-flex justify-content-center align-items-center flex-column py-5">
+                        class="py-5 w-100 d-flex justify-content-center align-items-center flex-column">
                         <h5 class="text-dark-emphasis">No Address present</h5>
                     </div>
 
@@ -71,7 +80,7 @@
                             </li>
                         </ul>
                     </div>
-                    <div class="w-100 d-flex justify-content-end border-top pt-3">
+                    <div class="pt-3 w-100 d-flex justify-content-end border-top">
                         <button class="btn btn-dark" routerLink="/shop/profile">Add
                             Address</button>
                     </div>

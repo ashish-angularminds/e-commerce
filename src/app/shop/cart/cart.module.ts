@@ -9,6 +9,7 @@ import { Store, StoreModule } from '@ngrx/store';
 import { cartReducer } from './store/cart.reducer';
 import { FormsModule } from '@angular/forms';
 import { PaymentComponent } from './payment/payment.component';
+import { SharedmoduleModule } from 'src/app/sharedmodule/sharedmodule.module';
 
 
 @NgModule({
@@ -23,7 +24,8 @@ import { PaymentComponent } from './payment/payment.component';
     CartRoutingModule,
     FormsModule,
     StoreModule.forFeature('cart', cartReducer),
-    FormsModule
+    FormsModule,
+    SharedmoduleModule
   ]
 })
 export class CartModule { }

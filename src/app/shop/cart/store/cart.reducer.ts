@@ -7,7 +7,7 @@ const _cartReducer = createReducer(initalstate,
     on(addproduct, (state, action) => {
         return {
             ...state,
-            price: state.price + action.product.price,
+            price: state.price + (action.product.deal ? action.product.deal.price : action.product.price),
             products: [...state.products, action.product]
         }
     }),
@@ -22,7 +22,7 @@ const _cartReducer = createReducer(initalstate,
             }),
             price: state.products.reduce((a, data) => {
                 if (data.productId != action.productId)
-                    return a + data.price
+                    return a + data.subTotal
                 else
                     return a + 0;
             }, 0)
@@ -36,7 +36,7 @@ const _cartReducer = createReducer(initalstate,
                     return {
                         ...data,
                         qty: data.qty + 1,
-                        subTotal: data.subTotal + data.price
+                        subTotal: data.subTotal + (data.deal ? data.deal.price : data.price)
                     }
                 }
                 else
@@ -52,7 +52,7 @@ const _cartReducer = createReducer(initalstate,
                     return {
                         ...data,
                         qty: data.qty - 1,
-                        subTotal: data.subTotal - data.price
+                        subTotal: data.subTotal - (data.deal ? data.deal?.price : data.price)
                     }
                 }
                 else
@@ -77,7 +77,6 @@ const _cartReducer = createReducer(initalstate,
         return {
             ...state,
             price: state.products.reduce((a, data) => {
-                console.log(data.subTotal)
                 return a + data.subTotal
             }, 0)
         }

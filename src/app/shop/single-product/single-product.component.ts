@@ -30,12 +30,29 @@ export class SingleProductComponent implements OnInit {
   }
 
   add() {
-    let p: Product = {
-      productId: this.item._id,
-      name: this.item.name,
-      price: this.item.price,
-      qty: 1,
-      subTotal: this.item.price
+    let p: Product;
+    if (this.item.deal) {
+      p = {
+        productId: this.item._id,
+        name: this.item.name,
+        price: this.item.price,
+        qty: 1,
+        subTotal: this.item.deal.price,
+        deal: {
+          discount: this.item.deal.discount,
+          ends: this.item.deal.ends,
+          price: this.item.deal.price
+        }
+      }
+    }
+    else {
+      p = {
+        productId: this.item._id,
+        name: this.item.name,
+        price: this.item.price,
+        qty: 1,
+        subTotal: this.item.price
+      }
     }
     this.store.dispatch(addproduct({ product: p }));
     this.store.select('cart').subscribe(data => localStorage.setItem('cart', JSON.stringify(data)));

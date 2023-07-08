@@ -6,7 +6,7 @@ import {
 import { ProductService } from './product.service';
 import { HttpClient } from '@angular/common/http';
 
-fdescribe('ProductService', () => {
+describe('ProductService', () => {
   let service: ProductService;
   let httpMock: HttpTestingController;
 
@@ -124,7 +124,7 @@ fdescribe('ProductService', () => {
     request.flush(mockdata);
   });
 
-  it('should create a product', () => {
+  it('should update images', () => {
     let mockdata = new FormData();
     mockdata.append('new_images',
       new Blob(['<html>…</html>'], { type: 'text/html' })

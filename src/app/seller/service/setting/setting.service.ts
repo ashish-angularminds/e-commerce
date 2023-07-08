@@ -12,7 +12,7 @@ export class SettingService {
   header = new HttpHeaders({ ['Authorization']: 'Bearer ' + localStorage.getItem('activeuser') });
 
   getuser(pagination: any) {
-    return this.http.get<any>('https://shop-api.ngminds.com/users', { headers: this.header, params: pagination }).pipe(pluck('results'));
+    return this.http.get<any>('https://shop-api.ngminds.com/users', { headers: this.header, params: pagination });
   }
   createuser(payload: any) {
     return this.http.post<any>('https://shop-api.ngminds.com/users', payload, { headers: this.header });

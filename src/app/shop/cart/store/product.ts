@@ -4,4 +4,9 @@ export interface Product {
     price: number,
     qty: number,
     subTotal: number
+    deal?: {
+        price: number,
+        discount: string,
+        ends:string
+    }
 } 

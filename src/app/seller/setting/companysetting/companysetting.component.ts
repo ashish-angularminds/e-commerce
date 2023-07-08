@@ -2,6 +2,7 @@ import { Component, OnInit, Output } from '@angular/core';
 import { NgToastService } from 'ng-angular-popup';
 import { NgxUiLoaderService } from 'ngx-ui-loader';
 import { SettingService } from '../../service/setting/setting.service';
+import { pluck } from 'rxjs';
 @Component({
   selector: 'app-companysetting',
   templateUrl: './companysetting.component.html',
@@ -17,47 +18,38 @@ export class CompanysettingComponent implements OnInit {
     name: '',
     email: ''
   };
-  flag = false;
-  change(u: any) {
-    this.flag = true;
-    this.infouser.name = u.name;
-    this.infouser.email = u.email;
-  }
   @Output() selectedid: any;
-
-
+  
+  flag = false;
   org = {
     name: '',
     email: ''
   }
-
   pagination = {
     sortBy: 'role',
     limit: 5,
     page: 1
   }
-
   userpass = {
     password: ''
   }
-
   companyname!: string;
-
   pages: number[] = [];
   users: any[] = [];
   ngOnInit() {
     this.loadlist();
-    this.settingservice.getuser({}).subscribe(data => {
-      console.log(this.users.length)
-      for (let i = 0; i <= data.length / 5; i++) {
-        this.pages.push(i);
-      }
-    });
+  }
+
+  change(u: any) {
+    this.flag = true;
+    this.infouser.name = u.name;
+    this.infouser.email = u.email;
   }
 
   loadlist() {
     this.loader.start();
-    this.settingservice.getuser(this.pagination).subscribe(data => {
+    this.settingservice.getuser(this.pagination).pipe(pluck('results')).subscribe(data => {
+      console.log(data);
       this.users = data;
       this.companyname = this.users.at(0)?._org.name as string;
       this.loader.stop();
