@@ -52,7 +52,7 @@ export class CustomerLoginComponent implements OnInit {
       this.service.login(this.user).subscribe(
         (res: any) => {
           localStorage.setItem('loginuser', res.token);
-          this.navbar.customerlogin = localStorage.getItem('loginuser');
+          this.navbar.customerlogin.next(localStorage.getItem('loginuser')!);
           this.navbar.changeprofilestate();
           this.Toast.fire({
             icon: 'success',

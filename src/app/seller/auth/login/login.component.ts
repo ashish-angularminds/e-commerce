@@ -5,6 +5,7 @@ import { ReCaptchaV3Service } from 'ng-recaptcha';
 import { NgxUiLoaderService } from 'ngx-ui-loader';
 import { AuthService } from '../../service/auth/auth.service';
 import Swal from 'sweetalert2';
+import { NavbarService } from 'src/app/navbar/service/navbar.service';
 
 @Component({
   selector: 'app-login',
@@ -15,8 +16,9 @@ export class LoginComponent implements OnInit {
 
   constructor(private route: Router, private http: AuthService,
     private recaptchaV3Service: ReCaptchaV3Service, private loader: NgxUiLoaderService,
-    private authService: SocialAuthService) { }
+    private authService: SocialAuthService, private navbarservice: NavbarService) { }
 
+  recaptchatoken: any;
   user!: SocialUser;
   loggedIn!: boolean;
   email!: string;
@@ -24,7 +26,6 @@ export class LoginComponent implements OnInit {
   loginUser = {
     email: '',
     password: '',
-    captcha: '',
   }
 
   Toast = Swal.mixin({
@@ -39,32 +40,40 @@ export class LoginComponent implements OnInit {
     }
   })
 
+  getrecaptcha() {
+    this.recaptchaV3Service.execute('importantAction').subscribe(token => {
+      this.recaptchatoken = token;
+    });
+  }
 
   ngOnInit() {
-    this.loader.start();
+    this.getrecaptcha();
     this.authService.signOut();
-    this.recaptchaV3Service.execute('importantAction').subscribe((token) => {
-      this.authService.authState.subscribe((user) => {
-        this.user = user;
-        this.loggedIn = (user != null);
-        this.http.googlelogin({ token: user.idToken, captcha: token }).subscribe(
-          res => {
-            this.route.navigate(['setting', 'my-profile']);
-            this.loginsuccess(res);
-            this.loader.stop();
-          },
-          err => {
-            this.Toast.fire({
-              icon: 'error',
-              title: 'Authentication failed',
-              text: err.error.message
-            });
-            this.loader.stop();
-          }
-        );
-      });
+    this.authService.authState.subscribe(user => {
+      this.user = user;
+      this.loggedIn = (user != null);
+      this.googlelogin(this.user?.idToken,this.recaptchatoken);
     });
-    this.loader.stop();
+  }
+
+  googlelogin(usertoken: any, recaptchatoken: any) {
+    this.loader.start();
+    this.http.googlelogin({ token: usertoken, captcha: recaptchatoken }).subscribe(
+      res => {
+        this.route.navigate(['setting', 'my-profile']);
+        this.loginsuccess(res);
+        this.navbarservice.sellerlogin.next(localStorage.getItem('activeuser')!);
+        this.loader.stop();
+      },
+      err => {
+        this.Toast.fire({
+          icon: 'error',
+          title: 'Authentication failed',
+          text: err.error.message
+        });
+        this.loader.stop();
+      }
+    );
   }
 
   loginsuccess(res: any) {
@@ -76,29 +85,27 @@ export class LoginComponent implements OnInit {
     localStorage.setItem('activeuser', a.token);
   }
 
-  alluser!: any;
   login() {
     this.loader.start();
-    this.recaptchaV3Service.execute('importantAction').subscribe((token: string) => {
-      this.loginUser.captcha = token;
-      this.http.login(this.loginUser).subscribe(
-        res => {
-          this.loader.stop();
-          this.loginsuccess(res);
-          let dom = document.querySelector('.grecaptcha-badge') as HTMLElement;
-          dom.style.display = 'none';
-          this.route.navigate(['setting', 'my-profile']);
-        },
-        err => {
-          this.loader.stop();
-          this.Toast.fire({
-            icon: 'error',
-            title: 'Authentication failed',
-            text: err.error.message
-          });
-        }
-      )
-    });
+    this.getrecaptcha();
+    this.http.login({ email: this.loginUser.email, password: this.loginUser.password, captcha: this.recaptchatoken }).subscribe(
+      res => {
+        this.loader.stop();
+        this.loginsuccess(res);
+        let dom = document.querySelector('.grecaptcha-badge') as HTMLElement;
+        dom.style.display = 'none';
+        this.route.navigate(['setting', 'my-profile']);
+        this.navbarservice.sellerlogin.next(localStorage.getItem('activeuser')!);
+      },
+      err => {
+        this.loader.stop();
+        this.Toast.fire({
+          icon: 'error',
+          title: 'Authentication failed',
+          text: err.error.message
+        });
+      }
+    )
   }
 
   forgetpassword() {

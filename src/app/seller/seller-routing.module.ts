@@ -4,7 +4,7 @@ import { LoginGuard } from './guards/login.guard';
 import { ProfileGuard } from './guards/profile.guard';
 import { SellersOrdersComponent } from './sellers-orders/sellers-orders.component';
 
-const routes: Routes = [
+export const routes: Routes = [
   { path: '', redirectTo: 'auth', pathMatch: 'full' },
 
   {

@@ -34,7 +34,7 @@ export class ListOfProductsComponent implements OnInit {
   search = '';
 
   ngOnInit(): void {
-    this.navbar.flag = false;
+    this.navbar.flag.next(false);
     this.loader.start();
     this.getproductslist();
     this.store.select('cart').subscribe(data => this.cartdata = data);

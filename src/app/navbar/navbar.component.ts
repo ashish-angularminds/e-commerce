@@ -1,7 +1,8 @@
 import { Component } from '@angular/core';
-import { ActivatedRoute, Event, NavigationEnd, Router } from '@angular/router';
+import { Event, NavigationEnd, Router } from '@angular/router';
 import { NavbarService } from './service/navbar.service';
 import { CartService } from '../shop/services/cart/cart.service';
+import { Observable } from 'rxjs';
 
 @Component({
   selector: 'app-navbar',
@@ -12,7 +13,10 @@ export class NavbarComponent {
   constructor(private router: Router, private navbarservice: NavbarService,
     private cartservice: CartService) { }
 
-  navbar = this.navbarservice;
+  navbarflag = this.navbarservice.flag;
+  sellerlogin = this.navbarservice.sellerlogin;
+  customerlogin = this.navbarservice.customerlogin;
+  img = this.navbarservice.img;
 
   ngOnInit() {
     this.checkroute();
@@ -20,38 +24,39 @@ export class NavbarComponent {
   }
 
   checkroute() {
-    this.router.events.subscribe((e: Event) => {
-      if (e instanceof NavigationEnd) {
-        this.navbarservice.sellerlogin = localStorage.getItem('activeuser');
-        this.navbarservice.customerlogin = localStorage.getItem('loginuser');
+    this.navbarservice.sellerlogin.next(localStorage.getItem('activeuser')!);
+    this.navbarservice.customerlogin.next(localStorage.getItem('loginuser')!);
+    if (this.router.url.includes('shop') || this.router.url.includes('cart')) {
+      this.pushflag(false);
+    }
+    else {
+      this.pushflag(true);
+    }
 
-        if ((/shop/.test(e.url)) || (/cart/.test(e.url))) {
-          this.navbarservice.flag = false;
-        }
-        else {
-          this.navbarservice.flag = true;
-        }
-      }
-    });
+
+  }
+  pushflag(flag: boolean) {
+    this.navbarflag.next(flag);
   }
 
-  activelink(event: any) {
+  activelink(event?: any) {
     document.querySelectorAll('.nav-item > a').forEach((item) => { item.className = 'nav-link' });
     event.target.className = 'nav-link active'
     this.checkroute();
   }
 
   logoutcustomer() {
-    localStorage.removeItem('loginuser');
     this.navbarservice.changeprofilestate();
-    if ((/profile/.test(this.router.url))) {
+    localStorage.removeItem('loginuser');
+    // if (this.router.url.includes('profile')) {
       this.router.navigate(["/"]);
-    }
+    // }
     this.cartservice.login.next(false);
   }
 
   logoutseller() {
     localStorage.removeItem('activeuser');
+    this.navbarservice.sellerlogin.next(localStorage.getItem('activeuser')!);
     this.router.navigate(['auth/login']);
   }
 
