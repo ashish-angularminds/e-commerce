@@ -40,24 +40,28 @@ export class LoginComponent implements OnInit {
     }
   })
 
-  getrecaptcha() {
-    this.recaptchaV3Service.execute('importantAction').subscribe(token => {
+  public getrecaptcha(recaptchaV3Service:ReCaptchaV3Service): void {
+    recaptchaV3Service?.execute('importantAction').subscribe(token => {
       this.recaptchatoken = token;
     });
   }
 
   ngOnInit() {
-    this.getrecaptcha();
-    this.authService.signOut();
+    this.getrecaptcha(this.recaptchaV3Service);
+    // this.authService.signOut();
     this.authService.authState.subscribe(user => {
       this.user = user;
       this.loggedIn = (user != null);
-      this.googlelogin(this.user?.idToken,this.recaptchatoken);
-    });
+      this.googlelogin(this.user?.idToken, this.recaptchatoken);
+    },
+      err => {
+        console.log(err);
+      });
   }
 
   googlelogin(usertoken: any, recaptchatoken: any) {
     this.loader.start();
+    this.getrecaptcha(this.recaptchaV3Service);
     this.http.googlelogin({ token: usertoken, captcha: recaptchatoken }).subscribe(
       res => {
         this.route.navigate(['setting', 'my-profile']);
@@ -87,13 +91,13 @@ export class LoginComponent implements OnInit {
 
   login() {
     this.loader.start();
-    this.getrecaptcha();
+    this.getrecaptcha(this.recaptchaV3Service);
     this.http.login({ email: this.loginUser.email, password: this.loginUser.password, captcha: this.recaptchatoken }).subscribe(
       res => {
         this.loader.stop();
         this.loginsuccess(res);
-        let dom = document.querySelector('.grecaptcha-badge') as HTMLElement;
-        dom.style.display = 'none';
+        let dom: HTMLElement = document.querySelector('.grecaptcha-badge') as HTMLElement;
+        dom!.style.display = 'none';
         this.route.navigate(['setting', 'my-profile']);
         this.navbarservice.sellerlogin.next(localStorage.getItem('activeuser')!);
       },
@@ -110,24 +114,23 @@ export class LoginComponent implements OnInit {
 
   forgetpassword() {
     this.loader.start();
-    this.recaptchaV3Service.execute('importantAction').subscribe((token: string) => {
-      this.http.forgetpassword({ email: this.email, captcha: token }).subscribe(
-        res => {
-          this.loader.stop();
-          this.Toast.fire({
-            icon: 'success',
-            title: 'Email Sent',
-            text: 'Check your email'
-          });
-        },
-        err => {
-          this.loader.stop();
-          this.Toast.fire({
-            icon: 'error',
-            text: err.error.message
-          });
-        }
-      );
-    });
+    this.getrecaptcha(this.recaptchaV3Service);
+    this.http.forgetpassword({ email: this.email, captcha: this.recaptchatoken }).subscribe(
+      res => {
+        this.loader.stop();
+        this.Toast.fire({
+          icon: 'success',
+          title: 'Email Sent',
+          text: 'Check your email'
+        });
+      },
+      err => {
+        this.loader.stop();
+        this.Toast.fire({
+          icon: 'error',
+          text: err.error.message
+        });
+      }
+    );
   }
 }

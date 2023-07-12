@@ -1,4 +1,4 @@
-import { ComponentFixture, TestBed, fakeAsync, tick } from '@angular/core/testing';
+import { ComponentFixture, TestBed, fakeAsync, flush, tick } from '@angular/core/testing';
 
 import { LoginComponent } from './login.component';
 import { Router, RouterModule } from '@angular/router';
@@ -11,7 +11,7 @@ import { environment } from 'src/app/environment';
 import { FormsModule } from '@angular/forms';
 import { of, throwError } from 'rxjs';
 
-fdescribe('LoginComponent', () => {
+describe('LoginComponent', () => {
   let component: LoginComponent;
   let fixture: ComponentFixture<LoginComponent>;
   let recaptchaV3Service: ReCaptchaV3Service;
@@ -58,25 +58,54 @@ fdescribe('LoginComponent', () => {
     expect(component).toBeTruthy();
   });
 
-  it('should googlelogin', fakeAsync(() => {
+
+  it('should google login success', fakeAsync(() => {
+    component.getrecaptcha(recaptchaV3Service);
     spyOn(auth, 'googlelogin').and.returnValue(of({}));
     spyOn(router, 'navigate');
     spyOn(loader, 'start');
     spyOn(loader, 'stop');
     component.googlelogin('sdsdddsd', 'ddfddfbjgb');
+    tick(1000);
     expect(loader.start).toHaveBeenCalled();
     expect(auth.googlelogin).toHaveBeenCalledWith({
       token: 'sdsdddsd',
       captcha: 'ddfddfbjgb'
     });
-    tick();
     expect(router.navigate).toHaveBeenCalledWith(['setting', 'my-profile']);
     expect(loader.stop).toHaveBeenCalled();
+    flush();
   }));
 
-  it('should', () => {
+  it('should google login throw error', () => {
     spyOn(auth, 'googlelogin').and.returnValue(throwError({ error: { message: 'no' } }));
     component.googlelogin('sdsdddsd', 'ddfddfbjgb');
     expect(auth.googlelogin).toHaveBeenCalled();
+  })
+
+  it('should login success', () => {
+    spyOn(auth, 'login').and.returnValue(of({}));
+    spyOn(router, 'navigate');
+    component.login();
+    expect(auth.login).toHaveBeenCalled();
+    expect(router.navigate).toHaveBeenCalledWith(['setting', 'my-profile']);
+  })
+
+  it('should login throw error', () => {
+    spyOn(auth, 'login').and.returnValue(throwError({ error: { message: 'no' } }));
+    component.login();
+    expect(auth.login).toHaveBeenCalled();
+  })
+
+  it('should forgetpassword success', () => {
+    spyOn(auth, 'forgetpassword').and.returnValue(of({}));
+    component.forgetpassword();
+    expect(auth.forgetpassword).toHaveBeenCalled();
+  })
+
+  it('should forgetpassword throw error', () => {
+    spyOn(auth, 'forgetpassword').and.returnValue(throwError({ error: { message: 'no' } }));
+    component.forgetpassword();
+    expect(auth.forgetpassword).toHaveBeenCalled();
   })
 });
