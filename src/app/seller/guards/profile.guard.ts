@@ -19,30 +19,34 @@ export class ProfileGuard implements CanActivate {
     //     return this.router.navigate(['auth', 'login']);
     //   }
     // );
-    return this.flag();
+    return this.flag(localStorage.getItem('activeuser') || '');
     // return localStorage.getItem('activeuser') == null ? true : this.router.navigate(['home/my-profile']);
   }
 
-  flag() {
-    // return new Promise((resolve, reject) => {
-    //   this.service.get(localStorage.getItem('activeuser')!).subscribe(
-    //     res => {
-    //       // console.log(res);
-    //       resolve(true);
-    //     },
-    //     error => {
-    //       // console.log(error);
-    //       reject(error);
-    //     }
-    //   )
-    // });
-    return this.service.get(localStorage.getItem('activeuser')!
-    ).pipe(
-      map(res => {
-        return true;
-      }),
-      catchError(err => {
-        return this.router.navigate(['auth', 'login']);
-      }));
+  flag(str: string) {
+    return new Promise<any>((resolve, reject) => {
+      if (str.length > 0) {
+        this.service.get(localStorage.getItem('activeuser')!).subscribe(
+          res => {
+            resolve(true);
+          },
+          error => {
+            localStorage.removeItem('activeuser');
+            this.router.navigate(['auth', 'login']);
+          }
+        )
+      }
+      else {
+        this.router.navigate(['auth', 'login']);
+      }
+
+    });
+    // return this.service.get(str).pipe(
+    //   map(res => {
+    //     return true;
+    //   }),
+    //   catchError(err => {
+    //     return this.router.navigate(['auth', 'login']);
+    //   }));
   }
 }

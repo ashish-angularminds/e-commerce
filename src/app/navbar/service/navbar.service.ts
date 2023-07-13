@@ -14,14 +14,14 @@ export class NavbarService {
   sellerlogin = new BehaviorSubject<string | undefined>(localStorage.getItem('activeuser') || undefined);
   img = new BehaviorSubject<string | undefined>(undefined);
 
-  changeprofilestate() {
-    this.customerlogin.next(localStorage.getItem('loginuser')!);
+  changeprofilestate(str:string) {
+    this.customerlogin.next(str);
     this.customerlogin.subscribe(data => {
-      this.service.get(data||'').subscribe(res => {
-        this.img.next(res.picture);
-      });
+      if (data) {
+        this.service.get(data!).subscribe(res => {
+          this.img.next(res.picture);
+        });
+      }
     })
-    
-
   }
 }

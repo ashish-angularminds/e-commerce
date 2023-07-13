@@ -10,43 +10,27 @@ export class LoginGuard implements CanActivate {
 
   constructor(private routes: Router, private service: AuthService) { }
 
-  canActivate(
-    route: ActivatedRouteSnapshot,
-    state: RouterStateSnapshot): Observable<boolean | UrlTree> | Promise<boolean | UrlTree> | boolean | UrlTree {
-    // let id = localStorage.getItem('activeuser');
-    // return id == undefined ? true : this.routes.navigate(['setting', 'my-profile']);
-    return this.flag();
+  canActivate(): Observable<boolean | UrlTree> | Promise<boolean | UrlTree> | boolean | UrlTree {
+    return this.flag(localStorage.getItem('activeuser')||'');
   }
 
-  flag() {
-    // return new Promise((resolve, reject) => {
-    //   this.service.get(localStorage.getItem('activeuser')!).subscribe(
-    //     res => {
-    //       // console.log(res);
-    //       resolve(true);
-    //     },
-    //     error => {
-    //       // console.log(error);
-    //       reject(error);
-    //     }
-    //   )
-    // });
-    if (localStorage.getItem('activeuser')) {
-      return this.service.get(localStorage.getItem('activeuser')!
-      ).pipe(
-        map(res => {
-          this.routes.navigate(['setting', 'my-profile']);
-          return false;
-        }),
-        catchError((err: any): Observable<boolean> => {
-          localStorage.removeItem('activeuser');
-          let a: Observable<boolean> = new Observable().pipe(map(res => { return true; }));
-          this.routes.navigate(['auth', 'login']);
-          return a;
-        }));
-    }
-    else {
-      return true;
-    }
+  flag(str:string) {
+    return new Promise<boolean>((resolve, reject) => {
+      if (str.length > 0) {
+        this.service.get(localStorage.getItem('activeuser')!).subscribe({
+          next: (res) => {
+            this.routes.navigate(['setting', 'my-profile']);
+            resolve(false);
+          },
+          error: (err) => {
+            localStorage.removeItem('activeuser');
+            resolve(true);
+          }
+        })
+      }
+      else {
+        resolve(true);
+      }
+    });
   }
 }

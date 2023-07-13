@@ -53,7 +53,7 @@ export class CustomerLoginComponent implements OnInit {
         (res: any) => {
           localStorage.setItem('loginuser', res.token);
           this.navbar.customerlogin.next(localStorage.getItem('loginuser')!);
-          this.navbar.changeprofilestate();
+          this.navbar.changeprofilestate(localStorage.getItem('loginuser')!);
           this.Toast.fire({
             icon: 'success',
             title: 'Login Successful'

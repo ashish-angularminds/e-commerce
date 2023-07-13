@@ -20,7 +20,7 @@ export class NavbarComponent {
 
   ngOnInit() {
     this.checkroute();
-    this.navbarservice.changeprofilestate();
+    this.navbarservice.changeprofilestate(localStorage.getItem('loginuser')!);
   }
 
   checkroute() {
@@ -46,7 +46,7 @@ export class NavbarComponent {
   }
 
   logoutcustomer() {
-    this.navbarservice.changeprofilestate();
+    this.navbarservice.changeprofilestate(localStorage.getItem('loginuser')!);
     localStorage.removeItem('loginuser');
     // if (this.router.url.includes('profile')) {
       this.router.navigate(["/"]);
