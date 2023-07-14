@@ -69,7 +69,7 @@ export class OneProductComponent implements OnInit {
     );
   }
 
-  deleteproduct() {
+  deleteproduct(id: string) {
     Swal.fire({
       title: 'Are you sure?',
       text: "You won't be able to revert this!",
@@ -78,32 +78,35 @@ export class OneProductComponent implements OnInit {
       confirmButtonColor: '#3085d6',
       cancelButtonColor: '#d33',
       confirmButtonText: 'Yes, delete it!'
-    }).then((result) => {
+    })?.then((result) => {
       if (result.isConfirmed) {
-        this.service.delete(this.id.id).subscribe(
-          res => {
-            Swal.fire({
-              title: 'Product Deleted Successfully!',
-              icon: 'success',
-              showConfirmButton: false,
-              timer: 2000
-            })
-            this.router.navigate(['products']);
-          },
-          err => {
-            Swal.fire({
-              title: 'Error!',
-              text: err.error.message,
-              icon: 'error',
-              showConfirmButton: false,
-              timer: 2000
-            })
-            console.log(err);
-          }
-        );
+        this.deletefun(id);
       }
     });
   }
 
+  deletefun(id:string) {
+    this.service.delete(id).subscribe({
+      next: (res) => {
+        Swal.fire({
+          title: 'Product Deleted Successfully!',
+          icon: 'success',
+          showConfirmButton: false,
+          timer: 2000
+        })
+        this.router.createUrlTree(['/product','products-list']);
+      },
+      error: (err) => {
+        Swal.fire({
+          title: 'Error!',
+          text: err.error?.message,
+          icon: 'error',
+          showConfirmButton: false,
+          timer: 2000
+        })
+        console.log(err);
+      }
+    });
+  }
 
 }

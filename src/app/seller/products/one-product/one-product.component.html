@@ -1,20 +1,20 @@
 <div class="container pt-5">
-    <div class="row column-gap-2 pt-5">
-        <div class="col-auto d-flex flex-md-column flex-row overflow-auto"
+    <div class="pt-5 row column-gap-2">
+        <div class="flex-row col-auto overflow-auto d-flex flex-md-column"
             style="height: 450px;">
             <div *ngFor="let item of product?.images">
                 <img [src]="item.url"
                     style="height: 100px;width: 100px;"
-                    class="img-thumbnail object-fit-contain my-1"
+                    class="my-1 img-thumbnail object-fit-contain"
                     (click)="selectedimg=item.url">
             </div>
         </div>
         <div class="col-3">
             <img [src]="selectedimg" class="img-fluid">
         </div>
-        <div class="col overflow-auto" style="height: 70vh;">
+        <div class="overflow-auto col" style="height: 70vh;">
             <h3 class="fw-bolder text-capitalize" style="word-spacing: -2px">{{product?.name}}</h3>
-            <div class="line w-auto bg-black me-5 my-3" style="height: 1px;"></div>
+            <div class="w-auto my-3 bg-black line me-5" style="height: 1px;"></div>
             <div class="d-flex justify-content-between">
                 <h3><b>{{product?.price | currency:'INR'}}</b></h3>
                 <div class="pe-5">
@@ -29,8 +29,8 @@
                                 role="button"
                                 data-bs-toggle="modal">Update Images</a></li>
                     </ul>
-                    <button class="btn btn-outline-danger mx-3"
-                        (click)="deleteproduct()">Delete</button>
+                    <button class="mx-3 btn btn-outline-danger"
+                        (click)="deleteproduct(id.id)">Delete</button>
                 </div>
 
             </div>
