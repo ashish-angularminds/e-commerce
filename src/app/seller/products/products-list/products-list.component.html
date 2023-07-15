@@ -1,31 +1,31 @@
-<div class="container-fluid row py-2 px-0 m-0">
-    <div class="col-xxl-2 d-none d-xxl-block rounded mt-3 px-3 py-5 ms-2 me-3 sticky-xl-top shadow-lg"
+<div class="px-0 py-2 m-0 container-fluid row">
+    <div class="px-3 py-5 mt-3 rounded shadow-lg col-xxl-2 d-none d-xxl-block ms-2 me-3 sticky-xl-top"
         style="height: 100%; width: auto; top: 70px;">
         <div class="d-flex justify-content-between">
             <h2 class="fw-bold">Filters</h2>
             <ul class="pagination" role="button">
                 <li class="page-item">
-                    <a class="page-link text-white bg-dark" aria-label="Previous" (click)="changePage(-1)">
+                    <a class="text-white page-link bg-dark" aria-label="Previous" (click)="changePage(-1)">
                         <span aria-hidden="true">&laquo;</span>
                     </a>
                 </li>
-                <li class="page-item"><a class="page-link text-black">{{pagination.page}}</a></li>
+                <li class="page-item"><a class="text-black page-link">{{pagination.page}}</a></li>
                 <li class="page-item">
-                    <a class="page-link text-white bg-dark" aria-label="Next" (click)="changePage(1)">
+                    <a class="text-white page-link bg-dark" aria-label="Next" (click)="changePage(1)">
                         <span aria-hidden="true">&raquo;</span>
                     </a>
                 </li>
             </ul>
         </div>
 
-        <div class="form-floating my-2">
-            <input type="email" class="form-control border-black" id="floatingInput" placeholder="name@example.com">
+        <div class="my-2 form-floating">
+            <input type="email" class="border-black form-control" id="floatingInput" placeholder="name@example.com">
             <!-- [(ngModel)]="pagination.name" (keyup)="getproductslist()" -->
             <label for="floatingInput">Search</label>
         </div>
 
-        <div class="form-floating my-3">
-            <select class="form-select border-black" id="floatingSelect" [(ngModel)]="pagination.sortBy"
+        <div class="my-3 form-floating">
+            <select class="border-black form-select" id="floatingSelect" [(ngModel)]="pagination.sortBy"
                 aria-label="Floating label select example" (click)="getproductslist()">
                 <option value="name">Name</option>
                 <option value="price">Price</option>
@@ -35,7 +35,7 @@
         </div>
 
         <div class="form-floating">
-            <select class="form-select border-black" id="limit" [(ngModel)]="pagination.limit"
+            <select class="border-black form-select" id="limit" [(ngModel)]="pagination.limit"
                 aria-label="Floating label select example" (click)="getproductslist()">
                 <option value="10">10</option>
                 <option value="15">15</option>
@@ -46,20 +46,20 @@
         </div>
 
     </div>
-    <div class="col-xxl-10 col-lg-12 p-0 row">
+    <div class="p-0 col-xxl-10 col-lg-12 row">
         <div class="col-lg-4 col-md-6 col-sm-12 g-3" *ngFor="let item of results">
-            <div class="card shadow-lg border-0" style="max-width: 540px;" (click)="oneProduct(item._id)">
+            <div class="border-0 shadow-lg card" style="max-width: 540px;" (click)="oneProduct(item._id)">
                 <div class="row g-0">
                     <div class="col-md-6">
                         <img [src]="item.images[0].url" style="height: 250px; width: 100%; object-fit: contain; "
-                            class="img-fluid rounded p-3 " alt="product image">
+                            class="p-3 rounded img-fluid " alt="product image">
                     </div>
                     <div class="col-md-6 d-flex align-items-center">
                         <div class="card-body">
-                            <h5 class="card-title text-capitalize ls lh-1 text-wrap m-0 p-0 fw-bold">
+                            <h5 class="p-0 m-0 card-title text-capitalize ls lh-1 text-wrap fw-bold">
                                 {{item.name | description:'title'}}</h5>
-                            <div class="w-100 bg-black my-1" style="height: 1px;"></div>
-                            <h6 class="card-text mb-0">
+                            <div class="my-1 bg-black w-100" style="height: 1px;"></div>
+                            <h6 class="mb-0 card-text">
                                 <b>Description:<br></b>
                             </h6>
                             <p [innerHTML]="item.description |description:'description'"></p>

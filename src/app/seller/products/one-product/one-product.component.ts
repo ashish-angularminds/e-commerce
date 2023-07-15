@@ -23,8 +23,7 @@ export class OneProductComponent implements OnInit {
     this.service.getone(this.id.id).subscribe(
       res => {
         this.product = res;
-        this.selectedimg = this.product.images[0].url;
-        console.log(res);
+        this.selectedimg = this.product?.images?.at(0)?.url;
         this.loader.stop();
       },
       err => {
@@ -43,18 +42,18 @@ export class OneProductComponent implements OnInit {
 
     document.querySelectorAll('.btn-success').forEach(i => {
       i.addEventListener('click', () => {
-        setTimeout(() => this.loadall(), 1000);
+        setTimeout(() => this.loadall(this.id.id), 1000);
       });
     })
   }
 
-  myCallbackFunction = (): void => { this.loadall() }
-  loadall() {
-    this.service.getone(this.id.id).subscribe(
+  myCallbackFunction = (): void => { this.loadall(this.id.id) }
+  loadall(id:string) {
+    this.service.getone(id).subscribe(
       res => {
         console.log(res);
         this.product = res;
-        this.selectedimg = this.product.images[0].url;
+        this.selectedimg = this.product?.images?.at(0)?.url;
       },
       err => {
         Swal.fire({

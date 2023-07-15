@@ -8,21 +8,21 @@
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
-                <div class="form-floating mb-3 mt-3">
+                <div class="mt-3 mb-3 form-floating">
                     <input type="text" name="name" [(ngModel)]="product.name" class="form-control border-dark"
                         placeholder="name
                                 address" required>
                     <label for="floatingInput">Name</label>
                 </div>
 
-                <div class="NgxEditor__Wrapper mb-3 border-black">
+                <div class="mb-3 border-black NgxEditor__Wrapper">
                     <ngx-editor-menu [editor]="editor" [toolbar]="toolbar">
                     </ngx-editor-menu>
                     <ngx-editor [editor]="editor" [(ngModel)]="product.description" [disabled]="false"
                         name="description" [placeholder]="'Type here...'"></ngx-editor>
                 </div>
 
-                <div class="form-floating mb-3">
+                <div class="mb-3 form-floating">
                     <input type="number" name="price" [(ngModel)]="product.price" class="form-control border-dark"
                         placeholder="price" required>
                     <label for="floatingInput">Price</label>
@@ -49,28 +49,28 @@
             </div>
             <div class="modal-body">
                 <div class="row">
-                    <div class="col-8 border-black border-end">
-                        <div class="d-flex flex-wrap" id="img-box">
+                    <div class="border-black col-8 border-end">
+                        <div class="flex-wrap d-flex" id="img-box">
                             <div class="position-relative" *ngFor="let img of images;index as i" [id]="'img-'+i">
                                 <span style="height: 25px;width: 25px;" role="button"
                                     (click)="deleteimg(img?.public_id,i)"
-                                    class="bi bi-x-circle text-danger border-0 rounded-circle bg-transparent position-absolute top-0 left-0">
+                                    class="top-0 left-0 bg-transparent border-0 bi bi-x-circle text-danger rounded-circle position-absolute">
                                 </span>
-                                <img [src]="img?.url" alt="img" class="img-thumbnail object-fit-contain m-2"
+                                <img [src]="img?.url" alt="img" class="m-2 img-thumbnail object-fit-contain"
                                     style="width: 100px;height: 100px;">
                             </div>
 
                             <div class="position-relative" *ngFor="let img of convertedfiles; index as i">
                                 <span style="height: 25px;width: 25px;" role="button" (click)="deletetempimg(i)"
-                                    class="bi bi-x-circle text-danger border-0 rounded-circle bg-transparent position-absolute top-0 left-0">
+                                    class="top-0 left-0 bg-transparent border-0 bi bi-x-circle text-danger rounded-circle position-absolute">
                                 </span>
-                                <img [src]="img" alt="img" class="img-thumbnail object-fit-contain m-2"
+                                <img [src]="img" alt="img" class="m-2 img-thumbnail object-fit-contain"
                                     style="width: 100px;height: 100px;">
                             </div>
                         </div>
                     </div>
                     <div class="col-4 d-flex align-items-center">
-                        <div class="input-group rounded border border-dark mb-3 p-4">
+                        <div class="p-4 mb-3 border rounded input-group border-dark">
                             <ngx-dropzone (change)="onFileSelect($event)" class="w-100">
                                 <ngx-dropzone-label>Drop images here...</ngx-dropzone-label>
                             </ngx-dropzone>

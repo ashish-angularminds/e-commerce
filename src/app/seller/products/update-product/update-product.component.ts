@@ -50,12 +50,14 @@ export class UpdateProductComponent implements OnInit {
 
   deleteimg(id: string, i: number) {
     this.files.append('delete', id);
-    document.getElementById(`img-${i}`)!.style.opacity = '0.4';
+    let temp: HTMLElement = document.getElementById(`img-${i}`) as HTMLElement;
+    if(temp)
+      temp.style.opacity = '0.4';
   }
 
-  updatedetails() {
+  updatedetails(id?:any) {
     this.loader.start();
-    this.service.update(this.id, this.product).subscribe(
+    this.service.update(id? id:this.id, this.product).subscribe(
       res => {
         Swal.fire({
           title: 'Detail Updated Successfully!',
@@ -80,12 +82,12 @@ export class UpdateProductComponent implements OnInit {
     );
   }
 
-  updateimg() {
+  updateimg(id?:any) {
     this.loader.start();
     this.tempfiles.forEach(item => {
       this.files.append('new_images', item);
     });
-    this.service.updateimg(this.id, this.files).subscribe(
+    this.service.updateimg(id ? id:this.id, this.files).subscribe(
       res => {
         Swal.fire({
           title: 'Images Updated Successfully!',
@@ -134,8 +136,8 @@ export class UpdateProductComponent implements OnInit {
     ['align_left', 'align_center', 'align_right', 'align_justify'],
   ];
 
-  loadimg() {
-    this.service.getone(this.id).subscribe(
+  loadimg(id?:any) {
+    this.service.getone(id?id:this.id).subscribe(
       res => {
         this.product.name = res.name;
         this.product.description = res.description;

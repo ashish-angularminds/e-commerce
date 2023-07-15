@@ -19,27 +19,13 @@ export class ProductsListComponent implements OnInit {
   };
   results: any = [];
   des = '';
+
   ngOnInit(): void {
-    this.loader.start();
     this.getproductslist();
   }
 
-  loadTitle(str: string) {
-    let text = '';
-    for (let i = 0; i < 40; i++) {
-      text += str[i];
-    }
-    return text;
-  }
-  loadDes(str: string) {
-    let text = '';
-    for (let i = 0; i < 80; i++) {
-      text += str[i];
-    }
-    return text;
-  }
-
   getproductslist() {
+    this.loader.start();
     this.productservice.getall(this.pagination).subscribe(
       res => {
         this.results = res.results;
@@ -53,7 +39,6 @@ export class ProductsListComponent implements OnInit {
   }
 
   changePage(id: number) {
-
     this.pagination.page = this.pagination.page + id;
     if (this.pagination.page == 0) {
       this.pagination.page = 1;
