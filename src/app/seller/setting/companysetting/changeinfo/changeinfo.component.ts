@@ -8,20 +8,15 @@ import { CompanysettingComponent } from '../companysetting.component';
   templateUrl: './changeinfo.component.html',
   styleUrls: ['./changeinfo.component.css']
 })
-export class ChangeinfoComponent implements OnInit {
+export class ChangeinfoComponent {
 
   constructor(private settingservice: SettingService, private toast: NgToastService,
     private parent: CompanysettingComponent) { }
 
   @Input() selectedid: any;
-  // @Output() flag = new EventEmitter<boolean>();
-
   @Input() infouser = {
     email: '',
     name: ''
-  }
-
-  ngOnInit() {
   }
 
   changeinfo() {

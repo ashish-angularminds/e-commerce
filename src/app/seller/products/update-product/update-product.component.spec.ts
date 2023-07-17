@@ -8,7 +8,7 @@ import { FormsModule } from '@angular/forms';
 import { ProductService } from '../../service/product/product.service';
 import { of, throwError } from 'rxjs';
 
-fdescribe('UpdateProductComponent', () => {
+describe('UpdateProductComponent', () => {
   let component: UpdateProductComponent;
   let fixture: ComponentFixture<UpdateProductComponent>;
   let service: ProductService;

@@ -36,6 +36,7 @@ export class CompanysettingComponent implements OnInit {
   companyname!: string;
   pages: number[] = [];
   users: any[] = [];
+
   ngOnInit() {
     this.loadlist();
   }
@@ -49,9 +50,9 @@ export class CompanysettingComponent implements OnInit {
   loadlist() {
     this.loader.start();
     this.settingservice.getuser(this.pagination).pipe(pluck('results')).subscribe(data => {
-      console.log(data);
+      // console.log(data);
       this.users = data;
-      this.companyname = this.users.at(0)?._org.name as string;
+      this.companyname = this.users?.at(0)?._org.name as string;
       this.loader.stop();
     });
   }

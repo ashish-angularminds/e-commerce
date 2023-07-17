@@ -19,27 +19,31 @@ export class SellersOrdersComponent implements OnInit {
     this.loadall();
   }
 
-  loadall() {
-    this.service.get().subscribe(
-      res => {
-        this.orders = res.results;
-        this.orders.forEach((item: any) => {
-          item.items.forEach((it: any) => {
-            this.ProductsService.getlist({ name: it.name }).subscribe(data => {
-              this.images.push({
-                name: it.name,
-                img: data.results[0]?.images[0]?.url
-              });
-            });
+  loadall(mocktoken?:string) {
+    this.service.get(mocktoken).subscribe({
+      next: (res) => {
+        if(res.results)
+          this.orders = res.results;
+        this.orders?.forEach((item: any) => {
+          item.items?.forEach((it: any) => {
+            this.collectimg(it);
           })
         })
       },
-      err => {
+      error: (err) => {
         console.log(err);
       }
-    );
+    });
   }
 
+  collectimg(it:any) {
+    this.ProductsService.getlist({ name: it.name }).subscribe(data => {
+      this.images.push({
+        name: it.name,
+        img: data?.results?.at(0)?.images?.at(0)?.url
+      });
+    });
+  }
 
 
   getimages(str: any) {
@@ -52,9 +56,10 @@ export class SellersOrdersComponent implements OnInit {
     return img;
   }
 
-  changeaction(id: string) {
+  changeaction(id: string, test?:any) {
     let temp: any = document.getElementById('selectaction');
-    if (temp?.value === '0') {
+    console.log(temp?.value);
+    if (temp?.value === '0' && test==undefined) {
       alert('select an action');
     }
     else {

@@ -8,8 +8,8 @@ export class SellersOrdersService {
 
   constructor(private httpclient: HttpClient) { }
 
-  get() {
-    let header = new HttpHeaders({ ['Authorization']: 'Bearer ' + localStorage.getItem('activeuser') });
+  get(id?:string) {
+    let header = new HttpHeaders({ ['Authorization']: 'Bearer ' + (id?id:localStorage.getItem('activeuser')) });
     return this.httpclient.get<any>('https://shop-api.ngminds.com/orders', { headers: header });
   }
 

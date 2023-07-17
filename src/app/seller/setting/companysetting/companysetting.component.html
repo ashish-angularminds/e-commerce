@@ -1,16 +1,16 @@
 <div class="container d-grid">
-    <div class="d-flex p-2 justify-content-between align-items-center bg-dark text-white my-5 rounded">
-        <button class="btn border-0 text-white rounded-5" [routerLink]="'/setting/my-profile'">
+    <div class="p-2 my-5 text-white rounded d-flex justify-content-between align-items-center bg-dark">
+        <button class="text-white border-0 btn rounded-5" routerLink="/setting/my-profile">
             <i class="bi bi-arrow-left"></i>
         </button>
 
         <div class="dropdown d-flex">
-            <h3 class="m-0 p-0">{{companyname}}</h3>
-            <button type="button" class="p-1 ms-1 bg-dark border-0 text-white" data-bs-toggle="dropdown"
+            <h3 class="p-0 m-0">{{companyname}}</h3>
+            <button type="button" class="p-1 text-white border-0 ms-1 bg-dark" data-bs-toggle="dropdown"
                 aria-expanded="false" data-bs-auto-close="outside" (click)="loadorg()">
                 <i class="bi bi-vector-pen small"></i>
             </button>
-            <form class="dropdown-menu p-4" style="width: 250px;">
+            <form class="p-4 dropdown-menu" style="width: 250px;">
                 <div class="mb-3">
                     <input type="text" class="form-control border-dark" id="exampleDropdownFormPassword2"
                         placeholder="Name" name="name" [(ngModel)]="org.name">
@@ -23,7 +23,7 @@
             </form>
         </div>
         <div class="btn-group">
-            <button class="mx-2 rounded-5 bg-dark text-white fw-bold fs-4 border-0 p-0" type="button"
+            <button class="p-0 mx-2 text-white border-0 rounded-5 bg-dark fw-bold fs-4" type="button"
                 data-bs-toggle="dropdown" data-bs-auto-close="true" aria-expanded="false">
                 <i class="bi bi-list"></i>
             </button>
@@ -37,7 +37,7 @@
         </div>
     </div>
     <div class="row">
-        <div class="col p-1">
+        <div class="p-1 col">
             <table class="table text-center">
                 <thead class=" table-dark">
                     <tr>
@@ -49,14 +49,14 @@
                 </thead>
                 <tbody>
                     <tr *ngFor="let u of users">
-                        <th scope="col"><input class="form-control border-0 bg-white text-center" type="text"
+                        <th scope="col"><input class="text-center bg-white border-0 form-control" type="text"
                                 [value]="u.email" disabled></th>
-                        <!-- <th><input class="form-control border-0 bg-white"
+                        <!-- <th><input class="bg-white border-0 form-control"
                                 type="text"
                                 value="Password" disabled></th> -->
-                        <th><input class="form-control border-0 bg-white text-center" type="text" [value]="u.name"
+                        <th><input class="text-center bg-white border-0 form-control" type="text" [value]="u.name"
                                 disabled></th>
-                        <th><input class="form-control border-0 bg-white text-center" type="text" [value]="u.role"
+                        <th><input class="text-center bg-white border-0 form-control" type="text" [value]="u.role"
                                 disabled></th>
                         <th class="d-flex justify-content-center">
                             <div class="dropdown">
@@ -79,7 +79,7 @@
                                     </li>
                                 </ul>
                             </div>
-                            <button class="btn btn-outline-dark mx-2"
+                            <button class="mx-2 btn btn-outline-dark"
                                 (click)="selectedid=u._id; deleteuser()">Delete</button>
                         </th>
                     </tr>
@@ -87,7 +87,7 @@
             </table>
         </div>
     </div>
-    <div class="row mt-2 d-flex justify-content-between">
+    <div class="mt-2 row d-flex justify-content-between">
         <div class="col-2">
             <ul class="pagination text-dark">
                 <li *ngFor="let i of pages" class="page-item" [className]="pagination.page==i+1? 'active':'page-item'">
@@ -96,7 +96,7 @@
             </ul>
         </div>
         <div class="col-2">
-            <div class="input-group mb-3">
+            <div class="mb-3 input-group">
                 <label class="input-group-text" for="inputGroupSelect01">Sort by</label>
                 <select class="form-select" id="inputGroupSelect01" [(ngModel)]="pagination.sortBy" name="sortby"
                     (change)="loadlist()">
@@ -117,7 +117,7 @@
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
-                <div class="form-floating mb-3">
+                <div class="mb-3 form-floating">
                     <input type="password" name="password" [(ngModel)]="userpass.password"
                         class="form-control border-dark" placeholder="Password" required>
                     <label for="floatingInput">Password</label>
