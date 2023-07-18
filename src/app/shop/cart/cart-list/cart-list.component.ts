@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { Product } from '../store/product';
-import { addproduct, checkprice, decreaseqty, increaseqty, removeproduct } from '../store/cart.actions';
+import { checkprice, decreaseqty, increaseqty, removeproduct } from '../store/cart.actions';
 import { Observable, pluck } from 'rxjs';
 import { CustomerService } from '../../services/customer/customer.service';
 import { CartService } from '../../services/cart/cart.service';
