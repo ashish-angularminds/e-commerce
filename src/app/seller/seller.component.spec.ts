@@ -1,6 +1,7 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { SellerComponent } from './seller.component';
+import { SellerRoutingModule } from './seller-routing.module';
 
 describe('SellerComponent', () => {
   let component: SellerComponent;
@@ -8,7 +9,8 @@ describe('SellerComponent', () => {
 
   beforeEach(() => {
     TestBed.configureTestingModule({
-      declarations: [SellerComponent]
+      declarations: [SellerComponent],
+      imports: [SellerRoutingModule]
     });
     fixture = TestBed.createComponent(SellerComponent);
     component = fixture.componentInstance;

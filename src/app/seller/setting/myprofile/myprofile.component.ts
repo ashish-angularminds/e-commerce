@@ -26,7 +26,6 @@ export class MyprofileComponent implements OnInit {
     this.http.get(this.localToken).subscribe(
       res => {
         this.user = res;
-        console.log(this.user);
         if (res.isEmailVerified) {
           this.classes = 'bg-success-subtle text-success disabled btn rounded-circle position-absolute tl shadow-lg';
         }

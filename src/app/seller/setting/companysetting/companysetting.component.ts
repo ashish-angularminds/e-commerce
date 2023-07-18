@@ -18,7 +18,7 @@ export class CompanysettingComponent implements OnInit {
     name: '',
     email: ''
   };
-  @Output() selectedid: any;
+  @Output() selectedid: any ='';
   
   flag = false;
   org = {
@@ -50,7 +50,6 @@ export class CompanysettingComponent implements OnInit {
   loadlist() {
     this.loader.start();
     this.settingservice.getuser(this.pagination).pipe(pluck('results')).subscribe(data => {
-      // console.log(data);
       this.users = data;
       this.companyname = this.users?.at(0)?._org.name as string;
       this.loader.stop();
@@ -63,8 +62,8 @@ export class CompanysettingComponent implements OnInit {
   }
 
   loadorg() {
-    this.org.name = this.users!.at(0)!._org!.name as string;
-    this.org.email = this.users!.at(0)!._org!.email as string;
+    this.org.name = this.users?.at(0)?._org?.name as string;
+    this.org.email = this.users?.at(0)?._org?.email as string;
   }
   updateorg() {
     this.settingservice.updateorg(this.org).subscribe(data => console.log(data));
@@ -80,11 +79,6 @@ export class CompanysettingComponent implements OnInit {
           duration: 3000,
         })
         this.loadlist();
-        console.log(res);
-      },
-      err => {
-        console.log(err);
-        console.log(this.selectedid);
       }
     );
   }
@@ -98,10 +92,6 @@ export class CompanysettingComponent implements OnInit {
           duration: 3000,
         })
         this.loadlist();
-        console.log(res)
-      },
-      err => {
-        console.log(err);
       }
     )
   }

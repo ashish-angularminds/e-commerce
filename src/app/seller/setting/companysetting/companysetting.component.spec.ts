@@ -9,7 +9,7 @@ import { ChangemypasswordComponent } from './changemypassword/changemypassword.c
 import { FormsModule } from '@angular/forms';
 import { of } from 'rxjs';
 
-fdescribe('CompanysettingComponent', () => {
+describe('CompanysettingComponent', () => {
   let component: CompanysettingComponent;
   let fixture: ComponentFixture<CompanysettingComponent>;
   let settingservice: SettingService;
@@ -48,5 +48,34 @@ fdescribe('CompanysettingComponent', () => {
     component.changepage(1);
     expect(component.pagination.page).toEqual(1);
     expect(component.loadlist).toHaveBeenCalled()
+  })
+
+  it('should load org', () => {
+    component.loadorg();
+    expect(component.org).toBeTruthy();
+  })
+
+  it('should update org info',()=> {
+    spyOn(settingservice, 'updateorg').and.returnValue(of({}));
+    spyOn(component, 'loadlist');
+    component.updateorg();
+    expect(settingservice.updateorg).toHaveBeenCalledWith({ name: '', email: '' });
+    expect(component.loadlist).toHaveBeenCalledWith();
+  })
+
+  it('should delete an user', () => {
+    spyOn(settingservice, 'deleteuser').and.returnValue(of({}));
+    spyOn(component, 'loadlist');
+    component.deleteuser();
+    expect(settingservice.deleteuser).toHaveBeenCalled();
+    expect(component.loadlist).toHaveBeenCalledWith();
+  })
+
+  it('should change password', () => {
+    spyOn(settingservice, 'changeinfo').and.returnValue(of({}));
+    spyOn(component, 'loadlist');
+    component.changepassword();
+    expect(settingservice.changeinfo).toHaveBeenCalledWith({password:''},'');
+    expect(component.loadlist).toHaveBeenCalledWith();
   })
 });
