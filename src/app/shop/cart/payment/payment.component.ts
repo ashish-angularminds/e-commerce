@@ -31,6 +31,7 @@ export class PaymentComponent {
     cvv: ''
   }
   expirydate: any = new Date();
+  id = '';
 
   placeorder() {
     let month = '';
@@ -44,9 +45,11 @@ export class PaymentComponent {
       }
     }
     this.card.expiry = month + '/' + year;
-    let id = '';
-    this.activated.params.pipe(pluck('id')).subscribe(data => id = data);
-    this.service.pay(localStorage.getItem('loginuser')!, this.card, id).subscribe(
+    this.activated.params.pipe(pluck('id')).subscribe(data => {
+      if(data)
+      this.id = data
+    });
+    this.service.pay(localStorage.getItem('loginuser')!, this.card, this.id).subscribe(
       res => {
         this.Toast.fire({
           icon: 'success',

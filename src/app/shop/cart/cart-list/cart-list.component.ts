@@ -35,10 +35,13 @@ export class CartListComponent implements OnInit {
   }
 
   inc(id: string) {
-    console.log(id)
+    console.log(id);
     this.store.dispatch(increaseqty({ productId: id }));
     this.store.dispatch(checkprice());
-    this.store.select('cart').subscribe(data => localStorage.setItem('cart', JSON.stringify(data)));
+    this.store.select('cart').subscribe(data => {
+      localStorage.setItem('cart', JSON.stringify(data))
+      console.log(data);
+    });
   }
 
   dec(id: string, qty: number) {
@@ -49,7 +52,10 @@ export class CartListComponent implements OnInit {
     else {
       this.store.dispatch(decreaseqty({ productId: id }));
       this.store.dispatch(checkprice());
-      this.store.select('cart').subscribe(data => localStorage.setItem('cart', JSON.stringify(data)));
+      this.store.select('cart').subscribe(data => {
+        localStorage.setItem('cart', JSON.stringify(data));
+        console.log(data);
+      });
     }
   }
 }

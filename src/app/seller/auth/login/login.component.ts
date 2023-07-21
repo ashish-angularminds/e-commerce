@@ -96,8 +96,7 @@ export class LoginComponent implements OnInit {
       res => {
         this.loader.stop();
         this.loginsuccess(res);
-        let dom: HTMLElement = document.querySelector('.grecaptcha-badge') as HTMLElement;
-        dom!.style.display = 'none';
+        document.querySelector('.grecaptcha-badge')?.setAttribute('class', 'd-none');
         this.route.navigate(['setting', 'my-profile']);
         this.navbarservice.sellerlogin.next(localStorage.getItem('activeuser')!);
       },

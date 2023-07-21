@@ -1,12 +1,12 @@
 import { Product } from "./product"
 
-interface cart {
+export interface cart {
     products: Product[],
     price: number,
     login: boolean
 }
-
-const localstg = JSON.parse(localStorage.getItem('cart') || '{"products":[],"price":0}');
+let a = localStorage.getItem('cart');
+const localstg = a?JSON.parse('{"products":[],"price":0}'):{};
 export const initalstate: cart = {
     products: localstg.products,
     price: localstg.price,

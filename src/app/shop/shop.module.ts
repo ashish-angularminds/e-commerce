@@ -1,6 +1,5 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-
 import { ShopRoutingModule } from './shop-routing.module';
 import { ShopComponent } from './shop.component';
 import { ImageCropperModule } from 'ngx-image-cropper';
@@ -14,7 +13,6 @@ import { CustomerProfileComponent } from './customer-profile/customer-profile.co
 import { StoreModule } from '@ngrx/store';
 import { cartReducer } from './cart/store/cart.reducer';
 import { OrdersComponent } from './orders/orders.component';
-import { DealDirective } from '../directives/deal.directive';
 import { SharedmoduleModule } from '../sharedmodule/sharedmodule.module';
 
 

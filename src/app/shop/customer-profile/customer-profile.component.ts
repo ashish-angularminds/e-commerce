@@ -65,12 +65,6 @@ export class CustomerProfileComponent implements OnInit {
     );
   }
 
-  setprofile(payload: any) {
-    console.log('fun called');
-    this.user = payload;
-    console.log(this.user);
-  }
-
   delete() {
     Swal.fire({
       title: 'Are you sure?',
@@ -88,7 +82,6 @@ export class CustomerProfileComponent implements OnInit {
               icon: 'success',
               title: 'Image Removed'
             });
-            console.log(res);
             this.getProfile();
           },
           err => {
@@ -108,7 +101,6 @@ export class CustomerProfileComponent implements OnInit {
     this.service.getaddress(localStorage.getItem('loginuser')!).subscribe(
       res => {
         this.addresss = res;
-        console.log(res);
       },
       err => {
         console.log(err);
@@ -116,14 +108,11 @@ export class CustomerProfileComponent implements OnInit {
     );
   }
 
-
-
   /* ---------------------------------------all modals logic-------------------------------------------*/
 
   editProfile() {
     this.service.updateprofile(localStorage.getItem('loginuser')!, this.edituser).subscribe(
       res => {
-        // this.setprofile(res);
         this.user.name = res.name;
         this.user.email = res.email;
         this.user = res;
@@ -154,22 +143,22 @@ export class CustomerProfileComponent implements OnInit {
   }
   fileChangeEvent(event: any): void {
     this.loader.start();
-    this.img = URL.createObjectURL(event.addedFiles[0]);
+    this.img = event.addedFiles?.get(0)?URL.createObjectURL(event.addedFiles?.get(0)):'';
   }
-  imageCropped(event: ImageCroppedEvent) {
+  imageCropped(event: any) {
     this.croppedImage = event.base64;
-    this.imgfile = base64ToFile(this.croppedImage);
+    this.imgfile = this.croppedImage?base64ToFile(this.croppedImage):'';
   }
-  imageLoaded() {
-    // show cropper
-  }
+  // imageLoaded() {
+  //   // show cropper
+  // }
   cropperReady() {
     // cropper ready
     this.loader.stop();
   }
-  loadImageFailed() {
-    // show message
-  }
+  // loadImageFailed() {
+  //   // show message
+  // }
 
 
   upload() {
@@ -233,7 +222,6 @@ export class CustomerProfileComponent implements OnInit {
 
   addressid: string = '';
   updateaddress() {
-    console.log(this.address);
     this.service.updateaddress(localStorage.getItem('loginuser')!, this.address, this.addressid).subscribe(
       res => {
         this.getaddress();
@@ -327,7 +315,6 @@ export class CustomerProfileComponent implements OnInit {
               icon: 'success',
               title: 'Account Deleted successfully'
             });
-            console.log(res);
             localStorage.removeItem('loginuser');
             this.router.navigate(['']);
           }

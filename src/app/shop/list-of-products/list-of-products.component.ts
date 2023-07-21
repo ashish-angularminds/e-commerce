@@ -21,7 +21,7 @@ interface pag {
 
 export class ListOfProductsComponent implements OnInit {
 
-  constructor(private service: ProductsService, private router: Router, private loader: NgxUiLoaderService,
+  constructor(private service: ProductsService, private loader: NgxUiLoaderService,
     private navbar: NavbarService, private store: Store<{ cart: { product: Product[] } }>) { }
 
   results: any;
@@ -64,7 +64,6 @@ export class ListOfProductsComponent implements OnInit {
   }
 
   changePage(id: number) {
-
     this.pagination.page = this.pagination.page + id;
     if (this.pagination.page == 0) {
       this.pagination.page = 1;
@@ -75,7 +74,7 @@ export class ListOfProductsComponent implements OnInit {
   cartdata: any;
   checkcart(item: any) {
     let pd: any | undefined;
-    this.cartdata.products.forEach((data: Product) => {
+    this.cartdata?.products?.forEach((data: Product) => {
       if (item._id === data.productId) {
         pd = data;
       }

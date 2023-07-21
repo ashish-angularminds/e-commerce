@@ -48,7 +48,6 @@ export class CustomerLoginComponent implements OnInit {
   login() {
     this.recaptchaV3Service.execute('importantAction').subscribe((token: string) => {
       this.user.captcha = token;
-      console.log(token);
       this.service.login(this.user).subscribe(
         (res: any) => {
           localStorage.setItem('loginuser', res.token);

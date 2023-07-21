@@ -40,10 +40,8 @@ describe('OneProductComponent', () => {
   it('should ask the delete confirmation', () => {
     let mockdata = '6482be598314b2229de9baaf';
     spyOn(component, 'deletefun');
-    // spyOn(swap, 'fire');
     component.deleteproduct(mockdata);
     Swal.clickConfirm();
-    // fixture.detectChanges();
     expect(component.deletefun).not.toHaveBeenCalledWith(mockdata);
   })
 

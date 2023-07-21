@@ -33,17 +33,16 @@ export class PricesComponent implements OnInit {
   storeproducts: Observable<any> = this.store.select('cart');
   storeprice: Observable<any> = this.store.select('cart').pipe(pluck('price'));
   storelogin: Observable<any> = this.store.select('cart').pipe(pluck('login'));
-  address = this.customerservice.getaddress(localStorage.getItem('loginuser')!);
 
   deliveryFee = 99;
   flag = false;
+  addressid: any = null;
 
   ngOnInit(): void {
     this.flag = localStorage.getItem('loginuser') ? true : false;
   }
 
   placeorder() {
-    let addressid: any = null;
     let payload = {
       items: [],
       deliveryFee: this.deliveryFee,
@@ -52,23 +51,24 @@ export class PricesComponent implements OnInit {
     }
     document.querySelectorAll('input[name=listGroupRadio]').forEach((item: any) => {
       if (item.checked) {
-        addressid = item.value;
+        this.addressid = item.value;
       }
     });
-    if (addressid) {
+    if (this.addressid) {
       this.storeproducts.subscribe(res => {
-        payload.total = res.price;
-        payload.items = res.products;
+        payload.total = res?.price || 0;
+        payload.items = res?.products || [];
       });
-      this.address.subscribe((data: any) => {
-        const { _id, ...newaddress } = data.at(addressid);
+      this.customerservice.getaddress(localStorage.getItem('loginuser')!).subscribe((data: any) => {
+        console.log(data);
+        const { _id, ...newaddress } = data!.at(this.addressid) || {};
         payload.address = newaddress;
         this.cartservice.creat(localStorage.getItem('loginuser')!, payload).subscribe(
           res => {
-            console.log(res);
+            // console.log(res);
             this.store.dispatch(emptycart());
             this.store.select('cart').subscribe(data => localStorage.setItem('cart', JSON.stringify(data)));
-            this.router.navigate(['shop', 'cart', 'confirm', res.order._id]);
+            this.router.navigate(['shop', 'cart', 'confirm', res?.order?._id]);
           },
           err => {
             console.log(err);

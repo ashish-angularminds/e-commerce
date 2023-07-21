@@ -1,7 +1,6 @@
 import { createReducer, on } from "@ngrx/store";
 import { addproduct, checklogin, checkprice, decreaseqty, emptycart, increaseqty, removeproduct } from "./cart.actions";
 import { initalstate } from "./cart.state";
-import { state } from "@angular/animations";
 
 const _cartReducer = createReducer(initalstate,
     on(addproduct, (state, action) => {
@@ -32,7 +31,7 @@ const _cartReducer = createReducer(initalstate,
         return {
             ...state,
             products: state.products.map((data) => {
-                if (data.productId === action.productId) {
+                if (data.productId === action.productId || true) {
                     return {
                         ...data,
                         qty: data.qty + 1,
