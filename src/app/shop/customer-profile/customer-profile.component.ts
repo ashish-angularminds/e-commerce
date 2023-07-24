@@ -149,16 +149,16 @@ export class CustomerProfileComponent implements OnInit {
     this.croppedImage = event.base64;
     this.imgfile = this.croppedImage?base64ToFile(this.croppedImage):'';
   }
-  // imageLoaded() {
-  //   // show cropper
-  // }
+  imageLoaded() {
+    // show cropper
+  }
   cropperReady() {
     // cropper ready
     this.loader.stop();
   }
-  // loadImageFailed() {
-  //   // show message
-  // }
+  loadImageFailed() {
+    // show message
+  }
 
 
   upload() {

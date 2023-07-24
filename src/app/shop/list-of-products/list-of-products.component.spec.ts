@@ -9,7 +9,7 @@ import { FormsModule } from '@angular/forms';
 import { ProductsService } from '../services/products.service';
 import { of, throwError } from 'rxjs';
 
-fdescribe('ListOfProductsComponent', () => {
+describe('ListOfProductsComponent', () => {
   let component: ListOfProductsComponent;
   let fixture: ComponentFixture<ListOfProductsComponent>;
   let productsservice: ProductsService;
@@ -51,7 +51,7 @@ fdescribe('ListOfProductsComponent', () => {
     expect(component.getproductslist).toHaveBeenCalled();
   })
 
-  it('should change the page', () => {
+  it('should change the page backword', () => {
     spyOn(component, 'getproductslist');
     component.changePage(-1);
     expect(component.getproductslist).toHaveBeenCalled();
@@ -60,5 +60,8 @@ fdescribe('ListOfProductsComponent', () => {
     let mock = component.checkcart({ _id: '' })
     expect(mock).toBeUndefined();
   })
-  it('should ',()=>{})
+  it('should get detail of single product', () => {
+    component.singleProduct([], {});
+    expect(component.cartproduct).toEqual({});
+  })
 });

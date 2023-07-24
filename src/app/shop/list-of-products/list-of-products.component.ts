@@ -82,7 +82,7 @@ export class ListOfProductsComponent implements OnInit {
     return pd;
   }
 
-  cartproduct: Product | undefined;
+  cartproduct: Product | undefined | {};
   singleProduct(prod: any, pd: any) {
     this.service.product.next(prod);
     this.cartproduct = pd;

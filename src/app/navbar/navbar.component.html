@@ -2,15 +2,20 @@
     <div class="container-fluid d-flex justify-content-between">
         <a class="navbar-brand text-capitalize" href="#">E-Commers</a>
         <ul class="flex-row w-auto gap-4 navbar-nav d-flex">
+
             <li class="nav-item" (click)="activelink($event)" *ngIf="navbarflag|async">
                 <a class="nav-link fw-bolder" routerLink="product">Products</a>
             </li>
             <li class="nav-item" (click)="activelink($event)" *ngIf="navbarflag|async">
-                <a class="nav-link fw-bolder" routerLink="setting">Settings</a>
-            </li>
-            <li class="nav-item" (click)="activelink($event)" *ngIf="navbarflag|async">
                 <a class="nav-link fw-bolder" routerLink="orders">Orders</a>
             </li>
+            <li class="nav-item" (click)="activelink($event)" *ngIf="navbarflag|async">
+                <a class="nav-link fw-bolder" routerLink="setting/my-profile">Profile</a>
+            </li>
+            <li class="nav-item" (click)="activelink($event)" *ngIf="navbarflag|async">
+                <a class="nav-link fw-bolder" routerLink="setting/company-setting">Settings</a>
+            </li>
+
             <li class="nav-item" (click)="activelink($event)" *ngIf="!(navbarflag|async)">
                 <a class="nav-link fw-bolder" routerLink="shop">All Products</a>
             </li>

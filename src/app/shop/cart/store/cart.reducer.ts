@@ -7,20 +7,20 @@ const _cartReducer = createReducer(initalstate,
         return {
             ...state,
             price: state.price + (action.product.deal ? action.product.deal.price : action.product.price),
-            products: [...state.products, action.product]
+            products: state.products?[...state.products, action.product]:[action.product]
         }
     }),
     on(removeproduct, (state, action) => {
         return {
             ...state,
-            products: state.products.filter((data) => {
-                if (data.productId != action.productId)
+            products: state.products?.filter((data) => {
+                if (data.productId !== action.productId)
                     return true;
                 else
                     return false;
             }),
-            price: state.products.reduce((a, data) => {
-                if (data.productId != action.productId)
+            price: state.products?.reduce((a, data) => {
+                if (data.productId !== action.productId)
                     return a + data.subTotal
                 else
                     return a + 0;
@@ -31,7 +31,7 @@ const _cartReducer = createReducer(initalstate,
         return {
             ...state,
             products: state.products.map((data) => {
-                if (data.productId === action.productId || true) {
+                if (data.productId === action.productId) {
                     return {
                         ...data,
                         qty: data.qty + 1,

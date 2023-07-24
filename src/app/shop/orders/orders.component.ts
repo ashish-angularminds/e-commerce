@@ -26,9 +26,10 @@ export class OrdersComponent implements OnInit {
       this.orders.forEach((item: any) => {
         item.items.forEach((it: any) => {
           this.ProductsService.getlist({ name: it.name }).subscribe(data => {
+            console.log(data);
             this.images.push({
               name: it.name,
-              img: data.results[0]?.images[0]?.url
+              img: data.results[0]?.images[0]?.url || ''
             });
           });
         })
@@ -46,6 +47,9 @@ export class OrdersComponent implements OnInit {
     this.images.forEach((data: any) => {
       if (data.name === n) {
         img = data.img;
+      }
+      else {
+        img = ''
       }
     });
     return img;

@@ -18,8 +18,9 @@ describe('CustomerGuard', () => {
   });
 
   it('should canactive return true', () => {
+    localStorage.setItem('loginuser','mock')
     const can = guard.canActivate();
-    expect(can).toEqual(false);
+    expect(can).toEqual(true);
   })
 
   it('should guard allow', () => {

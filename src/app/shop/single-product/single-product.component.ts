@@ -30,6 +30,7 @@ export class SingleProductComponent implements OnInit {
   }
 
   add() {
+    console.log(this.item);
     let p: Product;
     if (this.item.deal) {
       p = {
