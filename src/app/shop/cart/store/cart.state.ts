@@ -6,7 +6,8 @@ export interface cart {
     login: boolean
 }
 let a = localStorage.getItem('cart');
-const localstg = a?JSON.parse('{"products":[],"price":0}'):{};
+const localstg = a?JSON.parse(a):JSON.parse('{"products":[],"price":0}');
+
 export const initalstate: cart = {
     products: localstg.products,
     price: localstg.price,
